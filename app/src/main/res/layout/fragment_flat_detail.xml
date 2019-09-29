@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/topInfo">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/title_size"
+            android:paddingStart="@dimen/basic_padding"
+            android:text="@string/media"/>
+
+        <!--<androidx.recyclerview.widget.RecyclerView-->
+            <!--android:id="@+id/fragment_flat_recycler_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="200dp">-->
+        <!--</androidx.recyclerview.widget.RecyclerView>-->
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_recycler_height"
+            android:background="@color/dark_grey"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/basic_padding"
+            android:textSize="@dimen/title_size"
+            android:text="@string/description"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <me.biubiubiu.justifytext.library.JustifyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/default_margin"
+                android:text="@string/big_text"
+                android:textSize="@dimen/text_size_big" />
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/topInfo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/pink"
+        android:layout_above="@id/flat_info">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Duplex"
+            android:textColor="@color/white"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:textAlignment="center"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            android:text="Sèvres"
+            android:textColor="@color/white"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:textAlignment="center"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="@dimen/title_size_mini"
+            android:textStyle="bold"
+            android:text="250 000 €"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/flat_info"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottomInfo">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/subtitle_height"
+            android:background="@color/black">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="@style/GreenOverBlack"
+                android:textSize="@dimen/title_size_mini"
+                android:drawableStart="@drawable/ic_surface"
+                android:text="@string/surface"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/GreenOverBlack"
+                android:textSize="@dimen/title_size_mini"
+                android:drawableStart="@drawable/ic_home"
+                android:text="@string/room"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/subtitle_height"
+            android:background="@color/white">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/surface"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textAlignment="center"
+                android:textSize="@dimen/title_size_mini"
+                android:textColor="@color/black"
+                android:text="400 m2"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/room_nb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textAlignment="center"
+                android:textSize="@dimen/title_size_mini"
+                android:textColor="@color/black"
+                android:text="5"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/subtitle_height">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/GreenOverBlack"
+                android:textSize="@dimen/title_size_mini"
+                android:drawableStart="@drawable/ic_bathroom"
+                android:text="@string/bathroom"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/GreenOverBlack"
+                android:textSize="@dimen/title_size_mini"
+                android:drawableStart="@drawable/ic_bedroom"
+                android:text="@string/bedroom"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/subtitle_height"
+            android:background="@color/white">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/bathroom_nb"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/subtitle_height"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textAlignment="center"
+                android:textSize="@dimen/title_size_mini"
+                android:textColor="@color/black"
+                android:text="2"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/bedroom_nb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textAlignment="center"
+                android:textSize="@dimen/title_size_mini"
+                android:textColor="@color/black"
+                android:text="3"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_above="@+id/flat_info">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/map_height"
+                android:layout_weight="1"
+                >
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GreenOverBlack"
+                    android:textSize="@dimen/title_size_mini"
+                    android:drawableStart="@drawable/ic_location"
+                    android:text="@string/location"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/address"
+                    style="@style/GreenOverBlack"
+                    android:paddingStart="10dp"
+                    android:textSize="@dimen/title_size_mini" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/map_height"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_map"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomInfo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/pink"
+        android:layout_alignParentBottom="true">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/sale_status"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="EN VENTE"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/sale_agent"
+            android:textAlignment="center"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Pierre Martin"
+            android:textStyle="italic"
+            android:textColor="@color/black"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/creation_date"
+            android:textAlignment="center"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="@dimen/text_size"
+            android:text="Depuis le 12/02/2019"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

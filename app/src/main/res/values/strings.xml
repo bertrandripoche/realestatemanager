@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Real Estate Manager</string>
+    <string name="First_recorded_flat">Le premier bien immobilier enregistré vaut</string>
+    <string name="search">search</string>
+    <string name="add">add</string>
+    <string name="edit">edit</string>
+    <string name="description">Description</string>
+    <string name="big_text">Ceci est un superbe appartement, vous allez voir, c\'est un truc de fou et je me demande même si un jour je trouverai un appartement plus beau que ça. Franchement, nan, mais vous avez déjà vu un truc pareil, la vue est magnifique, le jardin alentour me fait directement penser aux petites balades que je vais pouvoir faire avec mon chien kiki. Et il  y a des restaurants et des salles de spectacles partout autour du quartier, ça va être une véritable tuerie. À se demander si je vais avoir même le temps de passer du temps ailleurs.\n</string>
+    <string name="surface">Surface</string>
+    <string name="bedroom">Number of bedrooms</string>
+    <string name="room">Number of rooms</string>
+    <string name="bathroom">Number of bathrooms</string>
+    <string name="media">Media</string>
+    <string name="address">50 Rue du Faubourg Saint-Denis\n75010\nParis\nFrance</string>
+    <string name="location">Location</string>
+</resources>
