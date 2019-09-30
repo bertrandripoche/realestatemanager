@@ -24,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         this.configureToolbar();
-        loadFragment(new FlatDetailFragment());
+//        loadFragment(new FlatDetailFragment());
+        loadFragment(new FlatListFragment());
     }
 
     @Override
@@ -49,14 +50,5 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
-//    private void configureTextViewMain(){
-//        this.textViewMain.setTextSize(15);
-//        this.textViewMain.setText(getResources().getString(R.string.First_recorded_flat));
-//    }
-//
-//    private void configureTextViewQuantity(){
-//        int quantity = Utils.convertDollarToEuro(100);
-//        this.textViewQuantity.setTextSize(20);
-//        this.textViewQuantity.setText(String.valueOf(quantity));
-//    }
+
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -20,7 +19,7 @@
             android:text="@string/media"/>
 
         <!--<androidx.recyclerview.widget.RecyclerView-->
-            <!--android:id="@+id/fragment_flat_recycler_view"-->
+            <!--android:id="@+id/fragment_flat_images_recycler_view"-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="200dp">-->
         <!--</androidx.recyclerview.widget.RecyclerView>-->
@@ -96,7 +95,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bottomInfo">
+        android:layout_above="@+id/flat_location">
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -193,85 +192,85 @@
                 android:text="3"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/bottomInfo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_above="@+id/flat_info">
+            android:layout_height="@dimen/title_height"
+            android:background="@color/pink">
 
-            <LinearLayout
-                android:orientation="vertical"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/sale_status"
+                android:gravity="center_vertical"
+                android:textAlignment="center"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/map_height"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                >
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/GreenOverBlack"
-                    android:textSize="@dimen/title_size_mini"
-                    android:drawableStart="@drawable/ic_location"
-                    android:text="@string/location"/>
+                android:text="EN VENTE"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/address"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/address"
-                    style="@style/GreenOverBlack"
-                    android:paddingStart="10dp"
-                    android:textSize="@dimen/title_size_mini" />
-            </LinearLayout>
-
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/sale_agent"
+                android:textAlignment="center"
+                android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/map_height"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleType="centerCrop"
-                android:src="@drawable/default_map"/>
+                android:text="Pierre Martin"
+                android:textStyle="italic"
+                android:textColor="@color/black"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/creation_date"
+                android:textAlignment="center"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size"
+                android:text="Depuis le 12/02/2019"
+                android:textColor="@color/white"/>
+
         </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/bottomInfo"
+        android:id="@+id/flat_location"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
-        android:background="@color/pink"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/sale_status"
-            android:gravity="center_vertical"
-            android:textAlignment="center"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/map_height"
             android:layout_weight="1"
-            android:text="EN VENTE"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
+            >
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/GreenOverBlack"
+                android:textSize="@dimen/title_size_mini"
+                android:drawableStart="@drawable/ic_location"
+                android:text="@string/location"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/sale_agent"
-            android:textAlignment="center"
-            android:gravity="center_vertical"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/address"
+                style="@style/GreenOverBlack"
+                android:paddingStart="10dp"
+                android:textSize="@dimen/title_size_mini" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/map_height"
             android:layout_weight="1"
-            android:text="Pierre Martin"
-            android:textStyle="italic"
-            android:textColor="@color/black"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/creation_date"
-            android:textAlignment="center"
-            android:gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textSize="@dimen/text_size"
-            android:text="Depuis le 12/02/2019"
-            android:textColor="@color/white"/>
-
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_map"/>
     </LinearLayout>
-
 
 </RelativeLayout>
