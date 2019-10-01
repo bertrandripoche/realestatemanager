@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_flat_relative_layout"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="80dp"
+    android:tag="@string/tag"
     android:background="@color/white">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/item_flat_pic"
         android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_anonymous_black"/>
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_flat"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"

@@ -1,19 +1,23 @@
 package com.openclassrooms.realestatemanager;
 
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
-class FlatViewHolder extends RecyclerView.ViewHolder {
-    private static final String TAG = "RestaurantViewHolder";
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    AppCompatImageView mFlatPic;
-    TextView mFlatPrice;
-    TextView mFlatCity;
-    TextView mFlatType;
+class FlatViewHolder extends RecyclerView.ViewHolder {
+
+    @BindView(R.id.item_flat_relative_layout) RelativeLayout mFlatRelativeLayout;
+    @BindView(R.id.item_flat_pic) AppCompatImageView mFlatPic;
+    @BindView(R.id.item_flat_price) TextView mFlatPrice;
+    @BindView(R.id.item_flat_location) TextView mFlatCity;
+    @BindView(R.id.item_flat_type) TextView mFlatType;
 
     /**
      * This method describes a line of our RecyclerView
@@ -21,11 +25,6 @@ class FlatViewHolder extends RecyclerView.ViewHolder {
      */
     public FlatViewHolder(@NonNull View itemView) {
         super(itemView);
-
-        mFlatPic = itemView.findViewById(R.id.item_flat_pic);
-        mFlatPrice = itemView.findViewById(R.id.item_flat_price);
-        mFlatCity = itemView.findViewById(R.id.item_flat_location);
-        mFlatType = itemView.findViewById(R.id.item_flat_type);
-
+        ButterKnife.bind(this, itemView);
     }
 }

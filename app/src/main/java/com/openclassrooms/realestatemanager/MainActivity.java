@@ -12,43 +12,57 @@ import android.widget.TextView;
 
 import com.openclassrooms.realestatemanager.utils.Utils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
-    private TextView textViewMain;
-    private TextView textViewQuantity;
-    private Toolbar toolbar;
+    @BindView(R.id.toolbar) Toolbar mTtoolbar;
+    FlatDetailFragment mFlatDetailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         this.configureToolbar();
-//        loadFragment(new FlatDetailFragment());
-        loadFragment(new FlatListFragment());
+        configureAndShowFlatListFragment();
+        configureAndShowDetailFragment();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Secondary menu creation
+        // Top menu creation
         getMenuInflater().inflate(R.menu.secondary_menu, menu);
         return true;
     }
 
-    /**
-     * This methods loads the specified fragment
-     * @param fragment is the fragment to load
-     */
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    private void configureAndShowFlatListFragment() {
+        FlatListFragment flatListFragment;
+        flatListFragment = (FlatListFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_list);
+
+        if (flatListFragment == null) {
+            flatListFragment = new FlatListFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container_fragment_flat_list, flatListFragment)
+                    .commit();
+        }
+    }
+
+    private void configureAndShowDetailFragment(){
+        mFlatDetailFragment = (FlatDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
+
+        if (mFlatDetailFragment == null && findViewById(R.id.container_fragment_flat_detail) != null) {
+            mFlatDetailFragment = new FlatDetailFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container_fragment_flat_detail, mFlatDetailFragment)
+                    .commit();
+        }
     }
 
     private void configureToolbar(){
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mTtoolbar);
     }
 
 }

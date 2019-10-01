@@ -13,4 +13,6 @@
     <string name="media">Media</string>
     <string name="address">50 Rue du Faubourg Saint-Denis\n75010\nParis\nFrance</string>
     <string name="location">Location</string>
+    <string name="tag">tag_to_set_programmatically</string>
+    <string name="no_related_flat">No related flat</string>
 </resources>

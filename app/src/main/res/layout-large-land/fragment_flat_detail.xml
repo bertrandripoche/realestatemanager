@@ -75,6 +75,7 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/type"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -84,6 +85,7 @@
                     android:textColor="@color/white" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/city"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -94,6 +96,7 @@
                     android:textStyle="italic" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/price"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

@@ -22,7 +22,7 @@
     <dimen name="image_recycler_height">150dp</dimen>
     <dimen name="map_height">150dp</dimen>
 
-    <integer name="gallery_orientation">1</integer>
+    <integer name="gallery_orientation">0</integer>
 
     <dimen name="nav_header_height">240dp</dimen>
 </resources>
