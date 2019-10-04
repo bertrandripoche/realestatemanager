@@ -43,6 +43,8 @@ public class FlatDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_flat_detail, container, false);
         ButterKnife.bind(this, view);
 
+        System.out.println("ICI");
+
         //mFlatDetailActivity = (FlatDetailActivity) getActivity();
         populategroceryList();
         //String flatId = (mFlatDetailActivity == null) ? "1" : mFlatDetailActivity.mFlatId;

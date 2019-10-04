@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:textSize="@dimen/title_size_big"
+            android:textSize="@dimen/title_size"
             android:text="Sèvres"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -35,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="@dimen/title_size_max"
+            android:textSize="@dimen/title_size_big"
             android:textStyle="bold"
             android:text="350 000 €"
             android:textColor="@color/pink"/>
@@ -48,7 +48,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:textSize="@dimen/title_size_big"
+            android:textSize="@dimen/title_size"
             android:text="Duplex"/>
 
     </TableRow>
@@ -121,7 +121,7 @@
                             android:drawableStart="@drawable/ic_surface"
                             android:gravity="center_vertical"
                             android:text="@string/surface"
-                            android:textSize="@dimen/title_size_mini" />
+                            android:textSize="@dimen/text_size"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/surface"
@@ -132,8 +132,8 @@
                             android:text="400 m2"
                             android:textAlignment="center"
                             android:textColor="@color/green"
-                            android:textSize="@dimen/title_size_mini"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_size"
+                            android:textStyle="bold"/>
                     </TableRow>
 
                     <TableRow>
@@ -144,7 +144,7 @@
                             android:drawableStart="@drawable/ic_home"
                             android:gravity="center_vertical"
                             android:text="@string/room"
-                            android:textSize="@dimen/title_size_mini" />
+                            android:textSize="@dimen/text_size"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/room_nb"
@@ -155,7 +155,7 @@
                             android:text="5"
                             android:textAlignment="center"
                             android:textColor="@color/green"
-                            android:textSize="@dimen/title_size_mini"
+                            android:textSize="@dimen/text_size"
                             android:textStyle="bold" />
                     </TableRow>
 
@@ -167,7 +167,7 @@
                             android:drawableStart="@drawable/ic_bathroom"
                             android:gravity="center_vertical"
                             android:text="@string/bathroom"
-                            android:textSize="@dimen/title_size_mini" />
+                            android:textSize="@dimen/text_size"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/bathroom_nb"
@@ -178,7 +178,7 @@
                             android:text="2"
                             android:textAlignment="center"
                             android:textColor="@color/green"
-                            android:textSize="@dimen/title_size_mini"
+                            android:textSize="@dimen/text_size"
                             android:textStyle="bold" />
                     </TableRow>
 
@@ -190,7 +190,7 @@
                             android:drawableStart="@drawable/ic_bedroom"
                             android:gravity="center_vertical"
                             android:text="@string/bedroom"
-                            android:textSize="@dimen/title_size_mini" />
+                            android:textSize="@dimen/text_size"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/bedroom_nb"
@@ -201,7 +201,7 @@
                             android:text="3"
                             android:textAlignment="center"
                             android:textColor="@color/green"
-                            android:textSize="@dimen/title_size_mini"
+                            android:textSize="@dimen/text_size"
                             android:textStyle="bold" />
                     </TableRow>
 
@@ -229,7 +229,7 @@
                             android:padding="@dimen/basic_padding"
                             android:drawableLeft="@drawable/ic_location"
                             android:text="@string/location"
-                            android:textSize="@dimen/title_size_mini"
+                            android:textSize="@dimen/text_size"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -241,7 +241,7 @@
                             android:padding="@dimen/basic_padding"
                             android:textColor="@color/green"
                             android:text="@string/address"
-                            android:textSize="@dimen/title_size_mini" />
+                            android:textSize="@dimen/text_size"/>
                     </LinearLayout>
 
                     <androidx.appcompat.widget.AppCompatImageView

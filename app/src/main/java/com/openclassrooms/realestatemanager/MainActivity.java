@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar) Toolbar mTtoolbar;
     FlatDetailFragment mFlatDetailFragment;
+    FlatListFragment mFlatListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +40,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configureAndShowFlatListFragment() {
-        FlatListFragment flatListFragment;
-        flatListFragment = (FlatListFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_list);
+        mFlatListFragment = (FlatListFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_list);
 
-        if (flatListFragment == null) {
-            flatListFragment = new FlatListFragment();
+        if (mFlatListFragment == null) {
+            mFlatListFragment = new FlatListFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_fragment_flat_list, flatListFragment)
+                    .add(R.id.container_fragment_flat_list, mFlatListFragment)
                     .commit();
         }
     }
