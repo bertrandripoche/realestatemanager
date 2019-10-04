@@ -34,7 +34,6 @@ public class FlatDetailFragment extends Fragment {
     @BindView(R.id.bedroom_nb) AppCompatTextView mBedroomNb;
     @BindView(R.id.sale_status) AppCompatTextView mSaleStatus;
     @BindView(R.id.sale_agent) AppCompatTextView mSaleAgent;
-    @BindView(R.id.creation_date) AppCompatTextView mCreationDate;
     @BindView(R.id.address) AppCompatTextView mAddress;
 
     public FlatDetailFragment() {}

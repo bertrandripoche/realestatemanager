@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +24,7 @@ public class FlatListFragment extends Fragment {
     RecyclerView mRecyclerView;
     FlatAdapter mAdapter;
     List<Flat> mFlatList;
-    RelativeLayout mFlatRelativeLayout;
+    ConstraintLayout mFlatConstraintLayout;
 
     public FlatListFragment() {}
 
@@ -60,8 +59,8 @@ public class FlatListFragment extends Fragment {
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         final String FLATID = "flatId";
 
-                        mFlatRelativeLayout = v.findViewById(R.id.item_flat_relative_layout);
-                        Object flatId = mFlatRelativeLayout.getTag();
+                        mFlatConstraintLayout = v.findViewById(R.id.item_flat_recycler_layout);
+                        Object flatId = mFlatConstraintLayout.getTag();
 
                         if (flatId != null) {
                             Bundle bundle = new Bundle();

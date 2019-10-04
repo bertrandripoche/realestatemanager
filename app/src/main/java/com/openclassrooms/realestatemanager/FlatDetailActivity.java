@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.Menu;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +27,13 @@ public class FlatDetailActivity extends AppCompatActivity {
         mFlatId = getTagIdFromBundle();
 
         configureAndShowFlatDetailFragment();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Top menu creation
+        getMenuInflater().inflate(R.menu.secondary_menu, menu);
+        return true;
     }
 
     private void configureAndShowFlatDetailFragment() {

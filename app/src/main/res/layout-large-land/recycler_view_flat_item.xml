@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/item_flat_relative_layout"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_flat_recycler_layout"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="150dp"
     android:tag="@string/tag"
     android:background="@color/white">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/item_flat_pic"
-        android:layout_width="80dp"
-        android:layout_height="match_parent"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_flat"/>
+        android:src="@drawable/default_flat"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_toEndOf="@id/item_flat_pic">
+        android:layout_toEndOf="@id/item_flat_pic"
+        app:layout_constraintLeft_toRightOf="@id/item_flat_pic"
+        app:layout_constraintRight_toRightOf="parent">
 
         <LinearLayout
             android:id="@+id/item_flat_description"
@@ -73,4 +77,4 @@
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

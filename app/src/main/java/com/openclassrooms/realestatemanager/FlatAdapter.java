@@ -43,7 +43,7 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
         holder.mFlatCity.setText(flat.getCityAddress());
         holder.mFlatPrice.setText(String.valueOf(flat.getPrice()));
         holder.mFlatType.setText(flat.getType());
-        holder.mFlatRelativeLayout.setTag(flat.getId());
+        holder.mFlatConstraintLayout.setTag(flat.getId());
     }
 
     @Override

@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void configureAndShowDetailFragment(){
         mFlatDetailFragment = (FlatDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
-
         if (mFlatDetailFragment == null && findViewById(R.id.container_fragment_flat_detail) != null) {
             mFlatDetailFragment = new FlatDetailFragment();
             getSupportFragmentManager().beginTransaction()
