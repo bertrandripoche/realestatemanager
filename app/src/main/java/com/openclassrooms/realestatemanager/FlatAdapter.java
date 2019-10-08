@@ -40,8 +40,9 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
     public void onBindViewHolder(@NonNull FlatViewHolder holder, int position) {
         Flat flat = mFlatList.get(position);
 
+        holder.mFlatSummary.setText(flat.getSummary());
         holder.mFlatCity.setText(flat.getCityAddress());
-        holder.mFlatPrice.setText(String.valueOf(flat.getPrice()));
+        holder.mFlatPrice.setText(holder.itemView.getResources().getString(R.string.euro, flat.getPrice()));
         holder.mFlatType.setText(flat.getType());
         holder.mFlatConstraintLayout.setTag(flat.getId());
     }

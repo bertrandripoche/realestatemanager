@@ -24,7 +24,7 @@ public class FlatListFragment extends Fragment {
     RecyclerView mRecyclerView;
     FlatAdapter mAdapter;
     List<Flat> mFlatList;
-    ConstraintLayout mFlatConstraintLayout;
+    FlatDetailFragment mFlatDetailFragment;
 
     public FlatListFragment() {}
 
@@ -58,37 +58,40 @@ public class FlatListFragment extends Fragment {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         final String FLATID = "flatId";
+                        int itemTag = (v.getTag() == null) ? 1 : Integer.parseInt(v.getTag().toString());
+                        Bundle args = new Bundle();
+                        args.putInt(FLATID, itemTag);
 
-                        mFlatConstraintLayout = v.findViewById(R.id.item_flat_recycler_layout);
-                        Object flatId = mFlatConstraintLayout.getTag();
-
-                        if (flatId != null) {
-                            Bundle bundle = new Bundle();
-                            bundle.putString(FLATID, flatId.toString());
-
+                        mFlatDetailFragment = (FlatDetailFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
+                        if (/*mFlatDetailFragment == null && */getActivity().findViewById(R.id.container_fragment_flat_detail) != null) {
+                            mFlatDetailFragment = new FlatDetailFragment();
+                            mFlatDetailFragment.setArguments(args);
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.container_fragment_flat_detail, mFlatDetailFragment)
+                                    .commit();
+                            v.setSelected(true);
+                        } else{
                             Intent intent = new Intent(v.getContext(), FlatDetailActivity.class);
-                            intent.putExtras(bundle);
+                            intent.putExtras(args);
                             startActivity(intent);
-                        } else {
-                            Toast.makeText(v.getContext(),R.string.no_related_flat,Toast.LENGTH_LONG).show();
                         }
                     }
                 });
     }
 
     private void populategroceryList(){
-        Flat paradis = new Flat(1, "Duplex", 237000, 31, 1 , 1, 1, 15, "rue du Paradis", 75010, "Paris");
-        Flat ecuries = new Flat(2, "Appartement", 480000, 67, 3 , 2, 1, 5, "rue des Petites Écuries", 75010, "Paris");
-        Flat rivoli = new Flat(3, "Appartement", 1560000, 138, 6 , 4, 2, 121, "rue de Rivoli", 75001, "Paris");
-        Flat trevise = new Flat(4, "Appartement", 980000, 108, 4 , 2, 2, 34, "rue de Trévise", 75009, "Paris");
-        Flat montorgueil = new Flat(5, "Loft", 1860000, 210, 5 , 3, 2, 56, "rue de Montorgueil", 75009, "Paris");
-        Flat bac = new Flat(6, "Appartement", 520000, 58, 3 , 2, 1, 87, "rue du Bac", 75009, "Paris");
-        Flat paradis2 = new Flat(7, "Duplex", 237000, 31, 1 , 1, 1, 15, "rue du Paradis", 75010, "Paris");
-        Flat ecuries2 = new Flat(8, "Appartement", 480000, 67, 3 , 2, 1, 5, "rue des Petites Écuries", 75010, "Paris");
-        Flat rivoli2 = new Flat(9, "Appartement", 1560000, 138, 6 , 4, 2, 121, "rue de Rivoli", 75001, "Paris");
-        Flat trevise2 = new Flat(10, "Appartement", 980000, 108, 4 , 2, 2, 34, "rue de Trévise", 75009, "Paris");
-        Flat montorgueil2 = new Flat(11, "Loft", 1860000, 210, 5 , 3, 2, 56, "rue de Montorgueil", 75009, "Paris");
-        Flat bac2 = new Flat(12, "Appartement", 520000, 58, 3 , 2, 1, 87, "rue du Bac", 75009, "Paris");
+        Flat paradis = new Flat(1, "Duplex au calme","Duplex", 237000, 31, 1 , 1, 1, 15, "rue du Paradis", 75010, "Paris");
+        Flat ecuries = new Flat(2, "Urbain et stylé", "Appartement", 480000, 67, 3 , 2, 1, 5, "rue des Petites Écuries", 75010, "Paris");
+        Flat rivoli = new Flat(3, "Familial de luxe", "Appartement", 1560000, 138, 6 , 4, 2, 121, "rue de Rivoli", 75001, "Paris");
+        Flat trevise = new Flat(4, "Pour grande famille","Appartement", 980000, 108, 4 , 2, 2, 34, "rue de Trévise", 75009, "Paris");
+        Flat montorgueil = new Flat(5, "Moderne et classieux","Loft", 1860000, 210, 5 , 3, 2, 56, "rue de Montorgueil", 75009, "Paris");
+        Flat bac = new Flat(6, "Idéal pour cocooning","Appartement", 520000, 58, 3 , 2, 1, 87, "rue du Bac", 75009, "Paris");
+        Flat paradis2 = new Flat(7, "Charmant pied à terre","Duplex", 237000, 31, 1 , 1, 1, 15, "rue du Paradis", 75010, "Paris");
+        Flat ecuries2 = new Flat(8, "Un petit nid urbain","Appartement", 480000, 67, 3 , 2, 1, 5, "rue des Petites Écuries", 75010, "Paris");
+        Flat rivoli2 = new Flat(9, "De l'espace","Appartement", 1560000, 138, 6 , 4, 2, 121, "rue de Rivoli", 75001, "Paris");
+        Flat trevise2 = new Flat(10, "Pour ne plus se marcher dessus","Appartement", 980000, 108, 4 , 2, 2, 34, "rue de Trévise", 75009, "Paris");
+        Flat montorgueil2 = new Flat(11, "En mode indus","Loft", 1860000, 210, 5 , 3, 2, 56, "rue de Montorgueil", 75009, "Paris");
+        Flat bac2 = new Flat(12, "Charmant trois pièces","Appartement", 520000, 58, 3 , 2, 1, 87, "rue du Bac", 75009, "Paris");
 
         mFlatList.add(paradis);
         mFlatList.add(ecuries);

@@ -15,11 +15,17 @@
         <activity android:name="com.openclassrooms.realestatemanager.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name="com.openclassrooms.realestatemanager.FlatDetailActivity"></activity>
-    </application>
+        <activity android:name="com.openclassrooms.realestatemanager.AddFlat"
+            android:label="Search Articles"
+            android:parentActivityName="com.openclassrooms.realestatemanager.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.openclassrooms.realestatemanager.MainActivity" />
+        </activity>    </application>
 
 </manifest>

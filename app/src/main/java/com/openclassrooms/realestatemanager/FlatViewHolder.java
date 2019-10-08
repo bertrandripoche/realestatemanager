@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager;
 
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +18,7 @@ class FlatViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.item_flat_price) TextView mFlatPrice;
     @BindView(R.id.item_flat_location) TextView mFlatCity;
     @BindView(R.id.item_flat_type) TextView mFlatType;
+    @BindView(R.id.item_flat_summary) TextView mFlatSummary;
 
     /**
      * This method describes a line of our RecyclerView

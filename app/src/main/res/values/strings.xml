@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
     <string name="First_recorded_flat">Le premier bien immobilier enregistré vaut</string>
+    <string name="euro">%1$d €</string>
     <string name="search">search</string>
     <string name="add">add</string>
     <string name="edit">edit</string>
@@ -16,4 +17,53 @@
     <string name="tag">tag_to_set_programmatically</string>
     <string name="no_related_flat">No related flat</string>
     <string name="info">Information</string>
+    <string name="addFlat">Add a flat</string>
+    <string name="summary">Summary</string>
+    <string name="title_edit_flat_presentation">Flat presentation</string>
+    <string name="edit_summary">Enter summary...</string>
+    <string name="flat_type">Flat type</string>
+    <string name="edit_city">Enter city...</string>
+    <string name="city">City</string>
+    <string name="price">Price</string>
+    <string name="edit_price">Enter price</string>
+    <string name="edit_street_nb">Enter street number...</string>
+    <string name="street_nb">Street number</string>
+    <string name="street">Street</string>
+    <string name="edit_steeet">Enter street name...</string>
+    <string name="postal_code">Postal code</string>
+    <string name="edit_postal_code">Enter postal code...</string>
+    <string name="btn_add_label">Add a flat</string>
+    <string name="btn_add_description">Add button</string>
+    <string name="title_edit_flat_address">Flat address</string>
+    <string name="edit_surface">Enter surface...</string>
+    <string name="edit_room">Enter rooms number...</string>
+    <string name="edit_bedroom">Enter bedrooms number...</string>
+    <string name="edit_bathroom">Enter bathrooms nb...</string>
+    <string name="title_edit_flat_school">Schools near flat</string>
+    <string name="title_edit_flat_poi">Point of Interest around the flat</string>
+    <string name="school">Schools around</string>
+    <string name="restaurant">Restaurants around</string>
+    <string name="post_office">Post offices around</string>
+    <string name="theater">Theaters around</string>
+    <string name="title_edit_flat_agent">Responsible agent</string>
+    <string name="flat_agent">Agent</string>
+
+    <string-array name="flat_type">
+        <item>Appartement</item>
+        <item>Duplex</item>
+        <item>Maison</item>
+        <item>Loft</item>
+        <item>Souplex</item>
+        <item>Triplex</item>
+    </string-array>
+
+    <string-array name="flat_agent">
+        <item></item>
+        <item>Agnès Isard</item>
+        <item>Naïma Lassim</item>
+        <item>Pierre Martin</item>
+        <item>Roger Dumont</item>
+        <item>Abdel Malat</item>
+        <item>Hector Renald</item>
+    </string-array>
 </resources>

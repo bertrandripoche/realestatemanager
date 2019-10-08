@@ -1,43 +1,45 @@
 package com.openclassrooms.realestatemanager;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.health.SystemHealthManager;
 import android.view.Menu;
-import android.widget.TextView;
-
-import com.openclassrooms.realestatemanager.utils.Utils;
+import android.view.MenuItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.toolbar) Toolbar mTtoolbar;
     FlatDetailFragment mFlatDetailFragment;
     FlatListFragment mFlatListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
 
-        this.configureToolbar();
         configureAndShowFlatListFragment();
-        configureAndShowDetailFragment();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Top menu creation
-        getMenuInflater().inflate(R.menu.secondary_menu, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Top menu creation
+//        getMenuInflater().inflate(R.menu.secondary_menu, menu);
+//        return true;
+//    }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Secondary menu item selection
+//        switch (item.getItemId()) {
+//            case R.id.secondary_menu_add:
+//                launchActivity("AddFlat");
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
     private void configureAndShowFlatListFragment() {
         mFlatListFragment = (FlatListFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_list);
@@ -48,20 +50,6 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.container_fragment_flat_list, mFlatListFragment)
                     .commit();
         }
-    }
-
-    private void configureAndShowDetailFragment(){
-        mFlatDetailFragment = (FlatDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
-        if (mFlatDetailFragment == null && findViewById(R.id.container_fragment_flat_detail) != null) {
-            mFlatDetailFragment = new FlatDetailFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_fragment_flat_detail, mFlatDetailFragment)
-                    .commit();
-        }
-    }
-
-    private void configureToolbar(){
-        setSupportActionBar(mTtoolbar);
     }
 
 }
