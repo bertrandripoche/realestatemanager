@@ -28,7 +28,7 @@
     <string name="flat_type">Flat type</string>
     <string name="edit_city">Enter city&#8230;</string>
     <string name="city">City *</string>
-    <string name="price">Price *</string>
+    <string name="price">Price (€) *</string>
     <string name="edit_price">Enter price&#8230;</string>
     <string name="edit_street_nb">Enter street number&#8230;</string>
     <string name="street_nb">Street number</string>
@@ -45,10 +45,11 @@
     <string name="edit_bathroom">Enter bathrooms nb&#8230;</string>
     <string name="title_edit_flat_school">Schools near flat</string>
     <string name="title_edit_flat_poi">AROUND THE FLAT</string>
-    <string name="school">Schools around</string>
-    <string name="restaurant">Restaurants around</string>
-    <string name="post_office">Post offices around</string>
-    <string name="theater">Theaters around</string>
+    <string name="school">Schools</string>
+    <string name="restaurant">Restaurants</string>
+    <string name="post_office">Post offices</string>
+    <string name="theater">Theaters</string>
+    <string name="shop">Shopping center</string>
     <string name="title_edit_flat_agent">RESPONSIBLE AGENT</string>
     <string name="flat_agent">Agent</string>
     <string name="mandatory_information">*  =  mandatory info</string>

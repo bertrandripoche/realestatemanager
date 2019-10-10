@@ -17,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <TableLayout
                 android:id="@+id/form_flat_presentation"
@@ -403,14 +403,15 @@
                 android:paddingBottom="@dimen/basic_padding"
                 android:stretchColumns="*">
 
-                <TableRow android:layout_margin="2dp">
+                <TableRow android:layout_margin="2dp"
+                    android:paddingBottom="@dimen/basic_padding">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/title_edit_flat_poi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:background="@color/green"
+                        android:layout_weight="1"
                         android:drawableStart="@drawable/ic_poi_pink"
                         android:drawablePadding="@dimen/middle_padding"
                         android:padding="@dimen/basic_padding"
@@ -421,10 +422,34 @@
                 </TableRow>
 
                 <TableRow android:layout_margin="2dp"
+                    android:paddingEnd="@dimen/basic_padding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/school"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/title_size_small"
+                        android:textStyle="bold">
+                    </androidx.appcompat.widget.AppCompatTextView>
+
+                    <Switch
+                        android:id="@+id/edit_school_switch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical" />
+
+                </TableRow>
+                <TableRow android:layout_margin="2dp"
                     android:paddingEnd="@dimen/basic_padding"
                     android:paddingTop="@dimen/basic_padding">
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
@@ -437,31 +462,16 @@
                     <Switch
                         android:id="@+id/edit_post_office_switch"
                         android:layout_width="match_parent"
-                        android:layout_gravity="start"/>
-
-                </TableRow>
-                <TableRow android:layout_margin="2dp"
-                    android:paddingEnd="@dimen/basic_padding">
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="left"
                         android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:text="@string/school"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/title_size_small" />
-
-                    <Switch
-                        android:id="@+id/edit_school_switch"
-                        android:layout_gravity="start"/>
+                        android:gravity="center_vertical" />
 
                 </TableRow>
                 <TableRow android:layout_margin="2dp"
                     android:paddingEnd="@dimen/basic_padding">
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
@@ -473,13 +483,17 @@
 
                     <Switch
                         android:id="@+id/edit_restaurant_switch"
-                        android:layout_gravity="start"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical" />
 
                 </TableRow>
                 <TableRow android:layout_margin="2dp"
                     android:paddingEnd="@dimen/basic_padding">
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
@@ -491,7 +505,32 @@
 
                     <Switch
                         android:id="@+id/edit_theater_switch"
-                        android:layout_gravity="start"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical" />
+                </TableRow>
+                <TableRow android:layout_margin="2dp"
+                    android:paddingEnd="@dimen/basic_padding">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:text="@string/shop"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/title_size_small" />
+
+                    <Switch
+                        android:id="@+id/edit_shop_switch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical" />
 
                 </TableRow>
 
@@ -559,6 +598,7 @@
                 android:gravity="center_vertical"
                 android:background="@color/light_pink"
                 android:text="@string/mandatory_information"
+                android:padding="@dimen/basic_padding"
                 android:drawablePadding="@dimen/middle_padding"
                 android:drawableStart="@drawable/ic_warning_pink"/>
 
@@ -585,8 +625,8 @@
         android:layout_margin="8dp"
         android:contentDescription="@string/btn_add_description"
         android:text="@string/btn_add_label"
-        android:clickable="false"
-        android:focusable="false"
+        android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/ic_save"
         app:backgroundTint="@color/light_grey"
         app:fabSize="normal"
