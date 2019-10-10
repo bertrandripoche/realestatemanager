@@ -2,17 +2,18 @@
 <resources>
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#78A15F</color>
-    <color name="colorAccent">#FC226E</color>
+    <color name="colorAccent">#C20044</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="light_grey_transparent">#80CCCCCC</color>
     <color name="light_grey">#CCC</color>
     <color name="dark_grey">#666</color>
     <color name="yellow">#F8E71C</color>
     <color name="light_orange">#FF8A50</color>
     <color name="orange">#FF5722</color>
     <color name="light_pink">#FC99AF</color>
-    <color name="pink">#FC226E</color>
+    <color name="pink">#C20044</color>
     <color name="light_green">#DDF4CF</color>
     <color name="green">#78A15F</color>
     <color name="dark_green">#458039</color>

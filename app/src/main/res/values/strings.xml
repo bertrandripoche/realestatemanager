@@ -2,15 +2,17 @@
     <string name="app_name">Real Estate Manager</string>
     <string name="First_recorded_flat">Le premier bien immobilier enregistré vaut</string>
     <string name="euro">%1$d €</string>
+    <string name="metre_carre">%1$d m&#178;</string>
     <string name="search">search</string>
     <string name="add">add</string>
     <string name="edit">edit</string>
-    <string name="description">Description</string>
+    <string name="description">Description *</string>
     <string name="big_text">Ceci est un superbe appartement, vous allez voir, c\'est un truc de fou et je me demande même si un jour je trouverai un appartement plus beau que ça. Franchement, nan, mais vous avez déjà vu un truc pareil, la vue est magnifique, le jardin alentour me fait directement penser aux petites balades que je vais pouvoir faire avec mon chien kiki. Et il  y a des restaurants et des salles de spectacles partout autour du quartier, ça va être une véritable tuerie. À se demander si je vais avoir même le temps de passer du temps ailleurs.Ceci est un superbe appartement, vous allez voir, c\'est un truc de fou et je me demande même si un jour je trouverai un appartement plus beau que ça. Franchement, nan, mais vous avez déjà vu un truc pareil, la vue est magnifique, le jardin alentour me fait directement penser aux petites balades que je vais pouvoir faire avec mon chien kiki. Et il  y a des restaurants et des salles de spectacles partout autour du quartier, ça va être une véritable tuerie. À se demander si je vais avoir même le temps de passer du temps ailleurs.Ceci est un superbe appartement, vous allez voir, c\'est un truc de fou et je me demande même si un jour je trouverai un appartement plus beau que ça. Franchement, nan, mais vous avez déjà vu un truc pareil, la vue est magnifique, le jardin alentour me fait directement penser aux petites balades que je vais pouvoir faire avec mon chien kiki. Et il  y a des restaurants et des salles de spectacles partout autour du quartier, ça va être une véritable tuerie. À se demander si je vais avoir même le temps de passer du temps ailleurs.\n</string>
     <string name="surface">Surface</string>
-    <string name="bedroom">Number of bedrooms</string>
-    <string name="room">Number of rooms</string>
-    <string name="bathroom">Number of bathrooms</string>
+    <string name="surface_form">Surface *</string>
+    <string name="bedroom">Bedrooms</string>
+    <string name="room">Rooms</string>
+    <string name="bathroom">Bathrooms</string>
     <string name="media">Media</string>
     <string name="address">50 Rue du Faubourg Saint-Denis\n75010\nParis\nFrance</string>
     <string name="location">Location</string>
@@ -18,35 +20,38 @@
     <string name="no_related_flat">No related flat</string>
     <string name="info">Information</string>
     <string name="addFlat">Add a flat</string>
-    <string name="summary">Summary</string>
-    <string name="title_edit_flat_presentation">Flat presentation</string>
-    <string name="edit_summary">Enter summary...</string>
+    <string name="title_edit_flat_presentation">FLAT PRESENTATION</string>
+    <string name="summary">Summary *</string>
+    <string name="edit_summary">Enter summary&#8230;</string>
+    <string name="flat_description">Description *</string>
+    <string name="edit_description">Enter description&#8230;</string>
     <string name="flat_type">Flat type</string>
-    <string name="edit_city">Enter city...</string>
-    <string name="city">City</string>
-    <string name="price">Price</string>
-    <string name="edit_price">Enter price</string>
-    <string name="edit_street_nb">Enter street number...</string>
+    <string name="edit_city">Enter city&#8230;</string>
+    <string name="city">City *</string>
+    <string name="price">Price *</string>
+    <string name="edit_price">Enter price&#8230;</string>
+    <string name="edit_street_nb">Enter street number&#8230;</string>
     <string name="street_nb">Street number</string>
     <string name="street">Street</string>
-    <string name="edit_steeet">Enter street name...</string>
+    <string name="edit_steeet">Enter street name&#8230;</string>
     <string name="postal_code">Postal code</string>
-    <string name="edit_postal_code">Enter postal code...</string>
+    <string name="edit_postal_code">Enter postal code&#8230;</string>
     <string name="btn_add_label">Add a flat</string>
     <string name="btn_add_description">Add button</string>
-    <string name="title_edit_flat_address">Flat address</string>
-    <string name="edit_surface">Enter surface...</string>
-    <string name="edit_room">Enter rooms number...</string>
-    <string name="edit_bedroom">Enter bedrooms number...</string>
-    <string name="edit_bathroom">Enter bathrooms nb...</string>
+    <string name="title_edit_flat_address">FLAT ADDRESS</string>
+    <string name="edit_surface">Enter surface&#8230;</string>
+    <string name="edit_room">Enter rooms number&#8230;</string>
+    <string name="edit_bedroom">Enter bedrooms number&#8230;</string>
+    <string name="edit_bathroom">Enter bathrooms nb&#8230;</string>
     <string name="title_edit_flat_school">Schools near flat</string>
-    <string name="title_edit_flat_poi">Point of Interest around the flat</string>
+    <string name="title_edit_flat_poi">AROUND THE FLAT</string>
     <string name="school">Schools around</string>
     <string name="restaurant">Restaurants around</string>
     <string name="post_office">Post offices around</string>
     <string name="theater">Theaters around</string>
-    <string name="title_edit_flat_agent">Responsible agent</string>
+    <string name="title_edit_flat_agent">RESPONSIBLE AGENT</string>
     <string name="flat_agent">Agent</string>
+    <string name="mandatory_information">*  =  mandatory info</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>
@@ -58,7 +63,6 @@
     </string-array>
 
     <string-array name="flat_agent">
-        <item></item>
         <item>Agnès Isard</item>
         <item>Naïma Lassim</item>
         <item>Pierre Martin</item>

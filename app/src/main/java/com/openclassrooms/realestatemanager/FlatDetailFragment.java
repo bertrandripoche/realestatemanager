@@ -67,10 +67,10 @@ public class FlatDetailFragment extends Fragment {
         mFlat = mFlatList.get(parseInt(flatId)-1);
         if (mFlat != null) {
             mSummary.setText(mFlat.getSummary());
-            mPrice.setText(String.valueOf(mFlat.getPrice()));
+            mPrice.setText(getString(R.string.euro, mFlat.getPrice()));
             mType.setText(mFlat.getType());
             mCity.setText(mFlat.getCityAddress());
-            mSurface.setText(String.valueOf(mFlat.getSurface()));
+            mSurface.setText(getString(R.string.metre_carre, mFlat.getSurface()));
             mRoomNb.setText(String.valueOf(mFlat.getRoom()));
             mBathroomNb.setText(String.valueOf(mFlat.getBathroom()));
             mBedroomNb.setText(String.valueOf(mFlat.getBedroom()));

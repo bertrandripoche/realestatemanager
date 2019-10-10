@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
         parentColumns = "id",
         childColumns = "agentId"))
 
-class Flat {
+public class Flat {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String summary;
