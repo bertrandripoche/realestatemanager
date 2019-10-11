@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.openclassrooms.realestatemanager.model.Flat;
+
 import java.util.List;
 
 public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{

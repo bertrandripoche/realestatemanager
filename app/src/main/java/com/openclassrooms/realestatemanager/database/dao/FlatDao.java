@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.dao;
+package com.openclassrooms.realestatemanager.database.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,7 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.openclassrooms.realestatemanager.Flat;
+import com.openclassrooms.realestatemanager.model.Flat;
 
 import java.util.List;
 
@@ -17,11 +17,11 @@ public interface FlatDao {
     LiveData<List<Flat>> getFlats(long agentId);
 
     @Insert
-    long insertItem(Flat flat);
+    long insertFlat(Flat flat);
 
     @Update
-    int updateItem(Flat flat);
+    int updateFlat(Flat flat);
 
-    @Delete
-    int deleteItem(Flat flat);
+    @Query("DELETE FROM Flat WHERE id = :flatId")
+    int deleteFlat(long flatId);
 }

@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:textSize="@dimen/title_size_big"
+            android:textSize="@dimen/title_size"
             android:text="Sèvres"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -48,7 +48,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:textSize="@dimen/title_size_big"
+            android:textSize="@dimen/title_size"
             android:text="Duplex"/>
 
     </TableRow>

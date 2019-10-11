@@ -1,17 +1,18 @@
-package com.openclassrooms.realestatemanager;
+package com.openclassrooms.realestatemanager.model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class Agent {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     private int id;
     private String firstname;
     private String lastname;
     private String mail;
 
-    public Agent(String firstname, String lastname, String mail) {
+    public Agent(int id, String firstname, String lastname, String mail) {
+        this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.mail = mail;

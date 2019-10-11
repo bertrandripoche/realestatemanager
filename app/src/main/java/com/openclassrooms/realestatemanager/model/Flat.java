@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager;
+package com.openclassrooms.realestatemanager.model;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -25,7 +25,7 @@ public class Flat {
     private boolean isSold;
     private int agentId;
 
-    public Flat(int id, String summary, String type, int price, int surface, int room, int bedroom, int bathroom, int numberAddress, String streetAddress, int postalCodeAddress, String cityAddress) {
+    public Flat(int id, String summary, String type, int price, int surface, int room, int bedroom, int bathroom, int numberAddress, String streetAddress, int postalCodeAddress, String cityAddress, int agentId) {
         this.id = id;
         this.summary = summary;
         this.type = type;
@@ -39,6 +39,7 @@ public class Flat {
         this.postalCodeAddress = postalCodeAddress;
         this.cityAddress = cityAddress;
         this.isSold = false;
+        this.agentId = agentId;
     }
 
     // GETTERS

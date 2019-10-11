@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
-    <string name="First_recorded_flat">Le premier bien immobilier enregistré vaut</string>
     <string name="euro">%1$d €</string>
     <string name="metre_carre">%1$d m&#178;</string>
     <string name="search">search</string>
@@ -18,41 +17,42 @@
     <string name="location">Location</string>
     <string name="tag">tag_to_set_programmatically</string>
     <string name="no_related_flat">No related flat</string>
-    <string name="info">Information</string>
-    <string name="addFlat">Add a flat</string>
+
     <string name="title_edit_flat_presentation">FLAT PRESENTATION</string>
+    <string name="title_edit_flat_address">FLAT ADDRESS</string>
+    <string name="title_edit_flat_poi">AROUND THE FLAT</string>
+    <string name="title_edit_flat_agent">RESPONSIBLE AGENT</string>
+
+    <string name="info">Information</string>
     <string name="summary">Summary *</string>
-    <string name="edit_summary">Enter summary&#8230;</string>
     <string name="flat_description">Description *</string>
-    <string name="edit_description">Enter description&#8230;</string>
     <string name="flat_type">Flat type</string>
-    <string name="edit_city">Enter city&#8230;</string>
     <string name="city">City *</string>
     <string name="price">Price (€) *</string>
-    <string name="edit_price">Enter price&#8230;</string>
-    <string name="edit_street_nb">Enter street number&#8230;</string>
     <string name="street_nb">Street number</string>
     <string name="street">Street</string>
-    <string name="edit_steeet">Enter street name&#8230;</string>
     <string name="postal_code">Postal code</string>
-    <string name="edit_postal_code">Enter postal code&#8230;</string>
+    <string name="edit_price"><i>Enter price&#8230;</i></string>
+    <string name="edit_street_nb"><i>Enter street number&#8230;</i></string>
+    <string name="edit_summary"><i>Enter summary&#8230;</i></string>
+    <string name="edit_description"><i>Enter description&#8230;</i></string>
+    <string name="edit_city"><i>Enter city&#8230;</i></string>
+    <string name="edit_steeet"><i>Enter street name&#8230;</i></string>
+    <string name="edit_surface"><i>Enter surface&#8230;</i></string>
+    <string name="edit_room"><i>Enter rooms number&#8230;</i></string>
+    <string name="edit_bedroom"><i>Enter bedrooms number&#8230;</i></string>
+    <string name="edit_bathroom"><i>Enter bathrooms nb&#8230;</i></string>
+    <string name="edit_postal_code"><i>Enter postal code&#8230;</i></string>
+    <string name="addFlat">Add a flat</string>
     <string name="btn_add_label">Add a flat</string>
     <string name="btn_add_description">Add button</string>
-    <string name="title_edit_flat_address">FLAT ADDRESS</string>
-    <string name="edit_surface">Enter surface&#8230;</string>
-    <string name="edit_room">Enter rooms number&#8230;</string>
-    <string name="edit_bedroom">Enter bedrooms number&#8230;</string>
-    <string name="edit_bathroom">Enter bathrooms nb&#8230;</string>
-    <string name="title_edit_flat_school">Schools near flat</string>
-    <string name="title_edit_flat_poi">AROUND THE FLAT</string>
     <string name="school">Schools</string>
     <string name="restaurant">Restaurants</string>
     <string name="post_office">Post offices</string>
     <string name="theater">Theaters</string>
     <string name="shop">Shopping center</string>
-    <string name="title_edit_flat_agent">RESPONSIBLE AGENT</string>
     <string name="flat_agent">Agent</string>
-    <string name="mandatory_information">*  =  mandatory info</string>
+    <string name="mandatory_information">*  =  mandatory field</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>

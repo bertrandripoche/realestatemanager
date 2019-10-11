@@ -43,7 +43,7 @@
                         android:text="@string/title_edit_flat_presentation"
                         android:drawableStart="@drawable/ic_home_pink"
                         android:drawablePadding="@dimen/middle_padding"
-                        android:textSize="@dimen/title_size_big"
+                        android:textSize="@dimen/title_size_small"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
                 </TableRow>
@@ -280,7 +280,7 @@
                         android:padding="@dimen/basic_padding"
                         android:text="@string/title_edit_flat_address"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/title_size_big"
+                        android:textSize="@dimen/title_size_small"
                         android:textStyle="bold" />
                 </TableRow>
 
@@ -417,7 +417,7 @@
                         android:padding="@dimen/basic_padding"
                         android:text="@string/title_edit_flat_poi"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/title_size_big"
+                        android:textSize="@dimen/title_size_small"
                         android:textStyle="bold" />
                 </TableRow>
 
@@ -536,8 +536,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:layout_weight="1"
                         android:paddingStart="@dimen/basic_padding"
+                        android:layout_weight="1"
                         android:theme="@style/Switch"
                         android:gravity="center_vertical" />
 
@@ -569,7 +569,7 @@
                         android:drawableStart="@drawable/ic_agent_pink"
                         android:drawablePadding="@dimen/middle_padding"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/title_size_big"
+                        android:textSize="@dimen/title_size_small"
                         android:textStyle="bold" />
                 </TableRow>
                 <TableRow android:layout_margin="2dp"
