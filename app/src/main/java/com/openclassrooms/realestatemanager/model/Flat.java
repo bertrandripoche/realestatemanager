@@ -12,22 +12,23 @@ public class Flat {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String summary;
+    private String description;
     private String type;
-    private int price;
-    private int surface;
-    private int room;
-    private int bedroom;
-    private int bathroom;
-    private int numberAddress;
+    private Integer price;
+    private Integer surface;
+    private Integer room;
+    private Integer bedroom;
+    private Integer bathroom;
+    private Integer numberAddress;
     private String streetAddress;
-    private int postalCodeAddress;
+    private Integer postalCodeAddress;
     private String cityAddress;
     private boolean isSold;
     private int agentId;
 
-    public Flat(int id, String summary, String type, int price, int surface, int room, int bedroom, int bathroom, int numberAddress, String streetAddress, int postalCodeAddress, String cityAddress, int agentId) {
-        this.id = id;
+    public Flat(String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, int agentId) {
         this.summary = summary;
+        this.description = description;
         this.type = type;
         this.price = price;
         this.surface = surface;
@@ -45,15 +46,16 @@ public class Flat {
     // GETTERS
     public int getId() {return id;}
     public String getSummary() {return summary;}
+    public String getDescription() {return description;}
     public String getType() {return type;}
-    public int getPrice() {return price;}
-    public int getSurface() {return surface;}
-    public int getRoom() {return room;}
-    public int getBedroom() {return bedroom;}
-    public int getBathroom() {return bathroom;}
-    public int getNumberAddress() {return numberAddress;}
+    public Integer getPrice() {return price;}
+    public Integer getSurface() {return surface;}
+    public Integer getRoom() {return room;}
+    public Integer getBedroom() {return bedroom;}
+    public Integer getBathroom() {return bathroom;}
+    public Integer getNumberAddress() {return numberAddress;}
     public String getStreetAddress() {return streetAddress;}
-    public int getPostalCodeAddress() {return postalCodeAddress;}
+    public Integer getPostalCodeAddress() {return postalCodeAddress;}
     public String getCityAddress() {return cityAddress;}
     public boolean getIsSold() {return isSold;}
     public int getAgentId() {return agentId;}
@@ -61,15 +63,16 @@ public class Flat {
     // SETTERS
     public void setId(int id) {this.id = id;}
     public void setSummary(String summary) {this.summary = summary;}
+    public void setDescription(String description) {this.description = description;}
     public void setType(String type) {this.type = type;}
-    public void setPrice(int price) {this.price = price;}
-    public void setSurface(int surface) {this.surface = surface;}
-    public void setRoom(int room) {this.room = room;}
-    public void setBedroom(int bedroom) {this.bedroom = bedroom;}
-    public void setBathroom(int bathroom) {this.bathroom = bathroom;}
-    public void setNumber_address(int number_address) {this.numberAddress = number_address;}
+    public void setPrice(Integer price) {this.price = price;}
+    public void setSurface(Integer surface) {this.surface = surface;}
+    public void setRoom(Integer room) {this.room = room;}
+    public void setBedroom(Integer bedroom) {this.bedroom = bedroom;}
+    public void setBathroom(Integer bathroom) {this.bathroom = bathroom;}
+    public void setNumber_address(Integer number_address) {this.numberAddress = number_address;}
     public void setStreet_address(String street_address) {this.streetAddress = street_address;}
-    public void setPostal_code_address(int postal_code_address) {this.postalCodeAddress = postal_code_address;}
+    public void setPostal_code_address(Integer postal_code_address) {this.postalCodeAddress = postal_code_address;}
     public void setCity_address(String city_address) {this.cityAddress = city_address;}
     public void setIsSold(boolean isSold) {this.isSold = isSold;}
     public void setAgentId(int agentId) {this.agentId = agentId;}

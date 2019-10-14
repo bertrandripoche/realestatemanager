@@ -13,8 +13,11 @@ import java.util.List;
 
 @Dao
 public interface FlatDao {
+    @Query("SELECT * FROM Flat")
+    LiveData<List<Flat>> getFlats();
+
     @Query("SELECT * FROM Flat WHERE agentId = :agentId")
-    LiveData<List<Flat>> getFlats(long agentId);
+    LiveData<List<Flat>> getFlatsPerAgent(long agentId);
 
     @Insert
     long insertFlat(Flat flat);

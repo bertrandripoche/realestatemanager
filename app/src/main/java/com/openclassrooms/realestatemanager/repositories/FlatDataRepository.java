@@ -1,0 +1,29 @@
+package com.openclassrooms.realestatemanager.repositories;
+
+import androidx.lifecycle.LiveData;
+
+import com.openclassrooms.realestatemanager.database.dao.FlatDao;
+import com.openclassrooms.realestatemanager.model.Flat;
+
+import java.util.List;
+
+public class FlatDataRepository {
+    private final FlatDao mFlatDao;
+
+    public FlatDataRepository(FlatDao flatDao) { this.mFlatDao = flatDao; }
+
+    // --- GET ---
+
+    public LiveData<List<Flat>> getFlats(){ return this.mFlatDao.getFlats(); }
+    public LiveData<List<Flat>> getFlatsPerAgent(long userId){ return this.mFlatDao.getFlatsPerAgent(userId); }
+
+    // --- CREATE ---
+
+    public void createFlat(Flat flat){ mFlatDao.insertFlat(flat); }
+
+    // --- DELETE ---
+    public void deleteFlat(long flatId){ mFlatDao.deleteFlat(flatId); }
+
+    // --- UPDATE ---
+    public void updateFlat(Flat flat){ mFlatDao.updateFlat(flat); }
+}
