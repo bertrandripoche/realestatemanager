@@ -2,12 +2,13 @@ package com.openclassrooms.realestatemanager.model;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = @ForeignKey(entity = Agent.class,
         parentColumns = "id",
-        childColumns = "agentId"))
-
+        childColumns = "agentId"),
+        indices = {@Index("agentId")})
 public class Flat {
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -25,6 +26,8 @@ public class Flat {
     private String cityAddress;
     private boolean isSold;
     private int agentId;
+
+    public Flat() { }
 
     public Flat(String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, int agentId) {
         this.summary = summary;
@@ -70,10 +73,10 @@ public class Flat {
     public void setRoom(Integer room) {this.room = room;}
     public void setBedroom(Integer bedroom) {this.bedroom = bedroom;}
     public void setBathroom(Integer bathroom) {this.bathroom = bathroom;}
-    public void setNumber_address(Integer number_address) {this.numberAddress = number_address;}
-    public void setStreet_address(String street_address) {this.streetAddress = street_address;}
-    public void setPostal_code_address(Integer postal_code_address) {this.postalCodeAddress = postal_code_address;}
-    public void setCity_address(String city_address) {this.cityAddress = city_address;}
+    public void setNumberAddress(Integer number_address) {this.numberAddress = number_address;}
+    public void setStreetAddress(String street_address) {this.streetAddress = street_address;}
+    public void setPostalCodeAddress(Integer postal_code_address) {this.postalCodeAddress = postal_code_address;}
+    public void setCityAddress(String city_address) {this.cityAddress = city_address;}
     public void setIsSold(boolean isSold) {this.isSold = isSold;}
     public void setAgentId(int agentId) {this.agentId = agentId;}
 

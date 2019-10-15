@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.openclassrooms.realestatemanager.FlatDetailActivity"></activity>
-        <activity android:name="com.openclassrooms.realestatemanager.AddFlat"
+        <activity android:name="com.openclassrooms.realestatemanager.AddFlatActivity"
             android:label="Search Articles"
             android:parentActivityName="com.openclassrooms.realestatemanager.MainActivity">
             <meta-data

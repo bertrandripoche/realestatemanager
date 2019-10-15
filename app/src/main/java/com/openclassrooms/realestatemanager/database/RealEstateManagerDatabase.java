@@ -48,8 +48,9 @@ public abstract class RealEstateManagerDatabase extends RoomDatabase {
                 super.onCreate(db);
 
                 ContentValues contentValues = new ContentValues();
-                contentValues.put("firstname", "Paul");
-                contentValues.put("lastname", "Dupont");
+                contentValues.put("id", "0");
+                contentValues.put("firstname", "Marc");
+                contentValues.put("lastname", "Antoine");
                 contentValues.put("mail", "mon.mail@gmail.com");
 
                 db.insert("Agent", OnConflictStrategy.IGNORE, contentValues);

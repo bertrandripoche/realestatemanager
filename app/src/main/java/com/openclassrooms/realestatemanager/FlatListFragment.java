@@ -97,7 +97,7 @@ public class FlatListFragment extends Fragment {
         Flat montorgueil2 = new Flat( "En mode indus", "Dibidibu","Loft", 1860000, 210, 5 , 3, 2, 56, "rue de Montorgueil", 75009, "Paris",0);
         Flat bac2 = new Flat( "Charmant trois pièces", "Tatitotou","Appartement", 520000, 58, 3 , 2, 1, 87, "rue du Bac", 75009, "Paris",0);
 
-        Agent agent = new Agent(1, "Pierre", "Paul", "a@gmail.com");
+        Agent agent = new Agent( "Pierre", "Paul", "a@gmail.com");
 
         AgentDao agentDao = new AgentDao() {
             @Override

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.facebook.stetho.Stetho;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -18,28 +20,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Stetho.initializeWithDefaults(this);
         configureAndShowFlatListFragment();
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Top menu creation
-//        getMenuInflater().inflate(R.menu.secondary_menu, menu);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Secondary menu item selection
-//        switch (item.getItemId()) {
-//            case R.id.secondary_menu_add:
-//                launchActivity("AddFlat");
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
 
     private void configureAndShowFlatListFragment() {
         mFlatListFragment = (FlatListFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_list);
@@ -51,5 +34,4 @@ public class MainActivity extends BaseActivity {
                     .commit();
         }
     }
-
 }

@@ -37,7 +37,7 @@ public class BaseActivity extends AppCompatActivity {
         // Secondary menu item selection
         switch (item.getItemId()) {
             case R.id.secondary_menu_add:
-                launchActivity("AddFlat");
+                launchActivity("AddFlatActivity");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -51,8 +51,8 @@ public class BaseActivity extends AppCompatActivity {
             case "FlatDetail":
                 myClass = FlatDetailActivity.class;
                 break;
-            case "AddFlat":
-                myClass = AddFlat.class;
+            case "AddFlatActivity":
+                myClass = AddFlatActivity.class;
                 break;
             default:
                 myClass = MainActivity.class;

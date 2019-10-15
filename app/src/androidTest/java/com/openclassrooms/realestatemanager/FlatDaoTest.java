@@ -27,10 +27,10 @@ public class FlatDaoTest {
     // FOR DATA
     private RealEstateManagerDatabase database;
     private static long AGENT_ID = 1;
-    private static Agent AGENT_DEMO = new Agent(1,"Philippe", "Dubois","Philippe.Dubois@gmail.com");
-    private static Flat NEW_Flat1 = new Flat(2, "Urbain et stylé", "Appartement", 480000, 67, 3 , 2, 1, 5, "rue des Petites Écuries", 75010, "Paris",1);
-    private static Flat NEW_Flat2 = new Flat(3, "Familial de luxe", "Appartement", 1560000, 138, 6 , 4, 2, 121, "rue de Rivoli", 75001, "Paris",1);
-    private static Flat NEW_Flat3 = new Flat(4, "Pour grande famille","Appartement", 980000, 108, 4 , 2, 2, 34, "rue de Trévise", 75009, "Paris",1);
+    private static Agent AGENT_DEMO = new Agent("Philippe", "Dubois","Philippe.Dubois@gmail.com");
+    private static Flat NEW_Flat1 = new Flat( "Urbain et stylé", "blablabla", "Appartement", 480000, 67, 3 , 2, 1, 5, "rue des Petites Écuries", 75010, "Paris",0);
+    private static Flat NEW_Flat2 = new Flat( "Familial de luxe", "blablabla", "Appartement", 1560000, 138, 6 , 4, 2, 121, "rue de Rivoli", 75001, "Paris",0);
+    private static Flat NEW_Flat3 = new Flat( "Pour grande famille", "blablabla", "Appartement", 980000, 108, 4 , 2, 2, 34, "rue de Trévise", 75009, "Paris",0);
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
@@ -61,7 +61,7 @@ public class FlatDaoTest {
     @Test
     public void getFlatsWhenNoFlatInserted() throws InterruptedException {
         // TEST
-        List<Flat> Flats = LiveDataTestUtil.getValue(this.database.mFlatDao().getFlats(AGENT_ID));
+        List<Flat> Flats = LiveDataTestUtil.getValue(this.database.mFlatDao().getFlatsPerAgent(AGENT_ID));
         assertTrue(Flats.isEmpty());
     }
 
@@ -75,7 +75,7 @@ public class FlatDaoTest {
         this.database.mFlatDao().insertFlat(NEW_Flat3);
 
         // TEST
-        List<Flat> Flats = LiveDataTestUtil.getValue(this.database.mFlatDao().getFlats(AGENT_ID));
+        List<Flat> Flats = LiveDataTestUtil.getValue(this.database.mFlatDao().getFlatsPerAgent(AGENT_ID));
         assertTrue(Flats.size() == 3);
     }
 
@@ -84,12 +84,12 @@ public class FlatDaoTest {
         // BEFORE : Adding demo user & demo Flats. Next, update Flat added & re-save it
         this.database.mAgentDao().createAgent(AGENT_DEMO);
         this.database.mFlatDao().insertFlat(NEW_Flat1);
-        Flat FlatAdded = LiveDataTestUtil.getValue(this.database.mFlatDao().getFlats(AGENT_ID)).get(0);
+        Flat FlatAdded = LiveDataTestUtil.getValue(this.database.mFlatDao().getFlatsPerAgent(AGENT_ID)).get(0);
         FlatAdded.setBathroom(3);
         this.database.mFlatDao().updateFlat(FlatAdded);
 
         //TEST
-        List<Flat> Flats = LiveDataTestUtil.getValue(this.database.mFlatDao().getFlats(AGENT_ID));
+        List<Flat> Flats = LiveDataTestUtil.getValue(this.database.mFlatDao().getFlatsPerAgent(AGENT_ID));
         assertTrue(Flats.size() == 1 && Flats.get(0).getBathroom() == 3);
     }
 
@@ -98,11 +98,11 @@ public class FlatDaoTest {
         // BEFORE : Adding demo user & demo Flat. Next, get the Flat added & delete it.
         this.database.mAgentDao().createAgent(AGENT_DEMO);
         this.database.mFlatDao().insertFlat(NEW_Flat1);
-        Flat FlatAdded = LiveDataTestUtil.getValue(this.database.mFlatDao().getFlats(AGENT_ID)).get(0);
+        Flat FlatAdded = LiveDataTestUtil.getValue(this.database.mFlatDao().getFlatsPerAgent(AGENT_ID)).get(0);
         this.database.mFlatDao().deleteFlat(FlatAdded.getId());
 
         //TEST
-        List<Flat> Flats = LiveDataTestUtil.getValue(this.database.mFlatDao().getFlats(AGENT_ID));
+        List<Flat> Flats = LiveDataTestUtil.getValue(this.database.mFlatDao().getFlatsPerAgent(AGENT_ID));
         assertTrue(Flats.isEmpty());
     }
 }

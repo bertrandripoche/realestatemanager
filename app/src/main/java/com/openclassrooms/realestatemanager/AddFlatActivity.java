@@ -4,9 +4,9 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddFlat extends AppCompatActivity {
+public class AddFlatActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.btn_add_flat) FloatingActionButton mBtnAddFlat;
     @BindView(R.id.edit_flat_type) Spinner mFlatType;
@@ -46,6 +46,7 @@ public class AddFlat extends AppCompatActivity {
     @BindView(R.id.edit_restaurant_switch) SwitchCompat mRestaurant;
     @BindView(R.id.edit_theater_switch) SwitchCompat mTheater;
     @BindView(R.id.edit_shop_switch) SwitchCompat mShop;
+    @BindView(R.id.edit_flat_agent) Spinner mFlatAgent;
 
     // 1 - FOR DATA
     private FlatViewModel mFlatViewModel;
@@ -62,6 +63,31 @@ public class AddFlat extends AppCompatActivity {
         this.configureViewModel();
     }
 
+    @OnClick(R.id.btn_add_flat)
+    public void onClickAddButton() {
+        this.createFlat();
+    }
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            // Enable-disable Floating Action Button
+            if (!mSummary.getText().toString().equals("") && !mDescription.getText().toString().equals("")  && !mSurface.getText().toString().equals("")  && !mPrice.getText().toString().equals("")  && !mCity.getText().toString().equals("")) {
+                enableAddFlatButton();
+            } else {
+                disableAddFlatButton();
+            }
+        }
+    };
+
     private void configureToolbar(){
         setSupportActionBar(mToolbar);
         ActionBar ab = getSupportActionBar();
@@ -77,24 +103,13 @@ public class AddFlat extends AppCompatActivity {
         mCity.addTextChangedListener(textWatcher);
     }
 
-    @OnClick(R.id.btn_add_flat)
-    public void onClickAddButton() {
-        if (!this.mSummary.getText().toString().equals("") && !this.mDescription.getText().toString().equals("")  && !this.mSurface.getText().toString().equals("")  && !this.mPrice.getText().toString().equals("")  && !this.mCity.getText().toString().equals("")) {
-            this.createFlat();
-        }
-
-    }
-
     // DATA
-
-    // 2 - Configuring ViewModel
     private void configureViewModel(){
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         this.mFlatViewModel = ViewModelProviders.of(this, mViewModelFactory).get(FlatViewModel.class);
         this.mFlatViewModel.init(AGENT_ID);
     }
 
-    // 3 - Create a new item
     private void createFlat(){
         Integer price = getNumber(this.mPrice.getText().toString());
         Integer surface = getNumber(this.mSurface.getText().toString());
@@ -119,29 +134,36 @@ public class AddFlat extends AppCompatActivity {
                 this.mCity.getText().toString(),
                 AGENT_ID);
 
-                this.mFlatViewModel.createFlat(flat);
+        this.mFlatViewModel.createFlat(flat);
+        cleanForm();
     }
 
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
+    private void cleanForm() {
+        Toast.makeText(this, "Flat saved", Toast.LENGTH_LONG).show();
+        emptyFields();
+        disableAddFlatButton();
+    }
 
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            // Enable-disable Floating Action Button
-            if (!mSummary.getText().toString().equals("") && !mDescription.getText().toString().equals("")  && !mSurface.getText().toString().equals("")  && !mPrice.getText().toString().equals("")  && !mCity.getText().toString().equals("")) {
-                enableAddFlatButton();
-            } else {
-                disableAddFlatButton();
-            }
-        }
-
-    };
+    private void emptyFields() {
+        mFlatType.setSelection(0,true);
+        mSummary.setText("");
+        mDescription.setText("");
+        mSurface.setText("");
+        mRoomNb.setText("");
+        mBedroomNb.setText("");
+        mBathroomNb.setText("");
+        mPrice.setText("");
+        mStreetNb.setText("");
+        mStreet.setText("");
+        mPostalCode.setText("");
+        mCity.setText("");
+        mSchool.setChecked(false);
+        mPostOffice.setChecked(false);
+        mRestaurant.setChecked(false);
+        mTheater.setChecked(false);
+        mShop.setChecked(false);
+        mFlatAgent.setSelection(0,true);
+    }
 
     private void enableAddFlatButton() {
         mBtnAddFlat.setClickable(true);
