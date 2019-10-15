@@ -4,6 +4,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -50,7 +51,7 @@ public class AddFlatActivity extends AppCompatActivity {
 
     // 1 - FOR DATA
     private FlatViewModel mFlatViewModel;
-    private static int AGENT_ID = 1;
+    private static int AGENT_ID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,17 @@ public class AddFlatActivity extends AppCompatActivity {
         this.configureToolbar();
         this.configureTextWatchers();
         this.configureViewModel();
+
+        this.configureSpinners();
+    }
+
+    private void configureSpinners() {
+        ArrayAdapter adapterSpinnerFlatType = ArrayAdapter.createFromResource(this, R.array.flat_type, R.layout.spinner_item);
+        adapterSpinnerFlatType.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        mFlatType.setAdapter(adapterSpinnerFlatType);
+        ArrayAdapter adapterSpinnerFlatAgent = ArrayAdapter.createFromResource(this, R.array.flat_agent, R.layout.spinner_item);
+        adapterSpinnerFlatAgent.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        mFlatAgent.setAdapter(adapterSpinnerFlatAgent);
     }
 
     @OnClick(R.id.btn_add_flat)
@@ -132,6 +144,11 @@ public class AddFlatActivity extends AppCompatActivity {
                 this.mStreet.getText().toString(),
                 postalCode,
                 this.mCity.getText().toString(),
+                mSchool.isChecked(),
+                mPostOffice.isChecked(),
+                mRestaurant.isChecked(),
+                mTheater.isChecked(),
+                mShop.isChecked(),
                 AGENT_ID);
 
         this.mFlatViewModel.createFlat(flat);
@@ -139,7 +156,7 @@ public class AddFlatActivity extends AppCompatActivity {
     }
 
     private void cleanForm() {
-        Toast.makeText(this, "Flat saved", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Flat saved", Toast.LENGTH_LONG).show();
         emptyFields();
         disableAddFlatButton();
     }

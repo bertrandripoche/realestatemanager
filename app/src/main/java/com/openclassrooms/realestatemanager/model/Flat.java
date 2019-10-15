@@ -24,12 +24,17 @@ public class Flat {
     private String streetAddress;
     private Integer postalCodeAddress;
     private String cityAddress;
+    private boolean school;
+    private boolean postOffice;
+    private boolean restaurant;
+    private boolean theater;
+    private boolean shop;
     private boolean isSold;
     private int agentId;
 
     public Flat() { }
 
-    public Flat(String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, int agentId) {
+    public Flat(String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, boolean school, boolean postOffice, boolean restaurant, boolean theater, boolean shop, int agentId) {
         this.summary = summary;
         this.description = description;
         this.type = type;
@@ -42,6 +47,11 @@ public class Flat {
         this.streetAddress = streetAddress;
         this.postalCodeAddress = postalCodeAddress;
         this.cityAddress = cityAddress;
+        this.school = school;
+        this.postOffice = postOffice;
+        this.restaurant = restaurant;
+        this.theater = theater;
+        this.shop = shop;
         this.isSold = false;
         this.agentId = agentId;
     }
@@ -60,6 +70,11 @@ public class Flat {
     public String getStreetAddress() {return streetAddress;}
     public Integer getPostalCodeAddress() {return postalCodeAddress;}
     public String getCityAddress() {return cityAddress;}
+    public boolean isSchool() {return school;}
+    public boolean isPostOffice() {return postOffice;}
+    public boolean isRestaurant() {return restaurant;}
+    public boolean isTheater() {return theater;}
+    public boolean isShop() {return shop;}
     public boolean getIsSold() {return isSold;}
     public int getAgentId() {return agentId;}
 
@@ -77,6 +92,11 @@ public class Flat {
     public void setStreetAddress(String street_address) {this.streetAddress = street_address;}
     public void setPostalCodeAddress(Integer postal_code_address) {this.postalCodeAddress = postal_code_address;}
     public void setCityAddress(String city_address) {this.cityAddress = city_address;}
+    public void setSchool(boolean school) {this.school = school;}
+    public void setPostOffice(boolean postOffice) {this.postOffice = postOffice;}
+    public void setRestaurant(boolean restaurant) {this.restaurant = restaurant;}
+    public void setTheater(boolean theater) {this.theater = theater;}
+    public void setShop(boolean shop) {this.shop = shop;}
     public void setIsSold(boolean isSold) {this.isSold = isSold;}
     public void setAgentId(int agentId) {this.agentId = agentId;}
 
