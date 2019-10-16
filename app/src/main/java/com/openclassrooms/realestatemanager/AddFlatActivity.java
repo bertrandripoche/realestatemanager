@@ -60,6 +60,7 @@ public class AddFlatActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         this.configureToolbar();
+        this.disableAddFlatButton();
         this.configureTextWatchers();
         this.configureViewModel();
 

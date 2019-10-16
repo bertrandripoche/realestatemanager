@@ -43,7 +43,7 @@ public class FlatViewModel extends ViewModel {
     public LiveData<Agent> getAgent(long agentId) { return this.mCurrentUser;  }
 
     // -------------
-    // FOR ITEM
+    // FOR FLAT
     // -------------
 
     public LiveData<List<Flat>> getFlats() {
