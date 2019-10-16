@@ -3,7 +3,12 @@ package com.openclassrooms.realestatemanager;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Layout;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.AlignmentSpan;
+import android.view.Gravity;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -60,11 +65,9 @@ public class AddFlatActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         this.configureToolbar();
-        this.disableAddFlatButton();
-        this.configureTextWatchers();
         this.configureViewModel();
-
         this.configureSpinners();
+        this.configureTextWatchers();
     }
 
     private void configureSpinners() {
@@ -78,7 +81,10 @@ public class AddFlatActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_add_flat)
     public void onClickAddButton() {
-        this.createFlat();
+        if (isFormValid()) this.createFlat();
+        else {
+            Toast.makeText(getApplicationContext(), R.string.invalid_form, Toast.LENGTH_LONG).show();
+        }
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
@@ -93,11 +99,8 @@ public class AddFlatActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable s) {
             // Enable-disable Floating Action Button
-            if (!mSummary.getText().toString().equals("") && !mDescription.getText().toString().equals("")  && !mSurface.getText().toString().equals("")  && !mPrice.getText().toString().equals("")  && !mCity.getText().toString().equals("")) {
-                enableAddFlatButton();
-            } else {
-                disableAddFlatButton();
-            }
+            if (isFormValid()) enableAddFlatButton();
+            else disableAddFlatButton();
         }
     };
 
@@ -157,7 +160,7 @@ public class AddFlatActivity extends AppCompatActivity {
     }
 
     private void cleanForm() {
-        Toast.makeText(getApplicationContext(), "Flat saved", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), R.string.flat_saved, Toast.LENGTH_LONG).show();
         emptyFields();
         disableAddFlatButton();
     }
@@ -184,15 +187,15 @@ public class AddFlatActivity extends AppCompatActivity {
     }
 
     private void enableAddFlatButton() {
-        mBtnAddFlat.setClickable(true);
-        mBtnAddFlat.setFocusable(true);
         mBtnAddFlat.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.pink)));
     }
 
     private void disableAddFlatButton() {
-        mBtnAddFlat.setClickable(false);
-        mBtnAddFlat.setFocusable(false);
         mBtnAddFlat.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_grey)));
+    }
+
+    private boolean isFormValid() {
+        return !mSummary.getText().toString().equals("") && !mDescription.getText().toString().equals("")  && !mSurface.getText().toString().equals("")  && !mPrice.getText().toString().equals("")  && !mCity.getText().toString().equals("");
     }
 
     private Integer getNumber(String str) {
@@ -203,4 +206,5 @@ public class AddFlatActivity extends AppCompatActivity {
             {number = null;}
         return number;
     }
+
 }
