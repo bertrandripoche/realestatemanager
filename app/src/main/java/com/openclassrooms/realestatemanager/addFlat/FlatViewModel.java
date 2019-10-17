@@ -23,8 +23,8 @@ public class FlatViewModel extends ViewModel {
     @Nullable
     private LiveData<Agent> mCurrentUser;
 
-    public FlatViewModel(FlatDataRepository mFlatDataSource, AgentDataRepository agentDataSource, Executor executor) {
-        this.mFlatDataSource = mFlatDataSource;
+    public FlatViewModel(FlatDataRepository flatDataSource, AgentDataRepository agentDataSource, Executor executor) {
+        this.mFlatDataSource = flatDataSource;
         this.mAgentDataSource = agentDataSource;
         this.executor = executor;
     }
@@ -41,6 +41,9 @@ public class FlatViewModel extends ViewModel {
     // -------------
 
     public LiveData<Agent> getAgent(long agentId) { return this.mCurrentUser;  }
+
+    public LiveData<List<Agent>> getAgents() { return this.mAgentDataSource.getAgents();  }
+
 
     // -------------
     // FOR FLAT

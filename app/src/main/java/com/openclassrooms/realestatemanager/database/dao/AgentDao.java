@@ -8,6 +8,8 @@ import androidx.room.Query;
 
 import com.openclassrooms.realestatemanager.model.Agent;
 
+import java.util.List;
+
 @Dao
 public interface AgentDao {
 
@@ -16,4 +18,7 @@ public interface AgentDao {
 
     @Query("SELECT * FROM Agent WHERE id = :agentId")
     LiveData<Agent> getAgent(long agentId);
+
+    @Query("SELECT * FROM Agent")
+    LiveData<List<Agent>> getAgents();
 }

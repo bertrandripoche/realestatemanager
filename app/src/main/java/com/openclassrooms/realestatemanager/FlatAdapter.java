@@ -40,13 +40,14 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
      */
     @Override
     public void onBindViewHolder(@NonNull FlatViewHolder holder, int position) {
-        Flat flat = mFlatList.get(position);
+        holder.updateWithFlat(this.mFlatList.get(position));
 
-        holder.mFlatSummary.setText(flat.getSummary());
-        holder.mFlatCity.setText(flat.getCityAddress());
-        holder.mFlatPrice.setText(holder.itemView.getResources().getString(R.string.euro, flat.getPrice()));
-        holder.mFlatType.setText(flat.getType());
-        holder.mFlatConstraintLayout.setTag(flat.getId());
+//        Flat flat = mFlatList.get(position);
+//        holder.mFlatSummary.setText(flat.getSummary());
+//        holder.mFlatCity.setText(flat.getCityAddress());
+//        holder.mFlatPrice.setText(holder.itemView.getResources().getString(R.string.euro, flat.getPrice()));
+//        holder.mFlatType.setText(flat.getType());
+//        holder.mFlatConstraintLayout.setTag(flat.getId());
     }
 
     @Override
@@ -54,4 +55,12 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
         return mFlatList.size();
     }
 
+    public Flat getFlat(int position){
+        return this.mFlatList.get(position);
+    }
+
+    public void updateData(List<Flat> flatList){
+        this.mFlatList = flatList;
+        this.notifyDataSetChanged();
+    }
 }
