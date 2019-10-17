@@ -19,6 +19,9 @@ public interface FlatDao {
     @Query("SELECT * FROM Flat WHERE agentId = :agentId")
     LiveData<List<Flat>> getFlatsPerAgent(long agentId);
 
+    @Query("SELECT * FROM Flat WHERE id = :flatId")
+    LiveData<Flat> getFlatFromId(long flatId);
+
     @Insert
     long insertFlat(Flat flat);
 

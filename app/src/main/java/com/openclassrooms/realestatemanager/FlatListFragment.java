@@ -25,6 +25,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static java.lang.Long.parseLong;
+
 public class FlatListFragment extends Fragment {
     @BindView(R.id.fragment_flat_list_recycler_view)
     RecyclerView mRecyclerView;
@@ -82,9 +84,9 @@ public class FlatListFragment extends Fragment {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         final String FLATID = "flatId";
-                        int itemTag = (v.getTag() == null) ? 1 : Integer.parseInt(v.getTag().toString());
+                        Long flatId = (v.getTag() == null) ? 1 : Long.parseLong(v.getTag().toString());
                         Bundle args = new Bundle();
-                        args.putInt(FLATID, itemTag);
+                        args.putLong(FLATID, flatId);
 
                         mFlatDetailFragment = (FlatDetailFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
                         if (getActivity().findViewById(R.id.container_fragment_flat_detail) != null) {
