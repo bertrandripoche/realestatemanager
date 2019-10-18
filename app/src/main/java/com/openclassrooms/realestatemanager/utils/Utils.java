@@ -19,9 +19,8 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 public class Utils {
 
     /**
-     * Conversion d'un prix d'un bien immobilier (Dollars vers Euros)
-     * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
-     * @param dollars
+     * Price conversion (Euros to Dollars)
+     * @param dollars amount to convert
      * @return
      */
     public static int convertDollarToEuro(int dollars){
@@ -29,9 +28,8 @@ public class Utils {
     }
 
     /**
-     * Conversion d'un prix d'un bien immobilier (Dollars vers Euros)
-     * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
-     * @param euros
+     * Price conversion (Dollars to Euros)
+     * @param euros amount to convert
      * @return
      */
     public static int convertEuroToDollar(int euros){

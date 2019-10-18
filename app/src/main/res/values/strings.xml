@@ -14,14 +14,14 @@
     <string name="no_related_flat">No related flat</string>
     <string name="info">Information</string>
     <string name="description">Description *</string>
-    <string name="big_text">Ceci est un superbe appartement, vous allez voir, c\'est un truc de fou et je me demande même si un jour je trouverai un appartement plus beau que ça. Franchement, nan, mais vous avez déjà vu un truc pareil, la vue est magnifique, le jardin alentour me fait directement penser aux petites balades que je vais pouvoir faire avec mon chien kiki. Et il  y a des restaurants et des salles de spectacles partout autour du quartier, ça va être une véritable tuerie. À se demander si je vais avoir même le temps de passer du temps ailleurs.Ceci est un superbe appartement, vous allez voir, c\'est un truc de fou et je me demande même si un jour je trouverai un appartement plus beau que ça. Franchement, nan, mais vous avez déjà vu un truc pareil, la vue est magnifique, le jardin alentour me fait directement penser aux petites balades que je vais pouvoir faire avec mon chien kiki. Et il  y a des restaurants et des salles de spectacles partout autour du quartier, ça va être une véritable tuerie. À se demander si je vais avoir même le temps de passer du temps ailleurs.Ceci est un superbe appartement, vous allez voir, c\'est un truc de fou et je me demande même si un jour je trouverai un appartement plus beau que ça. Franchement, nan, mais vous avez déjà vu un truc pareil, la vue est magnifique, le jardin alentour me fait directement penser aux petites balades que je vais pouvoir faire avec mon chien kiki. Et il  y a des restaurants et des salles de spectacles partout autour du quartier, ça va être une véritable tuerie. À se demander si je vais avoir même le temps de passer du temps ailleurs.\n</string>
+    <string name="description_text">%1$s\n</string>
     <string name="surface">Surface</string>
 
     <!-- FLAT ADD ACTIVITY -->
-    <string name="title_edit_flat_presentation">FLAT PRESENTATION</string>
-    <string name="title_edit_flat_address">FLAT ADDRESS</string>
-    <string name="title_edit_flat_poi">AROUND THE FLAT</string>
-    <string name="title_edit_flat_agent">RESPONSIBLE AGENT</string>
+    <string name="title_edit_flat_presentation">Flat presentation</string>
+    <string name="title_edit_flat_address">Flat address</string>
+    <string name="title_edit_flat_poi">Around the flat</string>
+    <string name="title_edit_flat_agent">Responsible agent</string>
 
     <string name="flat_type">Flat type</string>
     <string name="summary">Summary *</string>
@@ -52,7 +52,7 @@
     <string name="restaurant">Restaurants</string>
     <string name="post_office">Post offices</string>
     <string name="theater">Theaters</string>
-    <string name="shop">Shopping center</string>
+    <string name="shop">Shopping centers</string>
     <string name="flat_agent">Agent</string>
 
     <string name="addFlat">Add a flat</string>
@@ -61,6 +61,7 @@
     <string name="btn_add_description">Add button</string>
     <string name="flat_saved">Flat has been saved in database.</string>
     <string name="invalid_form">WARNING :\nThe fields Summary, Description, Surface, \nPrice and City can\'t be empty.</string>
+    <string name="available_date">EN VENTE depuis le %1$s</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>

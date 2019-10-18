@@ -10,12 +10,12 @@
 
     <dimen name="title_size_max">60sp</dimen>
     <dimen name="title_size_big">40sp</dimen>
-    <dimen name="title_size">26sp</dimen>
-    <dimen name="title_size_small">20sp</dimen>
-    <dimen name="title_size_mini">16sp</dimen>
-    <dimen name="text_size_big">14sp</dimen>
-    <dimen name="text_size">12sp</dimen>
-    <dimen name="text_size_small">10sp</dimen>
+    <dimen name="title_size">32sp</dimen>
+    <dimen name="title_size_small">28sp</dimen>
+    <dimen name="title_size_mini">24sp</dimen>
+    <dimen name="text_size_big">20sp</dimen>
+    <dimen name="text_size">16sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_mini">8sp</dimen>
 
     <dimen name="normal_height">25dp</dimen>

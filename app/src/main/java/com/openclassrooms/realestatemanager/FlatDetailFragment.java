@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.biubiubiu.justifytext.library.JustifyTextView;
 
 
 public class FlatDetailFragment extends Fragment {
@@ -32,6 +34,7 @@ public class FlatDetailFragment extends Fragment {
     private static int AGENT_ID = 0;
 
     @BindView(R.id.summary) AppCompatTextView mSummary;
+    @BindView(R.id.flat_description) JustifyTextView mDescription;
     @BindView(R.id.price) AppCompatTextView mPrice;
     @BindView(R.id.city) AppCompatTextView mCity;
     @BindView(R.id.type) AppCompatTextView mType;
@@ -39,9 +42,14 @@ public class FlatDetailFragment extends Fragment {
     @BindView(R.id.room_nb) AppCompatTextView mRoomNb;
     @BindView(R.id.bathroom_nb) AppCompatTextView mBathroomNb;
     @BindView(R.id.bedroom_nb) AppCompatTextView mBedroomNb;
-    @BindView(R.id.sale_status) AppCompatTextView mSaleStatus;
     @BindView(R.id.sale_agent) AppCompatTextView mSaleAgent;
     @BindView(R.id.address) AppCompatTextView mAddress;
+    @BindView(R.id.school) AppCompatImageView mSchool;
+    @BindView(R.id.post) AppCompatImageView mPost;
+    @BindView(R.id.restaurant) AppCompatImageView mRestaurant;
+    @BindView(R.id.theater) AppCompatImageView mTheater;
+    @BindView(R.id.shop) AppCompatImageView mShop;
+    @BindView(R.id.available_from) AppCompatTextView mAvailable_from;
 
     public FlatDetailFragment() {}
 
@@ -79,13 +87,39 @@ public class FlatDetailFragment extends Fragment {
         mFlat = flat;
         if (mFlat != null) {
             mSummary.setText(mFlat.getSummary());
+            mDescription.setText(getString(R.string.description_text, mFlat.getDescription()));
             mPrice.setText(getString(R.string.euro, mFlat.getPrice()));
             mType.setText(mFlat.getType());
             mCity.setText(mFlat.getCityAddress());
             mSurface.setText(getString(R.string.metre_carre, mFlat.getSurface()));
-            mRoomNb.setText(String.valueOf(mFlat.getRoom()));
-            mBathroomNb.setText(String.valueOf(mFlat.getBathroom()));
-            mBedroomNb.setText(String.valueOf(mFlat.getBedroom()));
+
+            if (mFlat.getRoom() == null) mRoomNb.setText("NC");
+            else mRoomNb.setText(String.valueOf(mFlat.getRoom()));
+            if (mFlat.getBathroom() == null) mBathroomNb.setText("NC");
+            else mBathroomNb.setText(String.valueOf(mFlat.getBathroom()));
+            if (mFlat.getBedroom() == null) mBedroomNb.setText("NC");
+            else mBedroomNb.setText(String.valueOf(mFlat.getBedroom()));
+
+            if (mFlat.isSchool()) mSchool.setImageResource(R.drawable.ic_ok);
+            else mSchool.setImageResource(R.drawable.ic_ko);
+            if (mFlat.isPostOffice()) mPost.setImageResource(R.drawable.ic_ok);
+            else mPost.setImageResource(R.drawable.ic_ko);
+            if (mFlat.isRestaurant()) mRestaurant.setImageResource(R.drawable.ic_ok);
+            else mRestaurant.setImageResource(R.drawable.ic_ko);
+            if (mFlat.isTheater()) mTheater.setImageResource(R.drawable.ic_ok);
+            else mTheater.setImageResource(R.drawable.ic_ko);
+            if (mFlat.isShop()) mShop.setImageResource(R.drawable.ic_ok);
+            else mShop.setImageResource(R.drawable.ic_ko);
+
+            String address = "";
+            if (mFlat.getNumberAddress() != null && mFlat.getStreetAddress() != null) address = String.valueOf(mFlat.getNumberAddress()) + ", " + mFlat.getStreetAddress();
+            if (mFlat.getNumberAddress() == null && mFlat.getStreetAddress() != null) address = mFlat.getStreetAddress();
+            if (mFlat.getPostalCodeAddress() != null && address != null) address = address + "\n" + mFlat.getPostalCodeAddress() + " " + mFlat.getCityAddress();
+            else if (mFlat.getPostalCodeAddress() == null && address != null) address = address + "\n" + mFlat.getCityAddress();
+            else address = mFlat.getCityAddress();
+            mAddress.setText(address);
+
+            mAvailable_from.setText(getString(R.string.available_date, mFlat.getAvailableDate()));
         }
     }
 

@@ -5,6 +5,10 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.openclassrooms.realestatemanager.utils.Utils;
+
+import java.util.Date;
+
 @Entity(foreignKeys = @ForeignKey(entity = Agent.class,
         parentColumns = "id",
         childColumns = "agentId"),
@@ -24,17 +28,19 @@ public class Flat {
     private String streetAddress;
     private Integer postalCodeAddress;
     private String cityAddress;
-    private boolean school;
-    private boolean postOffice;
-    private boolean restaurant;
-    private boolean theater;
-    private boolean shop;
+    private boolean isSchool;
+    private boolean isPostOffice;
+    private boolean isRestaurant;
+    private boolean isTheater;
+    private boolean isShop;
     private boolean isSold;
+    private String soldDate;
+    private String availableDate;
     private int agentId;
 
     public Flat() { }
 
-    public Flat(String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, boolean school, boolean postOffice, boolean restaurant, boolean theater, boolean shop, int agentId) {
+    public Flat(String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, boolean isSchool, boolean isPostOffice, boolean isRestaurant, boolean isTheater, boolean isShop, int agentId) {
         this.summary = summary;
         this.description = description;
         this.type = type;
@@ -47,12 +53,13 @@ public class Flat {
         this.streetAddress = streetAddress;
         this.postalCodeAddress = postalCodeAddress;
         this.cityAddress = cityAddress;
-        this.school = school;
-        this.postOffice = postOffice;
-        this.restaurant = restaurant;
-        this.theater = theater;
-        this.shop = shop;
+        this.isSchool = isSchool;
+        this.isPostOffice = isPostOffice;
+        this.isRestaurant = isRestaurant;
+        this.isTheater = isTheater;
+        this.isShop = isShop;
         this.isSold = false;
+        this.availableDate = Utils.getTodayDate();
         this.agentId = agentId;
     }
 
@@ -70,12 +77,14 @@ public class Flat {
     public String getStreetAddress() {return streetAddress;}
     public Integer getPostalCodeAddress() {return postalCodeAddress;}
     public String getCityAddress() {return cityAddress;}
-    public boolean isSchool() {return school;}
-    public boolean isPostOffice() {return postOffice;}
-    public boolean isRestaurant() {return restaurant;}
-    public boolean isTheater() {return theater;}
-    public boolean isShop() {return shop;}
+    public boolean isSchool() {return isSchool;}
+    public boolean isPostOffice() {return isPostOffice;}
+    public boolean isRestaurant() {return isRestaurant;}
+    public boolean isTheater() {return isTheater;}
+    public boolean isShop() {return isShop;}
     public boolean getIsSold() {return isSold;}
+    public String getSoldDate() {return soldDate;}
+    public String getAvailableDate() {return availableDate;}
     public int getAgentId() {return agentId;}
 
     // SETTERS
@@ -92,12 +101,14 @@ public class Flat {
     public void setStreetAddress(String street_address) {this.streetAddress = street_address;}
     public void setPostalCodeAddress(Integer postal_code_address) {this.postalCodeAddress = postal_code_address;}
     public void setCityAddress(String city_address) {this.cityAddress = city_address;}
-    public void setSchool(boolean school) {this.school = school;}
-    public void setPostOffice(boolean postOffice) {this.postOffice = postOffice;}
-    public void setRestaurant(boolean restaurant) {this.restaurant = restaurant;}
-    public void setTheater(boolean theater) {this.theater = theater;}
-    public void setShop(boolean shop) {this.shop = shop;}
+    public void setSchool(boolean school) {this.isSchool = school;}
+    public void setPostOffice(boolean postOffice) {this.isPostOffice = postOffice;}
+    public void setRestaurant(boolean restaurant) {this.isRestaurant = restaurant;}
+    public void setTheater(boolean theater) {this.isTheater = theater;}
+    public void setShop(boolean shop) {this.isShop = shop;}
     public void setIsSold(boolean isSold) {this.isSold = isSold;}
+    public void setSoldDate(String soldDate) {this.soldDate = soldDate;}
+    public void setAvailableDate(String availableDate) {this.availableDate = availableDate;}
     public void setAgentId(int agentId) {this.agentId = agentId;}
 
 }
