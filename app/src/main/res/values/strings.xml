@@ -62,6 +62,7 @@
     <string name="flat_saved">Flat has been saved in database.</string>
     <string name="invalid_form">WARNING :\nThe fields Summary, Description, Surface, \nPrice and City can\'t be empty.</string>
     <string name="available_date">EN VENTE depuis le %1$s</string>
+    <string name="editFlat">Edit a flat</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>

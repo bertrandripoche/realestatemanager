@@ -3,12 +3,7 @@ package com.openclassrooms.realestatemanager;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Layout;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextWatcher;
-import android.text.style.AlignmentSpan;
-import android.view.Gravity;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -54,7 +49,6 @@ public class AddFlatActivity extends AppCompatActivity {
     @BindView(R.id.edit_shop_switch) SwitchCompat mShop;
     @BindView(R.id.edit_flat_agent) Spinner mFlatAgent;
 
-    // 1 - FOR DATA
     private FlatViewModel mFlatViewModel;
     private static int AGENT_ID = 0;
 

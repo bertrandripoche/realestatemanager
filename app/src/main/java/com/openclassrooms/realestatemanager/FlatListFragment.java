@@ -25,10 +25,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static java.lang.Long.parseLong;
-
 public class FlatListFragment extends Fragment {
     @BindView(R.id.fragment_flat_list_recycler_view)
+
     RecyclerView mRecyclerView;
     private FlatAdapter mAdapter;
     private List<Flat> mFlatList;
@@ -89,14 +88,17 @@ public class FlatListFragment extends Fragment {
                         args.putLong(FLATID, flatId);
 
                         mFlatDetailFragment = (FlatDetailFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
+                        // Tablet
                         if (getActivity().findViewById(R.id.container_fragment_flat_detail) != null) {
                             mFlatDetailFragment = new FlatDetailFragment();
                             mFlatDetailFragment.setArguments(args);
                             getActivity().getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.container_fragment_flat_detail, mFlatDetailFragment)
+                                    .replace(R.id.container_fragment_flat_detail, mFlatDetailFragment, "FlatDetail")
                                     .commit();
-                            v.setSelected(true);
-                        } else{
+                            MainActivity mMainActivity = (MainActivity) getActivity();
+                            mMainActivity.displayEditBtn();
+                        // Smartphone
+                        } else {
                             Intent intent = new Intent(v.getContext(), FlatDetailActivity.class);
                             intent.putExtras(args);
                             startActivity(intent);

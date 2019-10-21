@@ -42,7 +42,7 @@ public class FlatDetailFragment extends Fragment {
     @BindView(R.id.room_nb) AppCompatTextView mRoomNb;
     @BindView(R.id.bathroom_nb) AppCompatTextView mBathroomNb;
     @BindView(R.id.bedroom_nb) AppCompatTextView mBedroomNb;
-    @BindView(R.id.sale_agent) AppCompatTextView mSaleAgent;
+    @BindView(R.id.sale_agent) AppCompatTextView mAgent;
     @BindView(R.id.address) AppCompatTextView mAddress;
     @BindView(R.id.school) AppCompatImageView mSchool;
     @BindView(R.id.post) AppCompatImageView mPost;
@@ -71,7 +71,7 @@ public class FlatDetailFragment extends Fragment {
         this.mFlatViewModel.init(AGENT_ID);
     }
 
-    private Long getFlatId() {
+    protected Long getFlatId() {
         Long flatId;
         Bundle b = getArguments();
         if (b == null) {
@@ -120,6 +120,7 @@ public class FlatDetailFragment extends Fragment {
             mAddress.setText(address);
 
             mAvailable_from.setText(getString(R.string.available_date, mFlat.getAvailableDate()));
+            mAgent.setText("Pierre Poljack");
         }
     }
 

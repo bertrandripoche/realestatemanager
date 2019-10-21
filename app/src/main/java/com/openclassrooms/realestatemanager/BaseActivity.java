@@ -7,13 +7,15 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BaseActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar mToolbar;
-
+    MenuItem mEditBtn;
     FlatDetailFragment mFlatDetailFragment;
 
     @Override
@@ -29,6 +31,8 @@ public class BaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Top menu creation
         getMenuInflater().inflate(R.menu.secondary_menu, menu);
+        mEditBtn = menu.findItem(R.id.secondary_menu_edit);
+
         return true;
     }
 
@@ -39,13 +43,15 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.secondary_menu_add:
                 launchActivity("AddFlatActivity");
                 return true;
+            case R.id.secondary_menu_edit:
+                launchActivity("EditFlatActivity");
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     protected void launchActivity(String activity) {
-        // Launch activity depending on the category chosen
         Class myClass;
         switch(activity) {
             case "FlatDetail":
@@ -53,6 +59,18 @@ public class BaseActivity extends AppCompatActivity {
                 break;
             case "AddFlatActivity":
                 myClass = AddFlatActivity.class;
+                break;
+            case "EditFlatActivity":
+                Long flatId;
+                if (mFlatDetailFragment != null) flatId = mFlatDetailFragment.getFlatId();
+                else {
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    Fragment currentFragment = fragmentManager.findFragmentByTag("FlatDetail");
+                    Bundle b = currentFragment.getArguments();
+                    flatId = b.getLong("flatId");
+                }
+                System.out.println("My flatId is "+flatId);
+                myClass = EditFlatActivity.class;
                 break;
             default:
                 myClass = MainActivity.class;
@@ -63,6 +81,7 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void configureToolbar(){
         setSupportActionBar(mToolbar);
+        mFlatDetailFragment = (FlatDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
     }
 
     protected void configureAndShowFlatDetailFragment(){
@@ -74,4 +93,13 @@ public class BaseActivity extends AppCompatActivity {
                     .commit();
         }
     }
+
+    protected void hideEditBtn() {
+        if (mEditBtn != null) mEditBtn.setVisible(false);
+    }
+
+    protected void displayEditBtn() {
+        if (mEditBtn != null) mEditBtn.setVisible(true);
+    }
+
 }

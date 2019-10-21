@@ -25,8 +25,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:textSize="@dimen/title_size"
-            android:text="Sèvres"/>
+            android:textSize="@dimen/title_size"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/price"
@@ -37,7 +36,6 @@
             android:layout_weight="1"
             android:textSize="@dimen/title_size_max"
             android:textStyle="bold"
-            android:text="350 000 €"
             android:textColor="@color/pink"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -48,8 +46,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:textSize="@dimen/title_size"
-            android:text="Duplex"/>
+            android:textSize="@dimen/title_size"/>
 
     </TableRow>
 
@@ -82,7 +79,6 @@
                 android:background="@color/pink"
                 android:gravity="center"
                 android:padding="@dimen/basic_padding"
-                android:text="Charmant pied à terre"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/title_size"
@@ -138,7 +134,6 @@
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/middle_padding"
                         android:gravity="center_vertical|start"
-                        android:text="400 m2"
                         android:textAlignment="center"
                         android:textColor="@color/green"
                         android:textSize="@dimen/title_size_mini"
@@ -161,7 +156,6 @@
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/middle_padding"
                         android:gravity="center_vertical|start"
-                        android:text="5"
                         android:textAlignment="center"
                         android:textColor="@color/green"
                         android:textSize="@dimen/title_size_mini"
@@ -182,7 +176,6 @@
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/middle_padding"
                         android:gravity="center_vertical|start"
-                        android:text="2"
                         android:textAlignment="center"
                         android:textColor="@color/green"
                         android:textSize="@dimen/title_size_mini"
@@ -203,7 +196,6 @@
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/middle_padding"
                         android:gravity="center_vertical|start"
-                        android:text="3"
                         android:textAlignment="center"
                         android:textColor="@color/green"
                         android:textSize="@dimen/title_size_mini"
@@ -344,7 +336,6 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:padding="@dimen/basic_padding"
-                    android:text="@string/address"
                     android:textSize="@dimen/title_size" />
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="match_parent"
@@ -374,7 +365,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center_vertical"
-            android:text="@string/available_date"
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="@dimen/text_size_big"
@@ -386,7 +376,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="Pierre Martin"
             android:textAlignment="center"
             android:textColor="@color/pink"
             android:textStyle="italic|bold" />

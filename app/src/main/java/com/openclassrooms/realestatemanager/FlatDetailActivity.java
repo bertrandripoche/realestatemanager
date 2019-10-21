@@ -28,6 +28,7 @@ public class FlatDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_flat_detail);
         ButterKnife.bind(this);
         configureToolbar();
+        displayEditBtn();
         configureViewModel();
 
         mExtras = getBundle();
