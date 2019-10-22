@@ -63,6 +63,30 @@ public class Flat {
         this.agentId = agentId;
     }
 
+    public Flat(int id, String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, boolean isSchool, boolean isPostOffice, boolean isRestaurant, boolean isTheater, boolean isShop, int agentId) {
+        this.id = id;
+        this.summary = summary;
+        this.description = description;
+        this.type = type;
+        this.price = price;
+        this.surface = surface;
+        this.room = room;
+        this.bedroom = bedroom;
+        this.bathroom = bathroom;
+        this.numberAddress = numberAddress;
+        this.streetAddress = streetAddress;
+        this.postalCodeAddress = postalCodeAddress;
+        this.cityAddress = cityAddress;
+        this.isSchool = isSchool;
+        this.isPostOffice = isPostOffice;
+        this.isRestaurant = isRestaurant;
+        this.isTheater = isTheater;
+        this.isShop = isShop;
+        this.isSold = false;
+        this.availableDate = Utils.getTodayDate();
+        this.agentId = agentId;
+    }
+
     // GETTERS
     public int getId() {return id;}
     public String getSummary() {return summary;}

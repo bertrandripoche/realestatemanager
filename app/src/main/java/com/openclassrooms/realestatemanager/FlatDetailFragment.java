@@ -73,12 +73,13 @@ public class FlatDetailFragment extends Fragment {
 
     protected Long getFlatId() {
         Long flatId;
+        final String FLATID = "flatId";
         Bundle b = getArguments();
         if (b == null) {
             mFlatDetailActivity = (FlatDetailActivity) getActivity();
             flatId = mFlatDetailActivity.mFlatId;
         } else {
-            flatId = b.getLong("flatId");
+            flatId = b.getLong(FLATID);
         }
         return flatId;
     }

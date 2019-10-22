@@ -53,6 +53,9 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void launchActivity(String activity) {
         Class myClass;
+
+        Long flatId = null;
+        final String FLATID = "flatId";
         switch(activity) {
             case "FlatDetail":
                 myClass = FlatDetailActivity.class;
@@ -61,21 +64,26 @@ public class BaseActivity extends AppCompatActivity {
                 myClass = AddFlatActivity.class;
                 break;
             case "EditFlatActivity":
-                Long flatId;
+
                 if (mFlatDetailFragment != null) flatId = mFlatDetailFragment.getFlatId();
                 else {
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     Fragment currentFragment = fragmentManager.findFragmentByTag("FlatDetail");
-                    Bundle b = currentFragment.getArguments();
-                    flatId = b.getLong("flatId");
+                    Bundle args;
+                    args = currentFragment.getArguments();
+                    flatId = args.getLong(FLATID);
                 }
-                System.out.println("My flatId is "+flatId);
                 myClass = EditFlatActivity.class;
                 break;
             default:
                 myClass = MainActivity.class;
         }
         Intent myIntent = new Intent(this, myClass);
+        if (flatId != null) {
+            Bundle b = new Bundle();
+            b.putLong(FLATID, flatId);
+            myIntent.putExtras(b);
+        }
         this.startActivity(myIntent);
     }
 

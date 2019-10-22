@@ -637,7 +637,7 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_save"
-        app:backgroundTint="@color/light_grey"
+        app:backgroundTint="@color/pink"
         app:fabSize="normal"
         app:maxImageSize="40dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal"

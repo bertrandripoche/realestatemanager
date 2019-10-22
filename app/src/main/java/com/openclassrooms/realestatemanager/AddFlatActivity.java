@@ -113,7 +113,6 @@ public class AddFlatActivity extends AppCompatActivity {
         mCity.addTextChangedListener(textWatcher);
     }
 
-    // DATA
     private void configureViewModel(){
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         this.mFlatViewModel = ViewModelProviders.of(this, mViewModelFactory).get(FlatViewModel.class);
