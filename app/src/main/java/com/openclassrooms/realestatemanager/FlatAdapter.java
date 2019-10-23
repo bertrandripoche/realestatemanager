@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.List;
 public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
 
     private List<Flat> mFlatList;
+    public int index = -1;
 
     public FlatAdapter(List<Flat> mFlatList) {
         this.mFlatList = mFlatList;
@@ -42,12 +44,9 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
     public void onBindViewHolder(@NonNull FlatViewHolder holder, int position) {
         holder.updateWithFlat(this.mFlatList.get(position));
 
-//        Flat flat = mFlatList.get(position);
-//        holder.mFlatSummary.setText(flat.getSummary());
-//        holder.mFlatCity.setText(flat.getCityAddress());
-//        holder.mFlatPrice.setText(holder.itemView.getResources().getString(R.string.euro, flat.getPrice()));
-//        holder.mFlatType.setText(flat.getType());
-//        holder.mFlatConstraintLayout.setTag(flat.getId());
+        if(index==position) setSelected(holder);
+        else unsetSelected(holder);
+
     }
 
     @Override
@@ -62,5 +61,20 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
     public void updateData(List<Flat> flatList){
         this.mFlatList = flatList;
         this.notifyDataSetChanged();
+    }
+
+    public void setSelected(FlatViewHolder holder) {
+        holder.mFlatConstraintLayout.setBackgroundColor(Color.parseColor("#C20044"));
+        holder.mFlatSummary.setTextColor(Color.parseColor("#FFFFFF"));
+        holder.mFlatCity.setTextColor(Color.parseColor("#DDF4CF"));
+        holder.mFlatPrice.setTextColor(Color.parseColor("#FFFFFF"));
+        holder.mFlatType.setTextColor(Color.parseColor("#FFFFFF"));
+    }
+
+    public void unsetSelected(FlatViewHolder holder) {
+        holder.mFlatConstraintLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        holder.mFlatSummary.setTextColor(Color.parseColor("#000000"));
+        holder.mFlatCity.setTextColor(Color.parseColor("#458039"));
+        holder.mFlatPrice.setTextColor(Color.parseColor("#C20044"));
     }
 }

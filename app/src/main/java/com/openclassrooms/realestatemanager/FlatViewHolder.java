@@ -38,4 +38,5 @@ class FlatViewHolder extends RecyclerView.ViewHolder {
         this.mFlatType.setText(flat.getType());
         this.mFlatConstraintLayout.setTag(flat.getId());
     }
+
 }

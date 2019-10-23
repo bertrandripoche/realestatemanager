@@ -44,7 +44,6 @@ public class FlatViewModel extends ViewModel {
 
     public LiveData<List<Agent>> getAgents() { return this.mAgentDataSource.getAgents();  }
 
-
     // -------------
     // FOR FLAT
     // -------------

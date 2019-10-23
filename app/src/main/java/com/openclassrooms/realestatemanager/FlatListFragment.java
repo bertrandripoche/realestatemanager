@@ -90,6 +90,9 @@ public class FlatListFragment extends Fragment {
                         mFlatDetailFragment = (FlatDetailFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
                         // Tablet
                         if (getActivity().findViewById(R.id.container_fragment_flat_detail) != null) {
+                            mAdapter.index = position;
+                            mAdapter.notifyDataSetChanged();
+
                             mFlatDetailFragment = new FlatDetailFragment();
                             mFlatDetailFragment.setArguments(args);
                             getActivity().getSupportFragmentManager().beginTransaction()
