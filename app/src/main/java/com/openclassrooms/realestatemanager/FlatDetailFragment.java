@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
@@ -24,7 +32,7 @@ import butterknife.ButterKnife;
 import me.biubiubiu.justifytext.library.JustifyTextView;
 
 
-public class FlatDetailFragment extends Fragment {
+public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback {
 
     private List<Flat> mFlatList;
     private Flat mFlat;
@@ -51,6 +59,9 @@ public class FlatDetailFragment extends Fragment {
     @BindView(R.id.shop) AppCompatImageView mShop;
     @BindView(R.id.available_from) AppCompatTextView mAvailable_from;
 
+    private GoogleMap mMap;
+    private static final String TAG = "Detail Fragment";
+
     public FlatDetailFragment() {}
 
     @Override
@@ -59,10 +70,26 @@ public class FlatDetailFragment extends Fragment {
         ButterKnife.bind(this, view);
         mFlatId = getFlatId();
 
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
         configureViewModel();
         getFlat(mFlatId);
 
         return view;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        System.out.println("MAP OK");
+        mMap = map;
+
+        boolean success = map.setMapStyle(new MapStyleOptions(getResources().getString(R.string.style_json)));
+        if (!success) {
+            Log.e(TAG, "Style parsing failed.");
+        }
+        map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+
     }
 
     private void configureViewModel() {

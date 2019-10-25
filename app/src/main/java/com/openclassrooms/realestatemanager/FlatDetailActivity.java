@@ -1,17 +1,19 @@
 package com.openclassrooms.realestatemanager;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
-import android.view.Menu;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FlatDetailActivity extends BaseActivity {
@@ -29,6 +31,7 @@ public class FlatDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         configureToolbar();
         displayEditBtn();
+
         configureViewModel();
 
         mExtras = getBundle();
@@ -51,6 +54,5 @@ public class FlatDetailActivity extends BaseActivity {
         this.mFlatViewModel = ViewModelProviders.of(this, mViewModelFactory).get(FlatViewModel.class);
         this.mFlatViewModel.init(AGENT_ID);
     }
-
 
 }

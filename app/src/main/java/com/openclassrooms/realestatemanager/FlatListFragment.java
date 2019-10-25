@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
@@ -34,6 +35,7 @@ public class FlatListFragment extends Fragment {
     private FlatDetailFragment mFlatDetailFragment;
 
     private FlatViewModel mFlatViewModel;
+    private int mSelectedFlat = -1;
     private static int AGENT_ID = 0;
 
     public FlatListFragment() {}
@@ -50,6 +52,27 @@ public class FlatListFragment extends Fragment {
         getFlats();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.index = mSelectedFlat;
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("selectedFlat", mSelectedFlat);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            mSelectedFlat = savedInstanceState.getInt("selectedFlat", -1);
+        }
     }
 
     private void getFlats() {
@@ -91,6 +114,7 @@ public class FlatListFragment extends Fragment {
                         // Tablet
                         if (getActivity().findViewById(R.id.container_fragment_flat_detail) != null) {
                             mAdapter.index = position;
+                            mSelectedFlat = position;
                             mAdapter.notifyDataSetChanged();
 
                             mFlatDetailFragment = new FlatDetailFragment();

@@ -11,6 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        resValue "string", "google_maps_key", (project.findProperty("GOOGLE_MAPS_API_KEY") ?: "")
     }
     buildTypes {
         release {
@@ -63,6 +64,11 @@ dependencies {
 
     //EASY PERMISSIONS
     implementation 'pub.devrel:easypermissions:1.1.1'
+
+    //GOOGLE
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
 
     //STETHO
     implementation 'com.facebook.stetho:stetho:1.5.1'

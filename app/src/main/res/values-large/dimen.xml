@@ -20,7 +20,7 @@
     <dimen name="title_height">40dp</dimen>
     <dimen name="subtitle_height">26dp</dimen>
     <dimen name="image_recycler_height">150dp</dimen>
-    <dimen name="map_height">150dp</dimen>
+    <dimen name="map_height">250dp</dimen>
 
     <integer name="gallery_orientation">0</integer>
 

@@ -357,12 +357,17 @@
                     android:padding="@dimen/basic_padding"
                     android:textSize="@dimen/title_size" />
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <fragment
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:map="http://schemas.android.com/apk/res-auto"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:id="@+id/map"
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/map_height"
-                    android:layout_weight="1"
-                    android:scaleType="center"
-                    android:src="@drawable/default_map" />
+                    map:cameraZoom="13"
+                    map:mapType="normal"
+                    map:liteMode="true"/>
             </LinearLayout>
 
         </LinearLayout>
