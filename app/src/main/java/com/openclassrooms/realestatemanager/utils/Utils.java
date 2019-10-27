@@ -61,4 +61,14 @@ public class Utils {
 
         return networkInfo != null && networkInfo.isAvailable();
     }
+
+    public static String buildAddress(Integer streetNb, String street, Integer postCode, String city) {
+        String address = "";
+        if (streetNb != null && street != null) address = String.valueOf(streetNb) + ", " + street;
+        if (streetNb == null && street != null) address = street;
+        if (postCode != null && address != null) address = address + "\n" + postCode + " " + city;
+        else if (postCode == null && address != null) address = address + "\n" + city;
+        else address = city;
+        return address;
+    }
 }

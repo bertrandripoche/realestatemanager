@@ -28,6 +28,8 @@ public class Flat {
     private String streetAddress;
     private Integer postalCodeAddress;
     private String cityAddress;
+    private Double latitude;
+    private Double longitude;
     private boolean isSchool;
     private boolean isPostOffice;
     private boolean isRestaurant;
@@ -40,7 +42,7 @@ public class Flat {
 
     public Flat() { }
 
-    public Flat(String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, boolean isSchool, boolean isPostOffice, boolean isRestaurant, boolean isTheater, boolean isShop, int agentId) {
+    public Flat(String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, Double latitude, Double longitude, boolean isSchool, boolean isPostOffice, boolean isRestaurant, boolean isTheater, boolean isShop, int agentId) {
         this.summary = summary;
         this.description = description;
         this.type = type;
@@ -53,6 +55,8 @@ public class Flat {
         this.streetAddress = streetAddress;
         this.postalCodeAddress = postalCodeAddress;
         this.cityAddress = cityAddress;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.isSchool = isSchool;
         this.isPostOffice = isPostOffice;
         this.isRestaurant = isRestaurant;
@@ -63,7 +67,7 @@ public class Flat {
         this.agentId = agentId;
     }
 
-    public Flat(int id, String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, boolean isSchool, boolean isPostOffice, boolean isRestaurant, boolean isTheater, boolean isShop, int agentId) {
+    public Flat(int id, String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, Double latitude, Double longitude, boolean isSchool, boolean isPostOffice, boolean isRestaurant, boolean isTheater, boolean isShop, int agentId) {
         this.id = id;
         this.summary = summary;
         this.description = description;
@@ -77,6 +81,8 @@ public class Flat {
         this.streetAddress = streetAddress;
         this.postalCodeAddress = postalCodeAddress;
         this.cityAddress = cityAddress;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.isSchool = isSchool;
         this.isPostOffice = isPostOffice;
         this.isRestaurant = isRestaurant;
@@ -101,6 +107,8 @@ public class Flat {
     public String getStreetAddress() {return streetAddress;}
     public Integer getPostalCodeAddress() {return postalCodeAddress;}
     public String getCityAddress() {return cityAddress;}
+    public Double getLatitude() {return latitude;}
+    public Double getLongitude() {return longitude;}
     public boolean isSchool() {return isSchool;}
     public boolean isPostOffice() {return isPostOffice;}
     public boolean isRestaurant() {return isRestaurant;}
@@ -125,6 +133,8 @@ public class Flat {
     public void setStreetAddress(String street_address) {this.streetAddress = street_address;}
     public void setPostalCodeAddress(Integer postal_code_address) {this.postalCodeAddress = postal_code_address;}
     public void setCityAddress(String city_address) {this.cityAddress = city_address;}
+    public void setLatitude(Double latitude) {this.latitude = latitude;}
+    public void setLongitude(Double longitude) {this.longitude = longitude;}
     public void setSchool(boolean school) {this.isSchool = school;}
     public void setPostOffice(boolean postOffice) {this.isPostOffice = postOffice;}
     public void setRestaurant(boolean restaurant) {this.isRestaurant = restaurant;}

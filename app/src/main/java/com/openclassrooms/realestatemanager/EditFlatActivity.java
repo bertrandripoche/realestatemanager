@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -18,7 +20,11 @@ import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Flat;
+import com.openclassrooms.realestatemanager.utils.Utils;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -159,6 +165,8 @@ public class EditFlatActivity extends AppCompatActivity {
         Integer streetNb = getNumber(this.mStreetNb.getText().toString());
         Integer postalCode = getNumber(this.mPostalCode.getText().toString());
 
+        String address = Utils.buildAddress(streetNb, this.mStreet.getText().toString(), postalCode, this.mCity.getText().toString());
+        Address flatAddress = getAddressFromSearchString(address);
 
         Flat flat = new Flat(
                 this.mFlatId.intValue(),
@@ -174,6 +182,8 @@ public class EditFlatActivity extends AppCompatActivity {
                 this.mStreet.getText().toString(),
                 postalCode,
                 this.mCity.getText().toString(),
+                flatAddress.getLatitude(),
+                flatAddress.getLongitude(),
                 mSchool.isChecked(),
                 mPostOffice.isChecked(),
                 mRestaurant.isChecked(),
@@ -191,5 +201,20 @@ public class EditFlatActivity extends AppCompatActivity {
         catch (NumberFormatException e)
         {number = null;}
         return number;
+    }
+
+    private Address getAddressFromSearchString(String address) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addressList = geocoder.getFromLocationName(address, 1);
+
+            if (addressList.size() > 0) {
+                System.out.println("Depuis méthode "+addressList.get(0).getLatitude() + " - " + addressList.get(0).getLongitude());
+                return addressList.get(0);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

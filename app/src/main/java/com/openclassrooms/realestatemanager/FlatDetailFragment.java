@@ -12,19 +12,20 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Flat;
+import com.openclassrooms.realestatemanager.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,13 +34,6 @@ import me.biubiubiu.justifytext.library.JustifyTextView;
 
 
 public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback {
-
-    private List<Flat> mFlatList;
-    private Flat mFlat;
-    private Long mFlatId;
-    private FlatDetailActivity mFlatDetailActivity;
-    private FlatViewModel mFlatViewModel;
-    private static int AGENT_ID = 0;
 
     @BindView(R.id.summary) AppCompatTextView mSummary;
     @BindView(R.id.flat_description) JustifyTextView mDescription;
@@ -59,8 +53,16 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
     @BindView(R.id.shop) AppCompatImageView mShop;
     @BindView(R.id.available_from) AppCompatTextView mAvailable_from;
 
+    private List<Flat> mFlatList;
+    private Flat mFlat;
+    private Long mFlatId;
+    private FlatDetailActivity mFlatDetailActivity;
+    private FlatViewModel mFlatViewModel;
+    private static int AGENT_ID = 0;
     private GoogleMap mMap;
     private static final String TAG = "Detail Fragment";
+    private static final int STREET_LEVEL_ZOOM = 16;
+    private static final int CITY_LEVEL_ZOOM = 11;
 
     public FlatDetailFragment() {}
 
@@ -81,15 +83,10 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
 
     @Override
     public void onMapReady(GoogleMap map) {
-        System.out.println("MAP OK");
         mMap = map;
+        map.getUiSettings().setMapToolbarEnabled(false);
 
-        boolean success = map.setMapStyle(new MapStyleOptions(getResources().getString(R.string.style_json)));
-        if (!success) {
-            Log.e(TAG, "Style parsing failed.");
-        }
         map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-
     }
 
     private void configureViewModel() {
@@ -139,16 +136,24 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
             if (mFlat.isShop()) mShop.setImageResource(R.drawable.ic_ok);
             else mShop.setImageResource(R.drawable.ic_ko);
 
-            String address = "";
-            if (mFlat.getNumberAddress() != null && mFlat.getStreetAddress() != null) address = String.valueOf(mFlat.getNumberAddress()) + ", " + mFlat.getStreetAddress();
-            if (mFlat.getNumberAddress() == null && mFlat.getStreetAddress() != null) address = mFlat.getStreetAddress();
-            if (mFlat.getPostalCodeAddress() != null && address != null) address = address + "\n" + mFlat.getPostalCodeAddress() + " " + mFlat.getCityAddress();
-            else if (mFlat.getPostalCodeAddress() == null && address != null) address = address + "\n" + mFlat.getCityAddress();
-            else address = mFlat.getCityAddress();
+            String address = Utils.buildAddress(mFlat.getNumberAddress(), mFlat.getStreetAddress(), mFlat.getPostalCodeAddress(), mFlat.getCityAddress());
+
             mAddress.setText(address);
 
             mAvailable_from.setText(getString(R.string.available_date, mFlat.getAvailableDate()));
             mAgent.setText("Pierre Poljack");
+
+            if (mFlat.getLatitude() != null) {
+                LatLng flatLatLng =  new LatLng(mFlat.getLatitude(), mFlat.getLongitude());
+                int zoom = (mFlat.getStreetAddress() == null || mFlat.getStreetAddress().equals("")) ?
+                        CITY_LEVEL_ZOOM : STREET_LEVEL_ZOOM;
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(flatLatLng, zoom));
+                mMap.addMarker(
+                        new MarkerOptions()
+                                .position(new LatLng(flatLatLng.latitude, flatLatLng.longitude))
+                                .title(mFlat.getSummary())
+                ).setTag(mFlatId);
+            }
         }
     }
 
