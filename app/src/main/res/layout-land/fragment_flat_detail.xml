@@ -134,7 +134,7 @@
                             android:drawablePadding="@dimen/basic_padding"
                             android:gravity="center_vertical"
                             android:text="@string/surface"
-                            android:textSize="@dimen/title_size_mini" />
+                            android:textSize="@dimen/title_size_small" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/surface"
@@ -144,7 +144,7 @@
                             android:gravity="center_vertical|start"
                             android:textAlignment="center"
                             android:textColor="@color/green"
-                            android:textSize="@dimen/title_size_mini"
+                            android:textSize="@dimen/title_size_small"
                             android:textStyle="bold" />
                     </TableRow>
                     <TableRow android:padding="@dimen/basic_padding">
@@ -156,7 +156,7 @@
                             android:drawablePadding="@dimen/basic_padding"
                             android:gravity="center_vertical"
                             android:text="@string/room"
-                            android:textSize="@dimen/title_size_mini" />
+                            android:textSize="@dimen/title_size_small" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/room_nb"
@@ -166,7 +166,7 @@
                             android:gravity="center_vertical|start"
                             android:textAlignment="center"
                             android:textColor="@color/green"
-                            android:textSize="@dimen/title_size_mini"
+                            android:textSize="@dimen/title_size_small"
                             android:textStyle="bold" />
                     </TableRow>
                     <TableRow android:padding="@dimen/basic_padding">
@@ -177,7 +177,7 @@
                             android:drawablePadding="@dimen/basic_padding"
                             android:gravity="center_vertical"
                             android:text="@string/bathroom"
-                            android:textSize="@dimen/title_size_mini" />
+                            android:textSize="@dimen/title_size_small" />
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/bathroom_nb"
                             android:layout_width="wrap_content"
@@ -186,7 +186,7 @@
                             android:gravity="center_vertical|start"
                             android:textAlignment="center"
                             android:textColor="@color/green"
-                            android:textSize="@dimen/title_size_mini"
+                            android:textSize="@dimen/title_size_small"
                             android:textStyle="bold" />
                     </TableRow>
                     <TableRow android:padding="@dimen/basic_padding">
@@ -197,7 +197,7 @@
                             android:drawablePadding="@dimen/basic_padding"
                             android:gravity="center_vertical"
                             android:text="@string/bedroom"
-                            android:textSize="@dimen/title_size_mini" />
+                            android:textSize="@dimen/title_size_small" />
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/bedroom_nb"
                             android:layout_width="wrap_content"
@@ -206,7 +206,7 @@
                             android:gravity="center_vertical|start"
                             android:textAlignment="center"
                             android:textColor="@color/green"
-                            android:textSize="@dimen/title_size_mini"
+                            android:textSize="@dimen/title_size_small"
                             android:textStyle="bold" />
                     </TableRow>
                 </TableLayout>
@@ -242,7 +242,7 @@
                                 android:drawablePadding="@dimen/basic_padding"
                                 android:gravity="center_vertical"
                                 android:text="@string/school"
-                                android:textSize="@dimen/title_size_mini" />
+                                android:textSize="@dimen/title_size_small" />
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/school"
                                 android:layout_width="wrap_content"
@@ -260,7 +260,7 @@
                                 android:drawablePadding="@dimen/basic_padding"
                                 android:gravity="center_vertical"
                                 android:text="@string/post_office"
-                                android:textSize="@dimen/title_size_mini" />
+                                android:textSize="@dimen/title_size_small" />
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/post"
                                 android:layout_width="wrap_content"
@@ -278,7 +278,7 @@
                                 android:drawablePadding="@dimen/basic_padding"
                                 android:gravity="center_vertical"
                                 android:text="@string/restaurant"
-                                android:textSize="@dimen/title_size_mini" />
+                                android:textSize="@dimen/title_size_small" />
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/restaurant"
                                 android:layout_width="wrap_content"
@@ -296,7 +296,7 @@
                                 android:drawablePadding="@dimen/basic_padding"
                                 android:gravity="center_vertical"
                                 android:text="@string/theater"
-                                android:textSize="@dimen/title_size_mini" />
+                                android:textSize="@dimen/title_size_small" />
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/theater"
                                 android:layout_width="wrap_content"
@@ -314,7 +314,7 @@
                                 android:drawablePadding="@dimen/basic_padding"
                                 android:gravity="center_vertical"
                                 android:text="@string/shop"
-                                android:textSize="@dimen/title_size_mini" />
+                                android:textSize="@dimen/title_size_small" />
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/shop"
                                 android:layout_width="wrap_content"
