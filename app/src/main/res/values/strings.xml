@@ -75,11 +75,11 @@
     </string-array>
 
     <string-array name="flat_agent">
+        <item>Marc Antoine</item>
         <item>Agnès Isard</item>
         <item>Naïma Lassim</item>
         <item>Pierre Martin</item>
         <item>Roger Dumont</item>
         <item>Abdel Malat</item>
-        <item>Hector Renald</item>
     </string-array>
 </resources>

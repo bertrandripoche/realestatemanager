@@ -52,6 +52,26 @@ public abstract class RealEstateManagerDatabase extends RoomDatabase {
                 contentValues.put("firstname", "Marc");
                 contentValues.put("lastname", "Antoine");
                 contentValues.put("mail", "mon.mail@gmail.com");
+                contentValues.put("id", "1");
+                contentValues.put("firstname", "Agnès");
+                contentValues.put("lastname", "Isard");
+                contentValues.put("mail", "mon.mail@gmail.com");
+                contentValues.put("id", "2");
+                contentValues.put("firstname", "Naïma");
+                contentValues.put("lastname", "Lassim");
+                contentValues.put("mail", "mon.mail@gmail.com");
+                contentValues.put("id", "3");
+                contentValues.put("firstname", "Pierre");
+                contentValues.put("lastname", "Martin");
+                contentValues.put("mail", "mon.mail@gmail.com");
+                contentValues.put("id", "4");
+                contentValues.put("firstname", "Roger");
+                contentValues.put("lastname", "Dumont");
+                contentValues.put("mail", "mon.mail@gmail.com");
+                contentValues.put("id", "5");
+                contentValues.put("firstname", "Abdel");
+                contentValues.put("lastname", "Malat");
+                contentValues.put("mail", "mon.mail@gmail.com");
 
                 db.insert("Agent", OnConflictStrategy.IGNORE, contentValues);
             }

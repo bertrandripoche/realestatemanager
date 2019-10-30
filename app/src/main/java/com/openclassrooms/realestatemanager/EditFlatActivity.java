@@ -57,8 +57,11 @@ public class EditFlatActivity extends AppCompatActivity {
 
     private Flat mFlat;
     private Long mFlatId;
+    private int mSelectedFlat;
     private FlatViewModel mFlatViewModel;
     private static int AGENT_ID = 0;
+    final String FLATID = "flatId";
+    final String SELECTEDFLAT = "selectedFlat";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +69,32 @@ public class EditFlatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_flat);
         ButterKnife.bind(this);
         mFlatId = getFlatId();
+        mSelectedFlat = getSelectedFlat();
 
         configureToolbar();
         configureSpinners();
         configureViewModel();
 
         getFlat(mFlatId);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        final String FLATID = "flatId";
+
+        Intent intent = new Intent(EditFlatActivity.this,MainActivity.class);
+        Bundle b = new Bundle();
+        b.putLong(FLATID, mFlatId);
+        intent.putExtras(b);
+
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_save_flat)
@@ -104,12 +127,20 @@ public class EditFlatActivity extends AppCompatActivity {
 
     protected Long getFlatId() {
         Long flatId = null;
-        final String FLATID = "flatId";
         Intent i = getIntent();
         if (i != null) {
             flatId = i.getExtras().getLong(FLATID);
         }
         return flatId;
+    }
+
+    protected int getSelectedFlat() {
+        int selectedFlat = -1;
+        Intent i = getIntent();
+        if (i != null) {
+            selectedFlat = i.getExtras().getInt(SELECTEDFLAT);
+        }
+        return selectedFlat;
     }
 
     private void getFlat(long flatId) {

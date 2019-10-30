@@ -61,18 +61,11 @@ public class BaseActivity extends AppCompatActivity {
                 myClass = FlatDetailActivity.class;
                 break;
             case "AddFlatActivity":
+                flatId = createBundleWithFlatId(flatId, FLATID);
                 myClass = AddFlatActivity.class;
                 break;
             case "EditFlatActivity":
-
-                if (mFlatDetailFragment != null) flatId = mFlatDetailFragment.getFlatId();
-                else {
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    Fragment currentFragment = fragmentManager.findFragmentByTag("FlatDetail");
-                    Bundle args;
-                    args = currentFragment.getArguments();
-                    flatId = args.getLong(FLATID);
-                }
+                flatId = createBundleWithFlatId(flatId, FLATID);
                 myClass = EditFlatActivity.class;
                 break;
             default:
@@ -108,6 +101,20 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void displayEditBtn() {
         if (mEditBtn != null) mEditBtn.setVisible(true);
+    }
+
+    protected Long createBundleWithFlatId(Long flatId, String FLATID) {
+        if (mFlatDetailFragment != null) flatId = mFlatDetailFragment.getFlatId();
+        else {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Fragment currentFragment = fragmentManager.findFragmentByTag("FlatDetail");
+            Bundle args;
+            if (currentFragment != null) {
+                args = currentFragment.getArguments();
+                flatId = args.getLong(FLATID);
+            }
+        }
+        return flatId;
     }
 
 }

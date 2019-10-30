@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
-import com.openclassrooms.realestatemanager.model.Agent;
 import com.openclassrooms.realestatemanager.model.Flat;
 
 import java.util.ArrayList;
@@ -37,6 +34,8 @@ public class FlatListFragment extends Fragment {
     private FlatViewModel mFlatViewModel;
     private int mSelectedFlat = -1;
     private static int AGENT_ID = 0;
+    final String FLATID = "flatId";
+    final String SELECTEDFLAT = "selectedFlat";
 
     public FlatListFragment() {}
 
@@ -64,14 +63,14 @@ public class FlatListFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("selectedFlat", mSelectedFlat);
+        outState.putInt(SELECTEDFLAT, mSelectedFlat);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
-            mSelectedFlat = savedInstanceState.getInt("selectedFlat", -1);
+            mSelectedFlat = savedInstanceState.getInt(SELECTEDFLAT, -1);
         }
     }
 
@@ -105,10 +104,10 @@ public class FlatListFragment extends Fragment {
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        final String FLATID = "flatId";
                         Long flatId = (v.getTag() == null) ? 1 : Long.parseLong(v.getTag().toString());
                         Bundle args = new Bundle();
                         args.putLong(FLATID, flatId);
+                        args.putInt(SELECTEDFLAT, position);
 
                         mFlatDetailFragment = (FlatDetailFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
                         // Tablet

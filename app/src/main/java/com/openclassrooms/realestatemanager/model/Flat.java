@@ -7,8 +7,6 @@ import androidx.room.PrimaryKey;
 
 import com.openclassrooms.realestatemanager.utils.Utils;
 
-import java.util.Date;
-
 @Entity(foreignKeys = @ForeignKey(entity = Agent.class,
         parentColumns = "id",
         childColumns = "agentId"),

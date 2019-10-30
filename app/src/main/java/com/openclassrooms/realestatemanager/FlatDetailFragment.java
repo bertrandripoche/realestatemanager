@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
+import com.openclassrooms.realestatemanager.databinding.FragmentFlatDetailBinding;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Flat;
@@ -70,6 +72,7 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_flat_detail, container, false);
         ButterKnife.bind(this, view);
+
         mFlatId = getFlatId();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
@@ -85,7 +88,6 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
     public void onMapReady(GoogleMap map) {
         mMap = map;
         map.getUiSettings().setMapToolbarEnabled(false);
-
         map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
     }
 
@@ -104,13 +106,17 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
             flatId = mFlatDetailActivity.mFlatId;
         } else {
             flatId = b.getLong(FLATID);
-        }
-        return flatId;
+        }return flatId;
+    }
+
+    private void getFlat(long flatId) {
+        this.mFlatViewModel.getFlatFromId(flatId).observe(this, this::populateData);
     }
 
     private void populateData(Flat flat) {
         mFlat = flat;
         if (mFlat != null) {
+
             mSummary.setText(mFlat.getSummary());
             mDescription.setText(getString(R.string.description_text, mFlat.getDescription()));
             mPrice.setText(getString(R.string.euro, mFlat.getPrice()));
@@ -155,10 +161,6 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
                 ).setTag(mFlatId);
             }
         }
-    }
-
-    private void getFlat(long flatId) {
-        this.mFlatViewModel.getFlatFromId(flatId).observe(this, this::populateData);
     }
 
 }
