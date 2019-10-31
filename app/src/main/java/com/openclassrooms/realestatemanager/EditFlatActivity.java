@@ -31,8 +31,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static java.lang.Math.toIntExact;
-
 public class EditFlatActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.btn_save_flat) FloatingActionButton mBtnSaveFlat;
@@ -57,7 +55,7 @@ public class EditFlatActivity extends AppCompatActivity {
 
     private Flat mFlat;
     private Long mFlatId;
-    private int mSelectedFlat;
+    private int mSelectedFlat = -1;
     private FlatViewModel mFlatViewModel;
     private static int AGENT_ID = 0;
     final String FLATID = "flatId";
@@ -92,6 +90,7 @@ public class EditFlatActivity extends AppCompatActivity {
         Intent intent = new Intent(EditFlatActivity.this,MainActivity.class);
         Bundle b = new Bundle();
         b.putLong(FLATID, mFlatId);
+        b.putInt(SELECTEDFLAT, mSelectedFlat);
         intent.putExtras(b);
 
         startActivity(intent);

@@ -56,8 +56,10 @@ public class FlatListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mAdapter.index = mSelectedFlat;
-        mAdapter.notifyDataSetChanged();
+//System.out.println("Ici onResume FlatListFragment SelectedFlat "+ mSelectedFlat);
+//        if (mAdapter.index != -1) mAdapter.index = mSelectedFlat;
+//System.out.println("Ici onResume FlatListFragment index "+mAdapter.index);
+//        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -90,13 +92,18 @@ public class FlatListFragment extends Fragment {
 
     private void configureRecyclerView() {
         final int orientation = getResources().getInteger(R.integer.gallery_orientation);
+        MainActivity mainActivity = (MainActivity) getActivity();
 
         mFlatList = new ArrayList<>();
 
         mAdapter = new FlatAdapter(mFlatList);
+        mAdapter.index = mainActivity.mSelectedFlat;
+        System.out.println("Ici onConfigureRecyclerView FlatListFragment index "+mAdapter.index);
+
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), orientation, false));
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 
     void configureOnClickRecyclerView(){
@@ -108,6 +115,8 @@ public class FlatListFragment extends Fragment {
                         Bundle args = new Bundle();
                         args.putLong(FLATID, flatId);
                         args.putInt(SELECTEDFLAT, position);
+                        MainActivity mainActivity = (MainActivity) getActivity();
+                        mainActivity.mSelectedFlat = position;
 
                         mFlatDetailFragment = (FlatDetailFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
                         // Tablet

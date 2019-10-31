@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.location.Address;
 import android.location.Geocoder;
@@ -57,6 +58,10 @@ public class AddFlatActivity extends AppCompatActivity {
 
     private FlatViewModel mFlatViewModel;
     private static int AGENT_ID = 0;
+    private Long mFlatId;
+    private int mSelectedFlat = -1;
+    final String FLATID = "flatId";
+    final String SELECTEDFLAT = "selectedFlat";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,35 @@ public class AddFlatActivity extends AppCompatActivity {
         this.configureViewModel();
         this.configureSpinners();
         this.configureTextWatchers();
+
+        mFlatId = getFlatId();
+        mSelectedFlat = getSelectedFlat();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(AddFlatActivity.this,MainActivity.class);
+        Bundle b = new Bundle();
+        if (mFlatId != null) b.putLong(FLATID, mFlatId);
+        if (mSelectedFlat != -1) b.putInt(SELECTEDFLAT, mSelectedFlat);
+        intent.putExtras(b);
+
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_add_flat)
+    public void onClickAddButton() {
+        if (isFormValid()) this.createFlat();
+        else {
+            Toast.makeText(getApplicationContext(), R.string.invalid_form, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void configureSpinners() {
@@ -77,14 +111,6 @@ public class AddFlatActivity extends AppCompatActivity {
         ArrayAdapter adapterSpinnerFlatAgent = ArrayAdapter.createFromResource(this, R.array.flat_agent, R.layout.spinner_item);
         adapterSpinnerFlatAgent.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mFlatAgent.setAdapter(adapterSpinnerFlatAgent);
-    }
-
-    @OnClick(R.id.btn_add_flat)
-    public void onClickAddButton() {
-        if (isFormValid()) this.createFlat();
-        else {
-            Toast.makeText(getApplicationContext(), R.string.invalid_form, Toast.LENGTH_LONG).show();
-        }
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
@@ -217,12 +243,29 @@ public class AddFlatActivity extends AppCompatActivity {
             List<Address> addressList = geocoder.getFromLocationName(address, 1);
 
             if (addressList.size() > 0) {
-System.out.println("Depuis méthode "+addressList.get(0).getLatitude() + " - " + addressList.get(0).getLongitude());
                 return addressList.get(0);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    protected Long getFlatId() {
+        Long flatId = null;
+        Intent i = getIntent();
+        if (i != null && i.getExtras() != null) {
+            flatId = i.getExtras().getLong(FLATID);
+        }
+        return flatId;
+    }
+
+    protected int getSelectedFlat() {
+        int selectedFlat = -1;
+        Intent i = getIntent();
+        if (i != null && i.getExtras() != null) {
+            selectedFlat = i.getExtras().getInt(SELECTEDFLAT);
+        }
+        return selectedFlat;
     }
 }

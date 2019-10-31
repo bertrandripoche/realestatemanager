@@ -15,7 +15,7 @@ import java.util.List;
 public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
 
     private List<Flat> mFlatList;
-    public int index = -1;
+    public int index;
 
     public FlatAdapter(List<Flat> mFlatList) {
         this.mFlatList = mFlatList;
@@ -43,8 +43,9 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull FlatViewHolder holder, int position) {
         holder.updateWithFlat(this.mFlatList.get(position));
+System.out.println("Ici adapter, index = "+index);
 
-        if(index==position) setSelected(holder);
+        if (index != -1 && index==position) setSelected(holder);
         else unsetSelected(holder);
 
     }

@@ -17,6 +17,10 @@ public class BaseActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar mToolbar;
     MenuItem mEditBtn;
     FlatDetailFragment mFlatDetailFragment;
+    protected Long mFlatId = null;
+    protected int mSelectedFlat = -1;
+    final String FLATID = "flatId";
+    final String SELECTEDFLAT = "selectedFlat";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,27 +58,26 @@ public class BaseActivity extends AppCompatActivity {
     protected void launchActivity(String activity) {
         Class myClass;
 
-        Long flatId = null;
-        final String FLATID = "flatId";
         switch(activity) {
             case "FlatDetail":
                 myClass = FlatDetailActivity.class;
                 break;
             case "AddFlatActivity":
-                flatId = createBundleWithFlatId(flatId, FLATID);
+                mFlatId = createBundleWithFlatId(mFlatId, FLATID);
                 myClass = AddFlatActivity.class;
                 break;
             case "EditFlatActivity":
-                flatId = createBundleWithFlatId(flatId, FLATID);
+                mFlatId = createBundleWithFlatId(mFlatId, FLATID);
                 myClass = EditFlatActivity.class;
                 break;
             default:
                 myClass = MainActivity.class;
         }
         Intent myIntent = new Intent(this, myClass);
-        if (flatId != null) {
+        if (mFlatId != null || mSelectedFlat != -1) {
             Bundle b = new Bundle();
-            b.putLong(FLATID, flatId);
+            if (mFlatId != null) b.putLong(FLATID, mFlatId);
+            if (mSelectedFlat != -1) b.putInt(SELECTEDFLAT, mSelectedFlat);
             myIntent.putExtras(b);
         }
         this.startActivity(myIntent);
