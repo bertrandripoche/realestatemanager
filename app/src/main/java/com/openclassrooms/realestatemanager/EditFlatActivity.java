@@ -125,7 +125,7 @@ public class EditFlatActivity extends AppCompatActivity {
     }
 
     protected Long getFlatId() {
-        Long flatId = null;
+        Long flatId = -1L;
         Intent i = getIntent();
         if (i != null) {
             flatId = i.getExtras().getLong(FLATID);

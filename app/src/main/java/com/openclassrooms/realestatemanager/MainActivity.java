@@ -19,7 +19,7 @@ public class MainActivity extends BaseActivity {
 
         mFlatId = getFlatId();
 
-        if(mFlatId != null && mFlatId != 0 && findViewById(R.id.container_fragment_flat_detail) != null)
+        if(mFlatId != null && mFlatId >= 0 && findViewById(R.id.container_fragment_flat_detail) != null)
         {
             Bundle args = new Bundle();
             mSelectedFlat = getSelectedFlat();
@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity {
                     .replace(R.id.container_fragment_flat_detail, mFlatDetailFragment, "FlatDetail")
                     .commit();
             displayEditBtn();
-        } else if (mFlatId != null && mFlatId != 0) {
+        } else if (mFlatId != null && mFlatId >= 0) {
             Bundle args = new Bundle();
             args.putLong(FLATID, mFlatId);
             Intent intent = new Intent(this, FlatDetailActivity.class);
@@ -55,13 +55,13 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
        super.onCreateOptionsMenu(menu);
-       if(mFlatId != null && findViewById(R.id.container_fragment_flat_detail) != null) displayEditBtn();
+       if(mFlatId != null && mFlatId > 0 &&findViewById(R.id.container_fragment_flat_detail) != null) displayEditBtn();
        else hideEditBtn();
        return true;
     }
 
     protected Long getFlatId() {
-        Long mFlatId = null;
+        Long mFlatId = -1L;
         final String FLATID = "flatId";
         Intent i = getIntent();
         if (i != null && i.getExtras() != null) {
@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity {
     protected int getSelectedFlat() {
         int selectedFlat = -1;
         Intent i = getIntent();
-        if (i != null && i.getExtras().getInt(SELECTEDFLAT) != -1) {
+        if (i != null && i.getExtras() != null && i.getExtras().getInt(SELECTEDFLAT) != -1) {
             selectedFlat = i.getExtras().getInt(SELECTEDFLAT);
         }
         return selectedFlat;

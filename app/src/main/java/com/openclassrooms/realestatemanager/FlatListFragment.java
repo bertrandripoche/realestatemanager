@@ -54,16 +54,8 @@ public class FlatListFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-//System.out.println("Ici onResume FlatListFragment SelectedFlat "+ mSelectedFlat);
-//        if (mAdapter.index != -1) mAdapter.index = mSelectedFlat;
-//System.out.println("Ici onResume FlatListFragment index "+mAdapter.index);
-//        mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
+        System.out.println("FlatListFragment onSaveInstance "+mSelectedFlat );
         super.onSaveInstanceState(outState);
         outState.putInt(SELECTEDFLAT, mSelectedFlat);
     }
@@ -73,6 +65,13 @@ public class FlatListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
             mSelectedFlat = savedInstanceState.getInt(SELECTEDFLAT, -1);
+
+            MainActivity mainActivity = (MainActivity) getActivity();
+            if (mSelectedFlat != -1) {
+                mainActivity.displayEditBtn();
+                mAdapter.index = mSelectedFlat;
+            }
+            else mainActivity.hideEditBtn();
         }
     }
 
@@ -117,12 +116,12 @@ public class FlatListFragment extends Fragment {
                         args.putInt(SELECTEDFLAT, position);
                         MainActivity mainActivity = (MainActivity) getActivity();
                         mainActivity.mSelectedFlat = position;
+                        mSelectedFlat = position;
 
                         mFlatDetailFragment = (FlatDetailFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
                         // Tablet
                         if (getActivity().findViewById(R.id.container_fragment_flat_detail) != null) {
                             mAdapter.index = position;
-                            mSelectedFlat = position;
                             mAdapter.notifyDataSetChanged();
 
                             mFlatDetailFragment = new FlatDetailFragment();

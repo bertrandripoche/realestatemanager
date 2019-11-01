@@ -17,7 +17,7 @@ public class BaseActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar mToolbar;
     MenuItem mEditBtn;
     FlatDetailFragment mFlatDetailFragment;
-    protected Long mFlatId = null;
+    protected Long mFlatId = -1L;
     protected int mSelectedFlat = -1;
     final String FLATID = "flatId";
     final String SELECTEDFLAT = "selectedFlat";

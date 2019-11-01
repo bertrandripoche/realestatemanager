@@ -90,7 +90,7 @@ public class AddFlatActivity extends AppCompatActivity {
         Intent intent = new Intent(AddFlatActivity.this,MainActivity.class);
         Bundle b = new Bundle();
         if (mFlatId != null) b.putLong(FLATID, mFlatId);
-        if (mSelectedFlat != -1) b.putInt(SELECTEDFLAT, mSelectedFlat);
+        b.putInt(SELECTEDFLAT, mSelectedFlat);
         intent.putExtras(b);
 
         startActivity(intent);
@@ -252,7 +252,7 @@ public class AddFlatActivity extends AppCompatActivity {
     }
 
     protected Long getFlatId() {
-        Long flatId = null;
+        Long flatId = -1L;
         Intent i = getIntent();
         if (i != null && i.getExtras() != null) {
             flatId = i.getExtras().getLong(FLATID);
