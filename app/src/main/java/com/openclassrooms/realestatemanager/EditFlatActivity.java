@@ -198,30 +198,27 @@ public class EditFlatActivity extends AppCompatActivity {
         String address = Utils.buildAddress(streetNb, this.mStreet.getText().toString(), postalCode, this.mCity.getText().toString());
         Address flatAddress = getAddressFromSearchString(address);
 
-        Flat flat = new Flat(
-                this.mFlatId.intValue(),
-                this.mSummary.getText().toString(),
-                this.mDescription.getText().toString(),
-                this.mFlatType.getSelectedItem().toString(),
-                price,
-                surface,
-                room,
-                bedroom,
-                bathroom,
-                streetNb,
-                this.mStreet.getText().toString(),
-                postalCode,
-                this.mCity.getText().toString(),
-                flatAddress.getLatitude(),
-                flatAddress.getLongitude(),
-                mSchool.isChecked(),
-                mPostOffice.isChecked(),
-                mRestaurant.isChecked(),
-                mTheater.isChecked(),
-                mShop.isChecked(),
-                AGENT_ID);
+        mFlat.setSummary(this.mSummary.getText().toString());
+        mFlat.setDescription(this.mDescription.getText().toString());
+        mFlat.setType(this.mFlatType.getSelectedItem().toString());
+        mFlat.setPrice(price);
+        mFlat.setSurface(surface);
+        mFlat.setRoom(room);
+        mFlat.setBedroom(bedroom);
+        mFlat.setBathroom(bathroom);
+        mFlat.setNumberAddress(streetNb);
+        mFlat.setStreetAddress(this.mStreet.getText().toString());
+        mFlat.setPostalCodeAddress(postalCode);
+        mFlat.setCityAddress(this.mCity.getText().toString());
+        mFlat.setLatitude(flatAddress.getLatitude());
+        mFlat.setLongitude(flatAddress.getLongitude());
+        mFlat.setSchool(mSchool.isChecked());
+        mFlat.setPostOffice(mPostOffice.isChecked());
+        mFlat.setRestaurant(mRestaurant.isChecked());
+        mFlat.setTheater(mTheater.isChecked());
+        mFlat.setShop(mShop.isChecked());
 
-        this.mFlatViewModel.updateFlat(flat);
+        this.mFlatViewModel.updateFlat(mFlat);
     }
 
     private Integer getNumber(String str) {
