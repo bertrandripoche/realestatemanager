@@ -55,7 +55,6 @@ public class FlatListFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        System.out.println("FlatListFragment onSaveInstance "+mSelectedFlat );
         super.onSaveInstanceState(outState);
         outState.putInt(SELECTEDFLAT, mSelectedFlat);
     }
@@ -97,7 +96,6 @@ public class FlatListFragment extends Fragment {
 
         mAdapter = new FlatAdapter(mFlatList);
         mAdapter.index = mainActivity.mSelectedFlat;
-        System.out.println("Ici onConfigureRecyclerView FlatListFragment index "+mAdapter.index);
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), orientation, false));
