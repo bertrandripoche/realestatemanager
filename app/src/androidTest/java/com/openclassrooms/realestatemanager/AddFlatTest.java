@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.room.Room;
-import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.matcher.BoundedMatcher;
 import androidx.test.filters.LargeTest;
@@ -17,15 +15,10 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.openclassrooms.realestatemanager.database.RealEstateManagerDatabase;
-import com.openclassrooms.realestatemanager.model.Agent;
-import com.openclassrooms.realestatemanager.model.Flat;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,32 +37,6 @@ import static org.hamcrest.Matchers.allOf;
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class AddFlatTest {
-
-    // FOR DATA
-    private RealEstateManagerDatabase database;
-    private static long AGENT_ID = 1;
-    private static Agent AGENT_DEMO = new Agent("Philippe", "Dubois","Philippe.Dubois@gmail.com");
-    private static Flat NEW_Flat1 = new Flat( "Urbain et stylé", "blablabla", "Appartement", 480000, 67, 3 , 2, 1, 5, "rue des Petites Écuries", 75010, "Paris", 48.7, 2.35, false, true, true, false, false, 1);
-    private static Flat NEW_Flat2 = new Flat( "Familial de luxe", "blablabla", "Appartement", 1560000, 138, 6 , 4, 2, 121, "rue de Rivoli", 75001, "Paris", 48.7, 2.35, false, true, true, false, false, 1);
-    private static Flat NEW_Flat3 = new Flat( "Pour grande famille", "blablabla", "Duplex", 980000, 108, 4 , 2, 2, 34, "rue de Trévise", 75009, "Paris",48.7, 2.35, false, true, true, false, false, 1);
-
-    @Before
-    public void initDb() throws Exception {
-        this.database = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(),
-                RealEstateManagerDatabase.class)
-                .allowMainThreadQueries()
-                .build();
-
-        this.database.mAgentDao().createAgent(AGENT_DEMO);
-        this.database.mFlatDao().insertFlat(NEW_Flat1);
-        this.database.mFlatDao().insertFlat(NEW_Flat2);
-        this.database.mFlatDao().insertFlat(NEW_Flat3);
-    }
-
-    @After
-    public void closeDb() throws Exception {
-        database.close();
-    }
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
