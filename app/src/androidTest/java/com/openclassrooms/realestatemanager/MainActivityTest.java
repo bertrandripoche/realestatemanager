@@ -192,6 +192,11 @@ public class MainActivityTest {
     public void CheckEditBtnAppearsWhenFlatItemClickedAndAfterClickingAddFlatAndFlipScreen() {
 
         UiDevice device = UiDevice.getInstance(getInstrumentation());
+//        try {
+//            device.setOrientationNatural();
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
 
         ViewInteraction editBtn = onView(withId(R.id.secondary_menu_edit));
 

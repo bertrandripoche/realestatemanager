@@ -1,28 +1,38 @@
 package com.openclassrooms.realestatemanager;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Flat;
+import com.openclassrooms.realestatemanager.model.Pic;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.io.IOException;
@@ -33,10 +43,14 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class AddFlatActivity extends AppCompatActivity {
+public class AddFlatActivity extends AppCompatActivity  implements EasyPermissions.PermissionCallbacks {
     @BindView(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.flat_photos_list_recycler_view) RecyclerView mFlatPhotosRecyclerView;
     @BindView(R.id.btn_add_flat) FloatingActionButton mBtnAddFlat;
+    @BindView(R.id.edit_photo_caption) EditText mCaption;
+    @BindView(R.id.btn_add_photo) ImageButton mBtnCaption;
     @BindView(R.id.edit_flat_type) Spinner mFlatType;
     @BindView(R.id.edit_summary) EditText mSummary;
     @BindView(R.id.edit_description) EditText mDescription;
@@ -57,11 +71,23 @@ public class AddFlatActivity extends AppCompatActivity {
     @BindView(R.id.edit_flat_agent) Spinner mFlatAgent;
 
     private FlatViewModel mFlatViewModel;
-    private static int AGENT_ID = 0;
     private Long mFlatId;
+    private Uri uriImageSelected;
+    private String mUserChoosenTask;
+    private List<Pic> mFlatPhotosList;
+
     private int mSelectedFlat = -1;
+    private static int AGENT_ID = 0;
     final String FLATID = "flatId";
     final String SELECTEDFLAT = "selectedFlat";
+    private static final int REQUEST_CAMERA = 0;
+    private static final int SELECT_FILE = 1;
+    private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
+    private static final int RC_IMAGE_PERMS = 100;
+    private static final int RC_CHOOSE_PHOTO = 200;
+
+    public AddFlatActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +102,8 @@ public class AddFlatActivity extends AppCompatActivity {
 
         mFlatId = getFlatId();
         mSelectedFlat = getSelectedFlat();
+
+        if (mFlatPhotosList == null || mFlatPhotosList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
     }
 
     @Override
@@ -96,11 +124,32 @@ public class AddFlatActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
     @OnClick(R.id.btn_add_flat)
     public void onClickAddButton() {
         if (isFormValid()) this.createFlat();
         else {
             Toast.makeText(getApplicationContext(), R.string.invalid_form, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @OnClick(R.id.btn_add_photo)
+    public void onClickPhotoButton() {
+        if (!mCaption.getText().toString().equals("")) {
+            String caption = mCaption.getText().toString();
+            if (!EasyPermissions.hasPermissions(this, PERMS)) {
+                EasyPermissions.requestPermissions(this, getString(R.string.permissions_issue), RC_IMAGE_PERMS, PERMS);
+                return;
+            }
+            selectImage(caption);
+        }
+        else {
+            Toast.makeText(getApplicationContext(), R.string.invalid_caption, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -127,6 +176,10 @@ public class AddFlatActivity extends AppCompatActivity {
             // Enable-disable Floating Action Button
             if (isFormValid()) enableAddFlatButton();
             else disableAddFlatButton();
+
+            // Enable-disable Photo Button
+            if (mCaption.getText().toString().equals("")) disablePhotoButton();
+            else enablePhotoButton();
         }
     };
 
@@ -138,6 +191,7 @@ public class AddFlatActivity extends AppCompatActivity {
     }
 
     private void configureTextWatchers() {
+        mCaption.addTextChangedListener(textWatcher);
         mSummary.addTextChangedListener(textWatcher);
         mDescription.addTextChangedListener(textWatcher);
         mSurface.addTextChangedListener(textWatcher);
@@ -224,6 +278,14 @@ public class AddFlatActivity extends AppCompatActivity {
         mBtnAddFlat.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_grey)));
     }
 
+    private void enablePhotoButton() {
+        mBtnCaption.setImageResource(R.drawable.ic_add_photo);
+    }
+
+    private void disablePhotoButton() {
+        mBtnCaption.setImageResource(R.drawable.ic_add_photo_off);
+    }
+
     private boolean isFormValid() {
         return !mSummary.getText().toString().equals("") && !mDescription.getText().toString().equals("")  && !mSurface.getText().toString().equals("")  && !mPrice.getText().toString().equals("")  && !mCity.getText().toString().equals("");
     }
@@ -267,5 +329,53 @@ public class AddFlatActivity extends AppCompatActivity {
             selectedFlat = i.getExtras().getInt(SELECTEDFLAT);
         }
         return selectedFlat;
+    }
+
+    private void selectImage(String caption) {
+        final CharSequence[] items = { "Take Photo", "Choose from Library",
+                "Cancel" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddFlatActivity.this, R.style.AlertDialogTheme);
+        builder.setTitle(getString(R.string.add_photo, caption));
+
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                boolean result = true;
+                if (items[item].equals("Take Photo")) {
+                    mUserChoosenTask = "Take Photo";
+                    if(result)
+                        cameraIntent();
+                } else if (items[item].equals("Choose from Library")) {
+                    mUserChoosenTask = "Choose from Library";
+                    if(result)
+                        galleryIntent();
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void cameraIntent() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_CAMERA);
+    }
+
+    private void galleryIntent() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+
     }
 }
