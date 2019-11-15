@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_flat_pic_recycler_layout"
+    android:layout_margin="@dimen/basic_padding"
+    android:layout_width="240dp"
+    android:layout_height="180dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/item_pic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_flat"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/item_caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/title_size_small"
+        android:paddingEnd="@dimen/middle_padding"
+        android:textStyle="bold"
+        android:background="@color/black_alpha"
+        android:text="Légende"
+        android:textColor="@color/white"
+        android:padding="@dimen/middle_padding"
+        app:layout_constraintBottom_toBottomOf="@id/item_pic"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -18,13 +19,13 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,9 +34,12 @@ import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Flat;
 import com.openclassrooms.realestatemanager.model.Pic;
+import com.openclassrooms.realestatemanager.utils.StorageUtils;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -43,9 +47,10 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class AddFlatActivity extends AppCompatActivity  implements EasyPermissions.PermissionCallbacks {
+public class AddFlatActivity extends AppCompatActivity  {
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.flat_photos_list_recycler_view) RecyclerView mFlatPhotosRecyclerView;
     @BindView(R.id.btn_add_flat) FloatingActionButton mBtnAddFlat;
@@ -74,17 +79,18 @@ public class AddFlatActivity extends AppCompatActivity  implements EasyPermissio
     private Long mFlatId;
     private Uri uriImageSelected;
     private String mUserChoosenTask;
-    private List<Pic> mFlatPhotosList;
+    private HashMap<Uri, String> mFlatPhotosList = new HashMap<Uri, String>();
+    private List<Pic> mFlatPicList = new ArrayList();
+    private FlatPicAdapter mAdapter;
 
     private int mSelectedFlat = -1;
     private static int AGENT_ID = 0;
     final String FLATID = "flatId";
     final String SELECTEDFLAT = "selectedFlat";
-    private static final int REQUEST_CAMERA = 0;
-    private static final int SELECT_FILE = 1;
+    private static final int REQUEST_CAMERA_TAKE_PICTURE = 0;
+    private static final int REQUEST_SELECT_PIC_GALLERY = 1;
     private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final int RC_IMAGE_PERMS = 100;
-    private static final int RC_CHOOSE_PHOTO = 200;
 
     public AddFlatActivity() {
     }
@@ -99,11 +105,10 @@ public class AddFlatActivity extends AppCompatActivity  implements EasyPermissio
         this.configureViewModel();
         this.configureSpinners();
         this.configureTextWatchers();
+        this.checkRecyclerView();
 
         mFlatId = getFlatId();
         mSelectedFlat = getSelectedFlat();
-
-        if (mFlatPhotosList == null || mFlatPhotosList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
     }
 
     @Override
@@ -139,6 +144,7 @@ public class AddFlatActivity extends AppCompatActivity  implements EasyPermissio
     }
 
     @OnClick(R.id.btn_add_photo)
+    @AfterPermissionGranted(RC_IMAGE_PERMS)
     public void onClickPhotoButton() {
         if (!mCaption.getText().toString().equals("")) {
             String caption = mCaption.getText().toString();
@@ -151,6 +157,59 @@ public class AddFlatActivity extends AppCompatActivity  implements EasyPermissio
         else {
             Toast.makeText(getApplicationContext(), R.string.invalid_caption, Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        this.handleResponse(requestCode, resultCode, data);
+    }
+
+    private void handleResponse(int requestCode, int resultCode, Intent data){
+        if (requestCode == REQUEST_SELECT_PIC_GALLERY) {
+            if (resultCode == RESULT_OK) {
+                uriImageSelected = data.getData();
+                String mSelectedImagePath = getPath(uriImageSelected);
+                System.out.println("URI : "+uriImageSelected + " - Path : "+mSelectedImagePath);
+                mFlatPhotosList.put(uriImageSelected, mCaption.getText().toString());
+                Pic pic = new Pic(uriImageSelected, mCaption.getText().toString(),0);
+                mFlatPicList.add(pic);
+
+                mCaption.setText("");
+                checkRecyclerView();
+                Toast.makeText(this, "Photo saved", Toast.LENGTH_SHORT).show();
+                System.out.println("Liste photo : "+mFlatPicList);
+
+            } else {
+                Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        startManagingCursor(cursor);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    private void checkRecyclerView() {
+        if (mFlatPhotosList == null || mFlatPhotosList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
+        else {
+            mFlatPhotosRecyclerView.setVisibility(View.VISIBLE);
+            this.configureRecyclerView();
+        }
+    }
+
+    private void configureRecyclerView() {
+        mAdapter = new FlatPicAdapter(mFlatPicList);
+
+        mFlatPhotosRecyclerView.setHasFixedSize(true);
+        mFlatPhotosRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        mFlatPhotosRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 
     private void configureSpinners() {
@@ -340,15 +399,12 @@ public class AddFlatActivity extends AppCompatActivity  implements EasyPermissio
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                boolean result = true;
                 if (items[item].equals("Take Photo")) {
                     mUserChoosenTask = "Take Photo";
-                    if(result)
-                        cameraIntent();
+                    cameraIntent();
                 } else if (items[item].equals("Choose from Library")) {
                     mUserChoosenTask = "Choose from Library";
-                    if(result)
-                        galleryIntent();
+                    galleryIntent();
                 } else if (items[item].equals("Cancel")) {
                     dialog.dismiss();
                 }
@@ -359,23 +415,15 @@ public class AddFlatActivity extends AppCompatActivity  implements EasyPermissio
 
     private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, REQUEST_CAMERA);
+        startActivityForResult(intent, REQUEST_CAMERA_TAKE_PICTURE);
     }
 
     private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);//
-        startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
+        startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_SELECT_PIC_GALLERY);
     }
 
-    @Override
-    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
 
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-
-    }
 }

@@ -43,7 +43,6 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull FlatViewHolder holder, int position) {
         holder.updateWithFlat(this.mFlatList.get(position));
-System.out.println("Ici adapter, index = "+index);
 
         if (index != -1 && index==position) setSelected(holder);
         else unsetSelected(holder);

@@ -13,13 +13,11 @@ public class FlatDataRepository {
     public FlatDataRepository(FlatDao flatDao) { this.mFlatDao = flatDao; }
 
     // --- GET ---
-
     public LiveData<List<Flat>> getFlats(){ return this.mFlatDao.getFlats(); }
     public LiveData<List<Flat>> getFlatsPerAgent(long agentId){ return this.mFlatDao.getFlatsPerAgent(agentId); }
     public LiveData<Flat> getFlatFromId(long flatId){ return this.mFlatDao.getFlatFromId(flatId); }
 
     // --- CREATE ---
-
     public void createFlat(Flat flat){ mFlatDao.insertFlat(flat); }
 
     // --- DELETE ---

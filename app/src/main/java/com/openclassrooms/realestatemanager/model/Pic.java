@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.model;
 
 import android.net.Uri;
 
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
@@ -17,6 +18,12 @@ public class Pic {
     private Uri picPath;
     private String caption;
     private int flatId;
+
+    public Pic(Uri picPath, String caption) {
+        this.picPath = picPath;
+        this.caption = caption;
+        this.flatId = 0;
+    }
 
     public Pic(Uri picPath, String caption, int flatId) {
         this.picPath = picPath;
