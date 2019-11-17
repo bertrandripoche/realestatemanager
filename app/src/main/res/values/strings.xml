@@ -72,6 +72,8 @@
     <string name="invalid_caption">Please enter a caption first.</string>
     <string name="permissions_issue">You need permissions first.</string>
     <string name="add_photo">Add photo \"%1$s\"</string>
+    <string name="no_picture_selected">No picture selected</string>
+    <string name="picture_saved">Photo saved</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>

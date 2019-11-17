@@ -19,6 +19,10 @@ public class MainActivity extends BaseActivity {
 
         mFlatId = getFlatId();
 
+        checkPreviousFlatSelection();
+    }
+
+    private void checkPreviousFlatSelection() {
         if(mFlatId != null && mFlatId >= 0 && findViewById(R.id.container_fragment_flat_detail) != null)
         {
             Bundle args = new Bundle();

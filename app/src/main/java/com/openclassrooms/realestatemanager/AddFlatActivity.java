@@ -11,6 +11,7 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -83,9 +84,10 @@ public class AddFlatActivity extends AppCompatActivity  {
     private FlatViewModel mFlatViewModel;
     private Long mFlatId;
     private Uri uriImageSelected;
+    private Uri mPhotoURI;
+    String mCurrentPhotoPath;
     private String mUserChoosenTask;
-    private HashMap<Uri, String> mFlatPhotosList = new HashMap<Uri, String>();
-    private List<Pic> mFlatPicList = new ArrayList();
+    private ArrayList<Pic> mFlatPicList = new ArrayList();
     private FlatPicAdapter mAdapter;
 
     private int mSelectedFlat = -1;
@@ -164,6 +166,19 @@ public class AddFlatActivity extends AppCompatActivity  {
         }
     }
 
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        System.out.println("La liste avant rotation : " + mFlatPicList);
+        outState.putParcelableArrayList("flatPicList", mFlatPicList);
+    }
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mFlatPicList = savedInstanceState.getParcelableArrayList("flatPicList");
+        System.out.println("La liste après rotation : " +mFlatPicList + " - " + mFlatPicList.size() +" éléments");
+        if (mFlatPicList.size() != 0) checkRecyclerView();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -173,27 +188,25 @@ public class AddFlatActivity extends AppCompatActivity  {
     private void handleResponse(int requestCode, int resultCode, Intent data){
         if (requestCode == REQUEST_SELECT_PIC_GALLERY || requestCode == REQUEST_CAMERA_TAKE_PICTURE) {
             if (resultCode == RESULT_OK) {
+
                 if (requestCode == REQUEST_SELECT_PIC_GALLERY) {
-                    System.out.println(data);
                     uriImageSelected = data.getData();
                     String mSelectedImagePath = getRealPathFromURI(uriImageSelected);
-                    System.out.println("URI : " + uriImageSelected + " - Path : " + mSelectedImagePath);
-                    mFlatPhotosList.put(uriImageSelected, mCaption.getText().toString());
-                    Pic pic = new Pic(uriImageSelected, mCaption.getText().toString(), 0);
-                    mFlatPicList.add(pic);
-
-                    mCaption.setText("");
-                    checkRecyclerView();
-                    Toast.makeText(this, "Photo saved", Toast.LENGTH_SHORT).show();
-                    System.out.println("Liste photo : " + mFlatPicList);
                 }
+
                 if (requestCode == REQUEST_CAMERA_TAKE_PICTURE) {
-                    Bundle extras = data.getExtras();
-                    uriImageSelected = data.getData();
+                    uriImageSelected = mPhotoURI;
+                    String mSelectedImagePath = mCurrentPhotoPath;
                 }
 
+                Pic pic = new Pic(uriImageSelected, mCaption.getText().toString(), 0);
+                mFlatPicList.add(pic);
+
+                Toast.makeText(this, R.string.picture_saved, Toast.LENGTH_SHORT).show();
+                mCaption.setText("");
+                checkRecyclerView();
             } else {
-                Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.no_picture_selected, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -211,7 +224,7 @@ public class AddFlatActivity extends AppCompatActivity  {
     }
 
     private void checkRecyclerView() {
-        if (mFlatPhotosList == null || mFlatPhotosList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
+        if (mFlatPicList == null || mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
         else {
             mFlatPhotosRecyclerView.setVisibility(View.VISIBLE);
             this.configureRecyclerView();
@@ -430,21 +443,19 @@ public class AddFlatActivity extends AppCompatActivity  {
 
     private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
         if (intent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
             File photoFile = null;
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
                 System.out.println("Error in cameraIntent");
             }
-            // Continue only if the File was successfully created
+
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
+                mPhotoURI = FileProvider.getUriForFile(this,
                         "com.example.android.fileprovider",
                         photoFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoURI);
                 startActivityForResult(intent, REQUEST_CAMERA_TAKE_PICTURE);
             }
         }
@@ -459,19 +470,19 @@ public class AddFlatActivity extends AppCompatActivity  {
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        String currentPhotoPath;
+
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+                imageFileName,
+                ".jpg",
+                storageDir
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
+        mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 }
