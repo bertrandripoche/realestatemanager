@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_flat_pic_recycler_layout"
     android:layout_margin="@dimen/basic_padding"
-    android:layout_width="240dp"
-    android:layout_height="180dp">
+    android:layout_width="320dp"
+    android:layout_height="240dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/item_pic"

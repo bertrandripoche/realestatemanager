@@ -43,14 +43,14 @@
                         android:textSize="@dimen/title_size_big"
                         android:textStyle="bold" />
                 </TableRow>
-                <TableRow android:layout_margin="2dp">
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/flat_photos_list_recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/map_height"
-                        android:layout_marginBottom="6dp">
-                    </androidx.recyclerview.widget.RecyclerView>
-                </TableRow>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/flat_photos_list_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/map_height"
+                    android:layout_marginBottom="6dp">
+                </androidx.recyclerview.widget.RecyclerView>
+
                 <TableRow android:layout_margin="2dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -81,8 +81,8 @@
                         android:id="@+id/btn_add_photo"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:scaleType="fitCenter"
                         android:layout_weight="1"
+                        android:scaleType="fitCenter"
                         android:background="@color/light_green"
                         android:src="@drawable/ic_add_photo_off"/>
                 </TableRow>

@@ -42,13 +42,12 @@
                         android:textSize="@dimen/title_size_big"
                         android:textStyle="bold" />
                 </TableRow>
-                <TableRow android:layout_margin="2dp">
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/flat_photos_list_recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/map_height">
-                    </androidx.recyclerview.widget.RecyclerView>
-                </TableRow>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/flat_photos_list_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/map_height"
+                    android:layout_marginBottom="@dimen/basic_padding">
+                </androidx.recyclerview.widget.RecyclerView>
                 <TableRow android:layout_margin="2dp">
 
                     <androidx.appcompat.widget.AppCompatTextView

@@ -1,6 +1,9 @@
 package com.openclassrooms.realestatemanager.utils;
 
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 
 import androidx.appcompat.app.AppCompatActivity;
 
