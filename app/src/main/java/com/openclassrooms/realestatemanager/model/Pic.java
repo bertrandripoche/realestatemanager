@@ -6,13 +6,19 @@ import android.os.Parcelable;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.openclassrooms.realestatemanager.utils.UriTypeConverter;
 
 @Entity(foreignKeys = @ForeignKey(entity = Flat.class,
         parentColumns = "id",
         childColumns = "flatId"),
         indices = {@Index("flatId")})
+@TypeConverters({UriTypeConverter.class})
+
 public class Pic implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -20,6 +26,7 @@ public class Pic implements Parcelable {
     private String caption;
     private int flatId;
 
+    @Ignore
     public Pic(Uri picPath, String caption) {
         this.picPath = picPath;
         this.caption = caption;

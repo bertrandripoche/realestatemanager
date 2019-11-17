@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.realestatemanager.model.Agent;
 import com.openclassrooms.realestatemanager.model.Flat;
+import com.openclassrooms.realestatemanager.model.Pic;
 import com.openclassrooms.realestatemanager.repositories.AgentDataRepository;
 import com.openclassrooms.realestatemanager.repositories.FlatDataRepository;
+import com.openclassrooms.realestatemanager.repositories.PicDataRepository;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -17,15 +19,17 @@ public class FlatViewModel extends ViewModel {
     // REPOSITORIES
     private final FlatDataRepository mFlatDataSource;
     private final AgentDataRepository mAgentDataSource;
+    private final PicDataRepository mPicDataSource;
     private final Executor executor;
 
     // DATA
     @Nullable
     private LiveData<Agent> mCurrentUser;
 
-    public FlatViewModel(FlatDataRepository flatDataSource, AgentDataRepository agentDataSource, Executor executor) {
+    public FlatViewModel(FlatDataRepository flatDataSource, AgentDataRepository agentDataSource, PicDataRepository picDataSource, Executor executor) {
         this.mFlatDataSource = flatDataSource;
         this.mAgentDataSource = agentDataSource;
+        this.mPicDataSource = picDataSource;
         this.executor = executor;
     }
 
@@ -47,6 +51,10 @@ public class FlatViewModel extends ViewModel {
     // -------------
     // FOR FLAT
     // -------------
+
+    public LiveData<Integer> getLastFlatId() {
+        return mFlatDataSource.getLastFlatId();
+    }
 
     public LiveData<List<Flat>> getFlats() {
         return mFlatDataSource.getFlats();
@@ -77,4 +85,39 @@ public class FlatViewModel extends ViewModel {
             mFlatDataSource.updateFlat(flat);
         });
     }
+
+    // -------------
+    // FOR PIC
+    // -------------
+
+    public LiveData<Pic> getOnePicFromFlat(long flatId) {
+        return mPicDataSource.getOnePicFromFlat(flatId);
+    }
+
+    public LiveData<List<Pic>> getPicsFromFlat(long flatId) {
+        return mPicDataSource.getPicsFromFlat(flatId);
+    }
+
+    public LiveData<List<Pic>> getPicFromId(long picId) {
+        return mPicDataSource.getPicsFromFlat(picId);
+    }
+
+    public void createPic(Pic pic) {
+        executor.execute(() -> {
+            mPicDataSource.createPic(pic);
+        });
+    }
+
+    public void deletePic(long picId) {
+        executor.execute(() -> {
+            mPicDataSource.deletePic(picId);
+        });
+    }
+
+    public void updatePic(Pic pic) {
+        executor.execute(() -> {
+            mPicDataSource.updatePic(pic);
+        });
+    }
+
 }

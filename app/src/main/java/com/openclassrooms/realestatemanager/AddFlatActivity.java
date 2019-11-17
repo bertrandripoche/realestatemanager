@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -327,6 +328,20 @@ public class AddFlatActivity extends AppCompatActivity  {
                 AGENT_ID);
 
         this.mFlatViewModel.createFlat(flat);
+
+        if (mFlatPicList.size() == 0) cleanForm();
+        else getLastFlatId();
+    }
+
+    private void getLastFlatId(){
+        this.mFlatViewModel.getLastFlatId().observe(this, this::savePics);
+    }
+
+    private void savePics(Integer flatId) {
+        for (Pic pic : mFlatPicList) {
+            pic.setFlatId(flatId);
+            this.mFlatViewModel.createPic(pic);
+        }
         cleanForm();
     }
 
@@ -334,6 +349,8 @@ public class AddFlatActivity extends AppCompatActivity  {
         Toast.makeText(getApplicationContext(), R.string.flat_saved, Toast.LENGTH_LONG).show();
         emptyFields();
         disableAddFlatButton();
+        mFlatPicList = new ArrayList();
+        checkRecyclerView();
     }
 
     private void emptyFields() {

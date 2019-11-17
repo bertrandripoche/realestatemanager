@@ -10,18 +10,21 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.openclassrooms.realestatemanager.database.dao.PicDao;
 import com.openclassrooms.realestatemanager.model.Agent;
 import com.openclassrooms.realestatemanager.model.Flat;
 import com.openclassrooms.realestatemanager.database.dao.FlatDao;
 import com.openclassrooms.realestatemanager.database.dao.AgentDao;
+import com.openclassrooms.realestatemanager.model.Pic;
 
-@Database(entities = {Flat.class, Agent.class}, version = 1, exportSchema = false)
+@Database(entities = {Flat.class, Agent.class, Pic.class}, version = 1, exportSchema = false)
 public abstract class RealEstateManagerDatabase extends RoomDatabase {
     private static volatile RealEstateManagerDatabase INSTANCE;
 
     // --- DAO ---
     public abstract FlatDao mFlatDao();
     public abstract AgentDao mAgentDao();
+    public abstract PicDao mPicDao();
 
     // --- INSTANCE ---
     public static RealEstateManagerDatabase getInstance(Context context) {

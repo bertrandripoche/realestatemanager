@@ -21,6 +21,9 @@ public interface FlatDao {
     @Query("SELECT * FROM Flat WHERE id = :flatId")
     LiveData<Flat> getFlatFromId(long flatId);
 
+    @Query("SELECT MAX(Id) FROM Flat")
+    LiveData<Integer> getLastFlatId();
+
     @Insert
     long insertFlat(Flat flat);
 

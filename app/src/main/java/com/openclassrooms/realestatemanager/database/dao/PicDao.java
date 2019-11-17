@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface PicDao {
     @Query("SELECT * FROM Pic WHERE flatId = :flatId LIMIT 0,1")
-    LiveData<List<Pic>> getOnePicFromFlat(long flatId);
+    LiveData<Pic> getOnePicFromFlat(long flatId);
 
     @Query("SELECT * FROM Pic WHERE flatId = :flatId")
     LiveData<List<Pic>> getPicsFromFlat(long flatId);

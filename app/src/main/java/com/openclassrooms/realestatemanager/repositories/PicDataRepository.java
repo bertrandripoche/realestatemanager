@@ -13,7 +13,7 @@ public class PicDataRepository {
     public PicDataRepository(PicDao picDao) { this.mPicDao = picDao; }
 
     // --- GET ---
-    public LiveData<List<Pic>> getOnePicFromFlat(long flatId){ return this.mPicDao.getOnePicFromFlat(flatId); }
+    public LiveData<Pic> getOnePicFromFlat(long flatId){ return this.mPicDao.getOnePicFromFlat(flatId); }
     public LiveData<List<Pic>> getPicsFromFlat(long flatId){ return this.mPicDao.getPicsFromFlat(flatId); }
     public LiveData<Pic> getPicFromId(long flatId){ return this.mPicDao.getPicFromId(flatId); }
 
