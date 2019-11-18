@@ -9,6 +9,8 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,8 +22,10 @@ import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Flat;
+import com.openclassrooms.realestatemanager.model.Pic;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,6 +35,7 @@ import me.biubiubiu.justifytext.library.JustifyTextView;
 
 public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback {
 
+    @BindView(R.id.fragment_flat_detail_images_recycler_view) RecyclerView mRecyclerView;
     @BindView(R.id.summary) AppCompatTextView mSummary;
     @BindView(R.id.flat_description) JustifyTextView mDescription;
     @BindView(R.id.price) AppCompatTextView mPrice;
@@ -54,8 +59,11 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
     private Long mFlatId;
     private FlatDetailActivity mFlatDetailActivity;
     private FlatViewModel mFlatViewModel;
-    private static int AGENT_ID = 0;
+    private List<Pic> mFlatPicList;
+    private FlatPicAdapter mAdapter;
     private GoogleMap mMap;
+
+    private static int AGENT_ID = 0;
     private static final String TAG = "Detail Fragment";
     private static final int STREET_LEVEL_ZOOM = 16;
     private static final int CITY_LEVEL_ZOOM = 11;
@@ -154,7 +162,31 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
                                 .title(mFlat.getSummary())
                 ).setTag(mFlatId);
             }
+
+            getPics(flat.getId() -1);
         }
     }
 
+    private void getPics(int flatId) {
+        this.mFlatViewModel.getPicsFromFlat(flatId).observe(this, this::displayPics);
+    }
+
+    private void displayPics(List<Pic> pics) {
+        if (pics.size() != 0) {
+            mFlatPicList = pics;
+            mRecyclerView.setVisibility(View.VISIBLE);
+            this.configureRecyclerView();
+        }
+    }
+
+    private void configureRecyclerView() {
+        final int orientation = getResources().getInteger(R.integer.gallery_pic_orientation);
+
+        mAdapter = new FlatPicAdapter(mFlatPicList);
+
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), orientation, false));
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+    }
 }

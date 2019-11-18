@@ -50,12 +50,6 @@
 
     </TableRow>
 
-    <!--<androidx.recyclerview.widget.RecyclerView-->
-    <!--android:id="@+id/fragment_flat_images_recycler_view"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="200dp">-->
-    <!--</androidx.recyclerview.widget.RecyclerView>-->
-
     <ScrollView
         android:id="@+id/flat_scrollview_container"
         android:layout_width="0dp"
@@ -83,11 +77,12 @@
                 android:textSize="@dimen/title_size"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/flat_pics_recycler_view"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fragment_flat_detail_images_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/image_recycler_height"
-                android:background="@color/dark_grey" />
+                android:visibility="gone">
+            </androidx.recyclerview.widget.RecyclerView>
 
             <me.biubiubiu.justifytext.library.JustifyTextView
                 android:id="@+id/flat_description"

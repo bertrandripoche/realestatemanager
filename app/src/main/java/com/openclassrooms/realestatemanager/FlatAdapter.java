@@ -46,7 +46,6 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
 
         if (index != -1 && index==position) setSelected(holder);
         else unsetSelected(holder);
-
     }
 
     @Override
