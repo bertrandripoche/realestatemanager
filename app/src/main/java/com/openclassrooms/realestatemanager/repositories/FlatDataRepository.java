@@ -16,6 +16,7 @@ public class FlatDataRepository {
     public LiveData<List<Flat>> getFlats(){ return this.mFlatDao.getFlats(); }
     public LiveData<List<Flat>> getFlatsPerAgent(long agentId){ return this.mFlatDao.getFlatsPerAgent(agentId); }
     public LiveData<Flat> getFlatFromId(long flatId){ return this.mFlatDao.getFlatFromId(flatId); }
+    public LiveData<Flat> getFlatFromDescription(String description){ return this.mFlatDao.getFlatFromDescription(description); }
     public LiveData<Integer> getLastFlatId(){ return this.mFlatDao.getLastFlatId(); }
 
     // --- CREATE ---

@@ -38,8 +38,6 @@ public class Flat {
     private String availableDate;
     private int agentId;
 
-    public Flat() { }
-
     public Flat(String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, Double latitude, Double longitude, boolean isSchool, boolean isPostOffice, boolean isRestaurant, boolean isTheater, boolean isShop, int agentId) {
         this.summary = summary;
         this.description = description;

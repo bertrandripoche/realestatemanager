@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager;
 
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.TextView;
 
@@ -29,7 +30,8 @@ public class FlatPicViewHolder extends RecyclerView.ViewHolder {
 
     public void updateWithPic(Pic pic) {
         this.mCaption.setText(pic.getCaption());
-        this.mPic.setImageURI(pic.getPicPath());
+//        this.mPic.setImageURI(pic.getPicUri());
+        this.mPic.setImageBitmap(BitmapFactory.decodeFile(pic.getPicPath()));
     }
 
 }

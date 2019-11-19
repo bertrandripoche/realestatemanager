@@ -60,8 +60,10 @@ public class FlatViewModel extends ViewModel {
         return mFlatDataSource.getFlats();
     }
 
-    public LiveData<List<Flat>> getFlatsPerAgent(long agentId) {
-        return mFlatDataSource.getFlatsPerAgent(agentId);
+    public LiveData<List<Flat>> getFlatsPerAgent(long agentId) {return mFlatDataSource.getFlatsPerAgent(agentId);}
+
+    public LiveData<Flat> getFlatFromDescription(String description) {
+        return mFlatDataSource.getFlatFromDescription(description);
     }
 
     public LiveData<Flat> getFlatFromId(long flatId) {

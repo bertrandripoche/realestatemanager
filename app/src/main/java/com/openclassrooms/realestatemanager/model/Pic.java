@@ -22,30 +22,35 @@ import com.openclassrooms.realestatemanager.utils.UriTypeConverter;
 public class Pic implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private Uri picPath;
+    private Uri picUri;
+    private String picPath;
     private String caption;
     private int flatId;
 
     @Ignore
-    public Pic(Uri picPath, String caption) {
+    public Pic(Uri picUri, String picPath, String caption) {
+        this.picUri = picUri;
         this.picPath = picPath;
         this.caption = caption;
         this.flatId = 0;
     }
 
-    public Pic(Uri picPath, String caption, int flatId) {
+    public Pic(Uri picUri, String picPath, String caption, int flatId) {
+        this.picUri = picUri;
         this.picPath = picPath;
         this.caption = caption;
         this.flatId = flatId;
     }
 
     public int getId() {return id;}
-    public Uri getPicPath() {return picPath;}
+    public Uri getPicUri() {return picUri;}
+    public String getPicPath() {return picPath;}
     public String getCaption() {return caption;}
     public int getFlatId() {return flatId;}
 
     public void setId(int id) {this.id = id;}
-    public void setPicPath(Uri picPath) {this.picPath = picPath;}
+    public void setPicUri(Uri picUri) {this.picUri = picUri;}
+    public void setPicPath(String picPath) {this.picPath = picPath;}
     public void setCaption(String caption) {this.caption = caption;}
     public void setFlatId(int flatId) {this.flatId = flatId;}
 
@@ -57,14 +62,16 @@ public class Pic implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
-        dest.writeParcelable(this.picPath, flags);
+        dest.writeParcelable(this.picUri, flags);
+        dest.writeString(this.picPath);
         dest.writeString(this.caption);
         dest.writeInt(this.flatId);
     }
 
     protected Pic(Parcel in) {
         this.id = in.readInt();
-        this.picPath = in.readParcelable(Uri.class.getClassLoader());
+        this.picUri = in.readParcelable(Uri.class.getClassLoader());
+        this.picPath = in.readString();
         this.caption = in.readString();
         this.flatId = in.readInt();
     }

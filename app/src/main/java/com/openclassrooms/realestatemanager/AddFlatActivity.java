@@ -84,7 +84,8 @@ public class AddFlatActivity extends AppCompatActivity  {
     private Long mFlatId;
     private Uri uriImageSelected;
     private Uri mPhotoURI;
-    String mCurrentPhotoPath;
+    private String mCurrentPhotoPath;
+    private String mSelectedImagePath;
     private String mUserChoosenTask;
     private ArrayList<Pic> mFlatPicList = new ArrayList();
     private FlatPicAdapter mAdapter;
@@ -187,18 +188,16 @@ public class AddFlatActivity extends AppCompatActivity  {
     private void handleResponse(int requestCode, int resultCode, Intent data){
         if (requestCode == REQUEST_SELECT_PIC_GALLERY || requestCode == REQUEST_CAMERA_TAKE_PICTURE) {
             if (resultCode == RESULT_OK) {
-
+                mSelectedImagePath = "";
                 if (requestCode == REQUEST_SELECT_PIC_GALLERY) {
                     uriImageSelected = data.getData();
-                    String mSelectedImagePath = getRealPathFromURI(uriImageSelected);
-                }
-
-                if (requestCode == REQUEST_CAMERA_TAKE_PICTURE) {
+                    mSelectedImagePath = getRealPathFromURI(uriImageSelected);
+                } else {
                     uriImageSelected = mPhotoURI;
-                    String mSelectedImagePath = mCurrentPhotoPath;
+                    mSelectedImagePath = mCurrentPhotoPath;
                 }
 
-                Pic pic = new Pic(uriImageSelected, mCaption.getText().toString(), 0);
+                Pic pic = new Pic(uriImageSelected, mSelectedImagePath, mCaption.getText().toString(), 0);
                 mFlatPicList.add(pic);
 
                 Toast.makeText(this, R.string.picture_saved, Toast.LENGTH_SHORT).show();
@@ -332,13 +331,24 @@ public class AddFlatActivity extends AppCompatActivity  {
     }
 
     private void getLastFlatId(){
-        this.mFlatViewModel.getLastFlatId().observe(this, this::savePics);
+//        this.mFlatViewModel.getLastFlatId().observe(this, this::savePics);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        this.mFlatViewModel.getFlatFromDescription(this.mDescription.getText().toString()).observe(this, this::savePics);
     }
 
-    private void savePics(Integer flatId) {
-        for (Pic pic : mFlatPicList) {
-            pic.setFlatId(flatId);
-            this.mFlatViewModel.createPic(pic);
+    private void savePics(Flat flat) {
+        if (flat != null) {
+            Integer flatId = flat.getId();
+            if (mFlatPicList.size() != 0) {
+                for (Pic pic : mFlatPicList) {
+                    pic.setFlatId(flatId);
+                    this.mFlatViewModel.createPic(pic);
+                }
+            }
         }
         cleanForm();
     }
@@ -434,8 +444,7 @@ public class AddFlatActivity extends AppCompatActivity  {
     }
 
     private void selectImage(String caption) {
-        final CharSequence[] items = { "Take Photo", "Choose from Library",
-                "Cancel" };
+        final CharSequence[] items = { "Take Photo", "Choose from Library", "Cancel" };
         AlertDialog.Builder builder = new AlertDialog.Builder(AddFlatActivity.this, R.style.AlertDialogTheme);
         builder.setTitle(getString(R.string.add_photo, caption));
 
@@ -443,10 +452,8 @@ public class AddFlatActivity extends AppCompatActivity  {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 if (items[item].equals("Take Photo")) {
-                    mUserChoosenTask = "Take Photo";
                     cameraIntent();
                 } else if (items[item].equals("Choose from Library")) {
-                    mUserChoosenTask = "Choose from Library";
                     galleryIntent();
                 } else if (items[item].equals("Cancel")) {
                     dialog.dismiss();
@@ -479,25 +486,22 @@ public class AddFlatActivity extends AppCompatActivity  {
     private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
         intent.setAction(Intent.ACTION_GET_CONTENT);//
         startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_SELECT_PIC_GALLERY);
     }
 
     private File createImageFile() throws IOException {
         // Create an image file name
-
-
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,
-                ".jpg",
-                storageDir
-        );
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
+
         return image;
     }
 }

@@ -163,7 +163,7 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
                 ).setTag(mFlatId);
             }
 
-            getPics(flat.getId() -1);
+            getPics(flat.getId());
         }
     }
 
