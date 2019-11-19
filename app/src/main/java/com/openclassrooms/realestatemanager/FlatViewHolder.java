@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager;
 
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ class FlatViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void updateWithFlat(Flat flat) {
+        if (!flat.getPicPath().equals("")) this.mFlatPic.setImageBitmap(BitmapFactory.decodeFile(flat.getPicPath()));
         this.mFlatSummary.setText(flat.getSummary());
         this.mFlatCity.setText(flat.getCityAddress());
         this.mFlatPrice.setText(this.itemView.getResources().getString(R.string.euro, flat.getPrice()));

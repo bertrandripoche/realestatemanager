@@ -291,6 +291,9 @@ public class AddFlatActivity extends AppCompatActivity  {
     }
 
     private void createFlat(){
+        String picPath;
+        if (mFlatPicList.size() != 0) picPath = mFlatPicList.get(0).getPicPath();
+        else picPath = "";
         Integer price = getNumber(this.mPrice.getText().toString());
         Integer surface = getNumber(this.mSurface.getText().toString());
         Integer room = getNumber(this.mRoomNb.getText().toString());
@@ -303,6 +306,7 @@ public class AddFlatActivity extends AppCompatActivity  {
         Address flatAddress = getAddressFromSearchString(address);
 
         Flat flat = new Flat(
+                picPath,
                 this.mSummary.getText().toString(),
                 this.mDescription.getText().toString(),
                 this.mFlatType.getSelectedItem().toString(),
@@ -463,6 +467,15 @@ public class AddFlatActivity extends AppCompatActivity  {
         builder.show();
     }
 
+    private void galleryIntent() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_SELECT_PIC_GALLERY);
+    }
+
     private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (intent.resolveActivity(getPackageManager()) != null) {
@@ -483,23 +496,12 @@ public class AddFlatActivity extends AppCompatActivity  {
         }
     }
 
-    private void galleryIntent() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        String[] mimeTypes = {"image/jpeg", "image/png"};
-        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
-        intent.setAction(Intent.ACTION_GET_CONTENT);//
-        startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_SELECT_PIC_GALLERY);
-    }
-
     private File createImageFile() throws IOException {
-        // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
-        // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
 
         return image;

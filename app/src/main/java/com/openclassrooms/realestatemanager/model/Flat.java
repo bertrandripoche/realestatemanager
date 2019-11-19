@@ -14,6 +14,7 @@ import com.openclassrooms.realestatemanager.utils.Utils;
 public class Flat {
     @PrimaryKey(autoGenerate = true)
     private int id;
+    private String picPath;
     private String summary;
     private String description;
     private String type;
@@ -38,7 +39,8 @@ public class Flat {
     private String availableDate;
     private int agentId;
 
-    public Flat(String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, Double latitude, Double longitude, boolean isSchool, boolean isPostOffice, boolean isRestaurant, boolean isTheater, boolean isShop, int agentId) {
+    public Flat(String picPath, String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, Double latitude, Double longitude, boolean isSchool, boolean isPostOffice, boolean isRestaurant, boolean isTheater, boolean isShop, int agentId) {
+        this.picPath = picPath;
         this.summary = summary;
         this.description = description;
         this.type = type;
@@ -65,6 +67,7 @@ public class Flat {
 
     // GETTERS
     public int getId() {return id;}
+    public String getPicPath() {return picPath;}
     public String getSummary() {return summary;}
     public String getDescription() {return description;}
     public String getType() {return type;}
@@ -91,6 +94,7 @@ public class Flat {
 
     // SETTERS
     public void setId(int id) {this.id = id;}
+    public void setPicPath(String picPath) {this.picPath = picPath;}
     public void setSummary(String summary) {this.summary = summary;}
     public void setDescription(String description) {this.description = description;}
     public void setType(String type) {this.type = type;}
