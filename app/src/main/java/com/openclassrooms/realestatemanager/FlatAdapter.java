@@ -75,5 +75,6 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
         holder.mFlatSummary.setTextColor(Color.parseColor("#000000"));
         holder.mFlatCity.setTextColor(Color.parseColor("#458039"));
         holder.mFlatPrice.setTextColor(Color.parseColor("#C20044"));
+        holder.mFlatType.setTextColor(Color.parseColor("#000000"));
     }
 }

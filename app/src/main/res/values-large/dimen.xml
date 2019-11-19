@@ -19,11 +19,11 @@
     <dimen name="toolbar_height">60dp</dimen>
     <dimen name="title_height">40dp</dimen>
     <dimen name="subtitle_height">26dp</dimen>
-    <dimen name="image_recycler_height">150dp</dimen>
+    <dimen name="image_recycler_height">250dp</dimen>
     <dimen name="map_height">250dp</dimen>
 
     <integer name="gallery_orientation">0</integer>
-    <integer name="gallery_pic_orientation">1</integer>
+    <integer name="gallery_pic_orientation">0</integer>
 
     <dimen name="nav_header_height">240dp</dimen>
 </resources>
