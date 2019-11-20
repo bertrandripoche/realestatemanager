@@ -328,32 +328,8 @@ public class AddFlatActivity extends AppCompatActivity  {
                 mShop.isChecked(),
                 AGENT_ID);
 
-        this.mFlatViewModel.createFlat(flat);
+        this.mFlatViewModel.createFlat(flat, mFlatPicList);
 
-        if (mFlatPicList.size() == 0) cleanForm();
-        else getLastFlatId();
-    }
-
-    private void getLastFlatId(){
-//        this.mFlatViewModel.getLastFlatId().observe(this, this::savePics);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        this.mFlatViewModel.getFlatFromDescription(this.mDescription.getText().toString()).observe(this, this::savePics);
-    }
-
-    private void savePics(Flat flat) {
-        if (flat != null) {
-            Integer flatId = flat.getId();
-            if (mFlatPicList.size() != 0) {
-                for (Pic pic : mFlatPicList) {
-                    pic.setFlatId(flatId);
-                    this.mFlatViewModel.createPic(pic);
-                }
-            }
-        }
         cleanForm();
     }
 

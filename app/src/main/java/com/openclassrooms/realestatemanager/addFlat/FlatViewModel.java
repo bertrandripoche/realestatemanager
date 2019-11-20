@@ -70,9 +70,14 @@ public class FlatViewModel extends ViewModel {
         return mFlatDataSource.getFlatFromId(flatId);
     }
 
-    public void createFlat(Flat flat) {
+    public void createFlat(Flat flat, List<Pic> flatPicList) {
         executor.execute(() -> {
-            mFlatDataSource.createFlat(flat);
+            long flatId = mFlatDataSource.createFlat(flat);
+
+            for (Pic pic : flatPicList) {
+                pic.setFlatId((int)flatId);
+                mPicDataSource.createPic(pic);
+            }
         });
     }
 

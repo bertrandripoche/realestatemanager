@@ -20,7 +20,7 @@ public class FlatDataRepository {
     public LiveData<Integer> getLastFlatId(){ return this.mFlatDao.getLastFlatId(); }
 
     // --- CREATE ---
-    public void createFlat(Flat flat){ mFlatDao.insertFlat(flat); }
+    public long createFlat(Flat flat){return mFlatDao.insertFlat(flat);}
 
     // --- DELETE ---
     public void deleteFlat(long flatId){ mFlatDao.deleteFlat(flatId); }
