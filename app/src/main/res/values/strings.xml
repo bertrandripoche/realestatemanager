@@ -61,7 +61,6 @@
     <string name="btn_add_description">Add button</string>
     <string name="flat_saved">Flat has been saved in database.</string>
     <string name="invalid_form">WARNING :\nThe fields Summary, Description, Surface, \nPrice and City can\'t be empty.</string>
-    <string name="available_date">EN VENTE depuis le %1$s</string>
     <string name="editFlat">Edit a flat</string>
     <string name="flat_updated">Flat has been updated in database</string>
     <string name="title_edit_pics">Pictures</string>
@@ -74,6 +73,10 @@
     <string name="add_photo">Add photo \"%1$s\"</string>
     <string name="no_picture_selected">No picture selected</string>
     <string name="picture_saved">Photo saved</string>
+    <string name="is_it_sold">Sold ?</string>
+    <string name="sold">Sold</string>
+    <string name="sold_date">VENDU le %1$s</string>
+    <string name="available_date">EN VENTE depuis le %1$s</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>

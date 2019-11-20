@@ -12,7 +12,7 @@ import java.util.List;
 
 @Dao
 public interface FlatDao {
-    @Query("SELECT * FROM Flat")
+    @Query("SELECT * FROM Flat ORDER BY isSold, id DESC")
     LiveData<List<Flat>> getFlats();
 
     @Query("SELECT * FROM Flat WHERE agentId = :agentId")
@@ -32,6 +32,12 @@ public interface FlatDao {
 
     @Update
     int updateFlat(Flat flat);
+
+    @Query("UPDATE Flat SET isSold = 1, soldDate = :soldDate WHERE id = :flatId")
+    int updateSold(long flatId, String soldDate);
+
+    @Query("UPDATE Flat SET isSold = 0, soldDate = null WHERE id = :flatId")
+    int updateNotSold(long flatId);
 
     @Query("DELETE FROM Flat WHERE id = :flatId")
     int deleteFlat(long flatId);

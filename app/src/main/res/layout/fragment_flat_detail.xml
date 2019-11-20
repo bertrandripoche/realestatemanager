@@ -327,14 +327,32 @@
                 android:layout_height="@dimen/map_height"
                 android:layout_weight="1"
                 android:orientation="horizontal">
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/address"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/basic_padding"
-                    android:textSize="@dimen/title_size_small" />
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/address"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/basic_padding"
+                        android:textSize="@dimen/title_size_small" />
+                    <Button
+                        android:id="@+id/btn_sold"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="@dimen/basic_padding"
+                        android:layout_margin="@dimen/middle_padding"
+                        android:text="@string/sold"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:background="@drawable/rounded_button"/>
+                </LinearLayout>
+
                 <fragment
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -347,6 +365,7 @@
                     map:mapType="normal"
                     map:liteMode="true"/>
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

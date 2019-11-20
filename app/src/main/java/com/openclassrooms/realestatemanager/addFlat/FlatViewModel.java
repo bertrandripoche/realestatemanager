@@ -93,6 +93,18 @@ public class FlatViewModel extends ViewModel {
         });
     }
 
+    public void updateSoldFlat(long flatId, String soldDate) {
+        executor.execute(() -> {
+            mFlatDataSource.updateSoldFlat(flatId, soldDate);
+        });
+    }
+
+    public void updateNotSoldFlat(long flatId) {
+        executor.execute(() -> {
+            mFlatDataSource.updateNotSoldFlat(flatId);
+        });
+    }
+
     // -------------
     // FOR PIC
     // -------------

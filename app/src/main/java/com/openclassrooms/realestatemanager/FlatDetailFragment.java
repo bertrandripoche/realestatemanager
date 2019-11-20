@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -30,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.biubiubiu.justifytext.library.JustifyTextView;
 
 
@@ -53,6 +56,7 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
     @BindView(R.id.theater) AppCompatImageView mTheater;
     @BindView(R.id.shop) AppCompatImageView mShop;
     @BindView(R.id.available_from) AppCompatTextView mAvailable_from;
+    @BindView(R.id.btn_sold) Button mBtnIsSold;
 
     private List<Flat> mFlatList;
     private Flat mFlat;
@@ -76,12 +80,11 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
         ButterKnife.bind(this, view);
 
         mFlatId = getFlatId();
+        configureViewModel();
+        getFlat(mFlatId);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        configureViewModel();
-        getFlat(mFlatId);
 
         return view;
     }
@@ -91,6 +94,35 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
         mMap = map;
         map.getUiSettings().setMapToolbarEnabled(false);
         map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+    }
+
+    @OnClick(R.id.btn_sold)
+    public void onClickSoldButton() {
+        if (mFlat.getIsSold()) flatNotSold();
+        else flatSold();
+    }
+
+    private void flatSold() {
+        String soldDate = Utils.getTodayDate();
+        mFlatViewModel.updateSoldFlat(mFlat.getId(), soldDate);
+        disableSoldBtn();
+    }
+
+    private void flatNotSold() {
+        mFlatViewModel.updateNotSoldFlat(mFlat.getId());
+        enableSoldBtn();
+    }
+
+    private void enableSoldBtn() {
+        mBtnIsSold.setBackground(getResources().getDrawable(R.drawable.rounded_button));
+        mBtnIsSold.setText(R.string.is_it_sold);
+        mAvailable_from.setText(getString(R.string.available_date, mFlat.getAvailableDate()));
+    }
+
+    private void disableSoldBtn() {
+        mBtnIsSold.setBackground(getResources().getDrawable(R.drawable.rounded_button_off));
+        mBtnIsSold.setText(R.string.sold);
+        mAvailable_from.setText(getString(R.string.sold_date, mFlat.getSoldDate()));
     }
 
     private void configureViewModel() {
@@ -144,11 +176,12 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
             if (mFlat.isShop()) mShop.setImageResource(R.drawable.ic_ok);
             else mShop.setImageResource(R.drawable.ic_ko);
 
-            String address = Utils.buildAddress(mFlat.getNumberAddress(), mFlat.getStreetAddress(), mFlat.getPostalCodeAddress(), mFlat.getCityAddress());
+            if (mFlat.getIsSold()) disableSoldBtn();
+            else enableSoldBtn();
 
+            String address = Utils.buildAddress(mFlat.getNumberAddress(), mFlat.getStreetAddress(), mFlat.getPostalCodeAddress(), mFlat.getCityAddress());
             mAddress.setText(address);
 
-            mAvailable_from.setText(getString(R.string.available_date, mFlat.getAvailableDate()));
             mAgent.setText("Pierre Poljack");
 
             if (mFlat.getLatitude() != null) {
@@ -164,6 +197,7 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
             }
 
             getPics(flat.getId());
+
         }
     }
 

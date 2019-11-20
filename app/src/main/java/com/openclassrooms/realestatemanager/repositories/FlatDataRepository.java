@@ -27,4 +27,7 @@ public class FlatDataRepository {
 
     // --- UPDATE ---
     public void updateFlat(Flat flat){ mFlatDao.updateFlat(flat); }
+    public void updateSoldFlat(long flatId, String soldDate){ mFlatDao.updateSold(flatId, soldDate); }
+    public void updateNotSoldFlat(long flatId){ mFlatDao.updateNotSold(flatId); }
+
 }
