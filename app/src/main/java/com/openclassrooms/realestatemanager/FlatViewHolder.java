@@ -22,6 +22,7 @@ class FlatViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.item_flat_location) TextView mFlatCity;
     @BindView(R.id.item_flat_type) TextView mFlatType;
     @BindView(R.id.item_flat_summary) TextView mFlatSummary;
+    @BindView(R.id.sold_panel) TextView mFlatSold;
 
     /**
      * This method describes a line of our RecyclerView
@@ -39,6 +40,8 @@ class FlatViewHolder extends RecyclerView.ViewHolder {
         this.mFlatPrice.setText(this.itemView.getResources().getString(R.string.euro, flat.getPrice()));
         this.mFlatType.setText(flat.getType());
         this.mFlatConstraintLayout.setTag(flat.getId());
+        if (flat.getIsSold()) mFlatSold.setVisibility(View.VISIBLE);
+        else mFlatSold.setVisibility(View.GONE);
     }
 
 }

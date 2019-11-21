@@ -24,6 +24,21 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline"/>
 
     <TextView
+        android:id="@+id/sold_panel"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="@string/big_sold"
+        android:background="@color/light_grey_transparent"
+        android:textSize="@dimen/title_size_max"
+        android:textColor="@color/pink"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"/>
+
+    <TextView
         android:id="@+id/item_flat_summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
