@@ -55,7 +55,7 @@ import butterknife.OnClick;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class AddFlatActivity extends AppCompatActivity  {
+public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter.Listener {
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.flat_photos_list_recycler_view) RecyclerView mFlatPhotosRecyclerView;
     @BindView(R.id.btn_add_flat) FloatingActionButton mBtnAddFlat;
@@ -230,11 +230,19 @@ public class AddFlatActivity extends AppCompatActivity  {
     }
 
     private void configureRecyclerView() {
-        mAdapter = new FlatPicAdapter(mFlatPicList);
+        mAdapter = new FlatPicAdapter(mFlatPicList, this, true);
 
         mFlatPhotosRecyclerView.setHasFixedSize(true);
         mFlatPhotosRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mFlatPhotosRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClickDeleteButton(int position) {
+        Pic pic = mAdapter.getFlatPic(position);
+        Toast.makeText(this, "You are trying to delete pic : "+pic.getId(), Toast.LENGTH_SHORT).show();
+        mFlatPicList.remove(pic);
         mAdapter.notifyDataSetChanged();
     }
 

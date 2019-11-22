@@ -14,8 +14,18 @@ import java.util.List;
 public class FlatPicAdapter extends RecyclerView.Adapter<FlatPicViewHolder> {
     private List<Pic> mFlatPicList;
     public int index;
+    private final Listener mCallback;
+    private boolean mEditionMode;
 
-    public FlatPicAdapter(List<Pic> mFlatPicList) {this.mFlatPicList = mFlatPicList;}
+    public FlatPicAdapter(List<Pic> mFlatPicList, Listener callback, boolean editionMode) {
+        this.mFlatPicList = mFlatPicList;
+        this.mCallback = callback;
+        this.mEditionMode = editionMode;
+    }
+
+    public interface Listener {
+        void onClickDeleteButton(int position);
+    }
 
     /**
      * This method creates the ViewHolder
@@ -38,7 +48,7 @@ public class FlatPicAdapter extends RecyclerView.Adapter<FlatPicViewHolder> {
      */
     @Override
     public void onBindViewHolder(@NonNull FlatPicViewHolder holder, int position) {
-        holder.updateWithPic(this.mFlatPicList.get(position));
+        holder.updateWithPic(this.mFlatPicList.get(position), this.mCallback, mEditionMode);
     }
 
     @Override
@@ -46,7 +56,7 @@ public class FlatPicAdapter extends RecyclerView.Adapter<FlatPicViewHolder> {
         return mFlatPicList.size();
     }
 
-    public Pic getFlat(int position){
+    public Pic getFlatPic(int position){
         return this.mFlatPicList.get(position);
     }
 

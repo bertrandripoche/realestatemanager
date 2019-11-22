@@ -216,7 +216,7 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
     private void configureRecyclerView() {
         final int orientation = getResources().getInteger(R.integer.gallery_pic_orientation);
 
-        mAdapter = new FlatPicAdapter(mFlatPicList);
+        mAdapter = new FlatPicAdapter(mFlatPicList, this::getPics ,false);
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), orientation, false));

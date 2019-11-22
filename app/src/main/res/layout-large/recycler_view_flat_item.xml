@@ -24,7 +24,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline"/>
 
     <TextView
-        android:id="@+id/sold_panel"
+        android:id="@+id/item_delete_flat_pic"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
