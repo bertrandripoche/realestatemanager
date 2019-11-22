@@ -30,4 +30,14 @@
         android:padding="@dimen/middle_padding"
         app:layout_constraintBottom_toBottomOf="@id/item_pic"/>
 
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="@dimen/middle_padding"
+        android:background="@mipmap/ic_trash"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/item_caption"
+        app:layout_constraintTop_toTopOf="@id/item_caption"
+        app:layout_constraintRight_toRightOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
