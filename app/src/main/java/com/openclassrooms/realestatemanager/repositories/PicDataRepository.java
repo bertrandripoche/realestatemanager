@@ -22,6 +22,7 @@ public class PicDataRepository {
 
     // --- DELETE ---
     public void deletePic(long picId){ mPicDao.deletePic(picId); }
+    public void deletePicFromFlat(long flatId){ mPicDao.deletePicFromFlat(flatId); }
 
     // --- UPDATE ---
     public void updatePic(Pic pic){ mPicDao.updatePic(pic); }

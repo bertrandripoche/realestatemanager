@@ -19,6 +19,76 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_pink"
+                android:layout_margin="@dimen/basic_padding"
+                android:paddingBottom="@dimen/basic_padding"
+                android:stretchColumns="*">
+
+                <TableRow android:layout_margin="2dp">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/title_edit_flat_pics"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/pink"
+                        android:drawableStart="@drawable/ic_photos_green"
+                        android:drawablePadding="@dimen/middle_padding"
+                        android:padding="@dimen/basic_padding"
+                        android:text="@string/title_edit_pics"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/title_size_big"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/flat_photos_list_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/map_height"
+                    android:layout_marginBottom="6dp">
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TableRow android:layout_margin="2dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center_vertical"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:text="@string/new_photo"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/title_size_small" />
+
+                    <EditText
+                        android:id="@+id/edit_photo_caption"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center_vertical|start"
+                        android:padding="@dimen/basic_padding"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/title_size_small"
+                        android:background="@color/light_grey_transparent"
+                        android:inputType="text"
+                        android:hint="@string/edit_caption"/>
+
+                    <ImageButton
+                        android:id="@+id/btn_add_photo"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter"
+                        android:background="@color/light_pink"
+                        android:src="@drawable/ic_add_photo_off"/>
+                </TableRow>
+
+            </TableLayout>
+
             <TableLayout
                 android:id="@+id/form_flat_presentation"
                 android:layout_width="match_parent"

@@ -29,4 +29,7 @@ public interface PicDao {
 
     @Query("DELETE FROM Pic WHERE id = :PicId")
     int deletePic(long PicId);
+
+    @Query("DELETE FROM Pic WHERE flatId = :flatId")
+    int deletePicFromFlat(long flatId);
 }

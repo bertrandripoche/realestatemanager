@@ -696,19 +696,6 @@
         android:layout_height="1dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.95"/>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_add_flat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:contentDescription="@string/btn_add_description"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_save"
-        app:backgroundTint="@color/light_grey"
-        app:fabSize="normal"
-        app:maxImageSize="40dp"
-        app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal"
-        app:layout_constraintRight_toRightOf="@+id/guideline_vertical"/>
+r
 
 </androidx.constraintlayout.widget.ConstraintLayout>

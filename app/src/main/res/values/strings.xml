@@ -78,6 +78,7 @@
     <string name="big_sold">SOLD !</string>
     <string name="sold_date">VENDU le %1$s</string>
     <string name="available_date">EN VENTE depuis le %1$s</string>
+    <string name="warning_removal_not_saved">N\'oubliez pas de sauver pour enregistrer la modification.</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>

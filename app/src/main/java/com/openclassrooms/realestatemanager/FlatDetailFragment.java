@@ -27,7 +27,6 @@ import com.openclassrooms.realestatemanager.model.Flat;
 import com.openclassrooms.realestatemanager.model.Pic;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

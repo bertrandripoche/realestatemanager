@@ -1,28 +1,48 @@
 package com.openclassrooms.realestatemanager;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Flat;
+import com.openclassrooms.realestatemanager.model.Pic;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -30,10 +50,15 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class EditFlatActivity extends AppCompatActivity {
+public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapter.Listener {
+    @BindView(R.id.flat_photos_list_recycler_view) RecyclerView mFlatPhotosRecyclerView;
+    @BindView(R.id.edit_photo_caption) EditText mCaption;
+    @BindView(R.id.btn_add_photo) ImageButton mBtnCaption;
     @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.btn_save_flat) FloatingActionButton mBtnSaveFlat;
+    @BindView(R.id.btn_save_flat) FloatingActionButton mBtnEditFlat;
     @BindView(R.id.edit_flat_type) Spinner mFlatType;
     @BindView(R.id.edit_summary) EditText mSummary;
     @BindView(R.id.edit_description) EditText mDescription;
@@ -57,7 +82,19 @@ public class EditFlatActivity extends AppCompatActivity {
     private Long mFlatId;
     private int mSelectedFlat = -1;
     private FlatViewModel mFlatViewModel;
+    private ArrayList<Pic> mFlatPicList = new ArrayList();
+    private FlatPicAdapter mAdapter;
+    private Uri uriImageSelected;
+    private Uri mPhotoURI;
+    private String mCurrentPhotoPath;
+    private String mSelectedImagePath;
+    private boolean picsHaveBeenModified = false;
+
     private static int AGENT_ID = 0;
+    private static final int REQUEST_CAMERA_TAKE_PICTURE = 0;
+    private static final int REQUEST_SELECT_PIC_GALLERY = 1;
+    private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
+    private static final int RC_IMAGE_PERMS = 100;
     final String FLATID = "flatId";
     final String SELECTEDFLAT = "selectedFlat";
 
@@ -70,8 +107,10 @@ public class EditFlatActivity extends AppCompatActivity {
         mSelectedFlat = getSelectedFlat();
 
         configureToolbar();
+        configureTextWatchers();
         configureSpinners();
         configureViewModel();
+        checkRecyclerView();
 
         getFlat(mFlatId);
     }
@@ -100,6 +139,219 @@ public class EditFlatActivity extends AppCompatActivity {
     public void onClickAddButton() {
         this.updateFlat();
         Toast.makeText(getApplicationContext(), R.string.flat_updated, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @OnClick(R.id.btn_add_photo)
+    @AfterPermissionGranted(RC_IMAGE_PERMS)
+    public void onClickPhotoButton() {
+        if (!mCaption.getText().toString().equals("")) {
+            String caption = mCaption.getText().toString();
+            if (!EasyPermissions.hasPermissions(this, PERMS)) {
+                EasyPermissions.requestPermissions(this, getString(R.string.permissions_issue), RC_IMAGE_PERMS, PERMS);
+                return;
+            }
+            selectImage(caption);
+        }
+        else {
+            Toast.makeText(getApplicationContext(), R.string.invalid_caption, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("flatPicList", mFlatPicList);
+    }
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mFlatPicList = savedInstanceState.getParcelableArrayList("flatPicList");
+        if (mFlatPicList.size() != 0) checkRecyclerView();
+    }
+
+    private void checkRecyclerView() {
+        if (mFlatPicList == null || mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
+        else {
+            mFlatPhotosRecyclerView.setVisibility(View.VISIBLE);
+            this.configureRecyclerView();
+        }
+    }
+
+    private void configureRecyclerView() {
+        mAdapter = new FlatPicAdapter(mFlatPicList, this, true);
+
+        mFlatPhotosRecyclerView.setHasFixedSize(true);
+        mFlatPhotosRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        mFlatPhotosRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClickDeleteButton(int position) {
+        Pic pic = mAdapter.getFlatPic(position);
+        Toast.makeText(this, R.string.warning_removal_not_saved, Toast.LENGTH_SHORT).show();
+        mFlatPicList.remove(pic);
+        picsHaveBeenModified = true;
+        mAdapter.notifyDataSetChanged();
+        if (mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        this.handleResponse(requestCode, resultCode, data);
+    }
+
+    private void handleResponse(int requestCode, int resultCode, Intent data){
+        if (requestCode == REQUEST_SELECT_PIC_GALLERY || requestCode == REQUEST_CAMERA_TAKE_PICTURE) {
+            if (resultCode == RESULT_OK) {
+                mSelectedImagePath = "";
+                if (requestCode == REQUEST_SELECT_PIC_GALLERY) {
+                    uriImageSelected = data.getData();
+                    mSelectedImagePath = getRealPathFromURI(uriImageSelected);
+                } else {
+                    uriImageSelected = mPhotoURI;
+                    mSelectedImagePath = mCurrentPhotoPath;
+                }
+
+                Pic pic = new Pic(uriImageSelected, mSelectedImagePath, mCaption.getText().toString(), 0);
+                mFlatPicList.add(pic);
+                picsHaveBeenModified = true;
+
+                Toast.makeText(this, R.string.picture_saved, Toast.LENGTH_SHORT).show();
+                mCaption.setText("");
+                checkRecyclerView();
+            } else {
+                Toast.makeText(this, R.string.no_picture_selected, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void selectImage(String caption) {
+        final CharSequence[] items = { "Take Photo", "Choose from Library", "Cancel" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditFlatActivity.this, R.style.AlertDialogTheme);
+        builder.setTitle(getString(R.string.add_photo, caption));
+
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (items[item].equals("Take Photo")) {
+                    cameraIntent();
+                } else if (items[item].equals("Choose from Library")) {
+                    galleryIntent();
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void galleryIntent() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_SELECT_PIC_GALLERY);
+    }
+
+    private void cameraIntent() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                System.out.println("Error in cameraIntent");
+            }
+
+            if (photoFile != null) {
+                mPhotoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider",
+                        photoFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoURI);
+                startActivityForResult(intent, REQUEST_CAMERA_TAKE_PICTURE);
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+
+        mCurrentPhotoPath = image.getAbsolutePath();
+
+        return image;
+    }
+
+    public String getRealPathFromURI (Uri contentUri) {
+        String path = null;
+        String[] proj = { MediaStore.MediaColumns.DATA };
+        Cursor cursor = this.getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+            path = cursor.getString(column_index);
+        }
+        cursor.close();
+        return path;
+    }
+
+    private void configureTextWatchers() {
+        mCaption.addTextChangedListener(textWatcher);
+        mSummary.addTextChangedListener(textWatcher);
+        mDescription.addTextChangedListener(textWatcher);
+        mSurface.addTextChangedListener(textWatcher);
+        mPrice.addTextChangedListener(textWatcher);
+        mCity.addTextChangedListener(textWatcher);
+    }
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            // Enable-disable Floating Action Button
+            if (isFormValid()) enableAddFlatButton();
+            else disableAddFlatButton();
+
+            // Enable-disable Photo Button
+            if (mCaption.getText().toString().equals("")) disablePhotoButton();
+            else enablePhotoButton();
+        }
+    };
+
+    private void enableAddFlatButton() {
+        mBtnEditFlat.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.pink)));
+    }
+
+    private void disableAddFlatButton() {
+        mBtnEditFlat.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_grey)));
+    }
+
+    private void enablePhotoButton() {
+        mBtnCaption.setImageResource(R.drawable.ic_add_photo);
+    }
+
+    private void disablePhotoButton() {
+        mBtnCaption.setImageResource(R.drawable.ic_add_photo_off);
+    }
+
+    private boolean isFormValid() {
+        return !mSummary.getText().toString().equals("") && !mDescription.getText().toString().equals("")  && !mSurface.getText().toString().equals("")  && !mPrice.getText().toString().equals("")  && !mCity.getText().toString().equals("");
     }
 
     private void configureToolbar(){
@@ -176,7 +428,20 @@ public class EditFlatActivity extends AppCompatActivity {
             if (mFlat.isRestaurant()) mRestaurant.setChecked(true);
             if (mFlat.isTheater()) mTheater.setChecked(true);
             if (mFlat.isShop()) mShop.setChecked(true);
+        }
 
+        getPics(mFlat.getId());
+    }
+
+    private void getPics(int flatId) {
+        this.mFlatViewModel.getPicsFromFlat(flatId).observe(this, this::displayPics);
+    }
+
+    private void displayPics(List<Pic> pics) {
+        if (pics.size() != 0) {
+            mFlatPicList = (ArrayList) pics;
+            mFlatPhotosRecyclerView.setVisibility(View.VISIBLE);
+            this.configureRecyclerView();
         }
     }
 
@@ -218,7 +483,10 @@ public class EditFlatActivity extends AppCompatActivity {
         mFlat.setTheater(mTheater.isChecked());
         mFlat.setShop(mShop.isChecked());
 
-        this.mFlatViewModel.updateFlat(mFlat);
+        if (picsHaveBeenModified) this.mFlatViewModel.updateFlat(mFlat, mFlatPicList);
+        else this.mFlatViewModel.updateFlat(mFlat);
+
+        picsHaveBeenModified = false;
     }
 
     private Integer getNumber(String str) {

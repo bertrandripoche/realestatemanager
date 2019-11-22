@@ -86,7 +86,6 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
     private Uri mPhotoURI;
     private String mCurrentPhotoPath;
     private String mSelectedImagePath;
-    private String mUserChoosenTask;
     private ArrayList<Pic> mFlatPicList = new ArrayList();
     private FlatPicAdapter mAdapter;
 
@@ -168,14 +167,12 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
 
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        System.out.println("La liste avant rotation : " + mFlatPicList);
         outState.putParcelableArrayList("flatPicList", mFlatPicList);
     }
 
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mFlatPicList = savedInstanceState.getParcelableArrayList("flatPicList");
-        System.out.println("La liste après rotation : " +mFlatPicList + " - " + mFlatPicList.size() +" éléments");
         if (mFlatPicList.size() != 0) checkRecyclerView();
     }
 
@@ -244,6 +241,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         Toast.makeText(this, "You are trying to delete pic : "+pic.getId(), Toast.LENGTH_SHORT).show();
         mFlatPicList.remove(pic);
         mAdapter.notifyDataSetChanged();
+        if (mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
     }
 
     private void configureSpinners() {
