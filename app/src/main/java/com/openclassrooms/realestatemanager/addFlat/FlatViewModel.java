@@ -95,13 +95,18 @@ public class FlatViewModel extends ViewModel {
 
     public void updateFlat(Flat flat, List<Pic> flatPicList) {
         executor.execute(() -> {
-            mFlatDataSource.updateFlat(flat);
             mPicDataSource.deletePicFromFlat(flat.getId());
-
-            for (Pic pic : flatPicList) {
-                pic.setFlatId((int)flat.getId());
-                mPicDataSource.createPic(pic);
+            if (flatPicList.size() == 0) flat.setPicPath("");
+            else {
+                boolean isFirst = true;
+                for (Pic pic : flatPicList) {
+                    if (isFirst) flat.setPicPath(pic.getPicPath());
+                    pic.setFlatId((int) flat.getId());
+                    mPicDataSource.createPic(pic);
+                    isFirst = false;
+                }
             }
+            mFlatDataSource.updateFlat(flat);
         });
     }
 
