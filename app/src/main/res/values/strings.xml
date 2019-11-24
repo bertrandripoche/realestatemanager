@@ -8,7 +8,6 @@
     <string name="euro">%1$d €</string>
     <string name="metre_carre">%1$d m&#178;</string>
     <string name="media">Media</string>
-    <string name="address">50 Rue du Faubourg Saint-Denis\n75010\nParis\nFrance</string>
     <string name="location">Location</string>
     <string name="tag">tag_to_set_programmatically</string>
     <string name="no_related_flat">No related flat</string>
@@ -76,13 +75,14 @@
     <string name="is_it_sold">Sold ?</string>
     <string name="sold">Sold</string>
     <string name="big_sold">SOLD !</string>
-    <string name="sold_date">VENDU le %1$s</string>
-    <string name="available_date">EN VENTE depuis le %1$s</string>
-    <string name="warning_removal_not_saved">N\'oubliez pas de sauver pour enregistrer la modification.</string>
-    <string name="notification_title">Real Estate Manager</string>
-    <string name="notification_text">New flat recorded</string>
+    <string name="sold_date">SOLD on %1$s</string>
+    <string name="available_date">ON SALE from %1$s</string>
+    <string name="warning_removal_not_saved">Don\'t forget to save the flat.</string>
+    <string name="notification_title">New Flat recorded</string>
+    <string name="notification_text">%1$s</string>
     <string name="channel_name">notification_channel</string>
     <string name="channel_description">Notification channel</string>
+    <string name="pic_deleted">Pic deleted</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>

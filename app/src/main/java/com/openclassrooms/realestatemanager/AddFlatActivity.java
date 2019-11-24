@@ -40,6 +40,7 @@ import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Flat;
 import com.openclassrooms.realestatemanager.model.Pic;
+import com.openclassrooms.realestatemanager.notifications.NotificationService;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.io.File;
@@ -101,6 +102,8 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
     private static final int REQUEST_SELECT_PIC_GALLERY = 1;
     private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final int RC_IMAGE_PERMS = 100;
+
+    private NotificationService mNotificationService = new NotificationService();
 
     public AddFlatActivity() {
     }
@@ -242,7 +245,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
     @Override
     public void onClickDeleteButton(int position) {
         Pic pic = mAdapter.getFlatPic(position);
-        Toast.makeText(this, "You are trying to delete pic : "+pic.getId(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.pic_deleted, Toast.LENGTH_SHORT).show();
         mFlatPicList.remove(pic);
         mAdapter.notifyDataSetChanged();
         if (mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
@@ -304,11 +307,16 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         String picPath;
         if (mFlatPicList.size() != 0) picPath = mFlatPicList.get(0).getPicPath();
         else picPath = "";
+        String summary = this.mSummary.getText().toString();
+        String description = this.mDescription.getText().toString();
+        String flatType = this.mFlatType.getSelectedItem().toString();
         Integer price = getNumber(this.mPrice.getText().toString());
         Integer surface = getNumber(this.mSurface.getText().toString());
         Integer room = getNumber(this.mRoomNb.getText().toString());
         Integer bedroom = getNumber(this.mBedroomNb.getText().toString());
         Integer bathroom = getNumber(this.mBathroomNb.getText().toString());
+        String street = this.mStreet.getText().toString();
+        String city = this.mCity.getText().toString();
         Integer streetNb = getNumber(this.mStreetNb.getText().toString());
         Integer postalCode = getNumber(this.mPostalCode.getText().toString());
 
@@ -317,18 +325,18 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
 
         Flat flat = new Flat(
                 picPath,
-                this.mSummary.getText().toString(),
-                this.mDescription.getText().toString(),
-                this.mFlatType.getSelectedItem().toString(),
+                summary,
+                description,
+                flatType,
                 price,
                 surface,
                 room,
                 bedroom,
                 bathroom,
                 streetNb,
-                this.mStreet.getText().toString(),
+                street,
                 postalCode,
-                this.mCity.getText().toString(),
+                city,
                 flatAddress.getLatitude(),
                 flatAddress.getLongitude(),
                 mSchool.isChecked(),
@@ -339,9 +347,8 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
                 AGENT_ID);
 
         this.mFlatViewModel.createFlat(flat, mFlatPicList);
-
+        mNotificationService.createNotification(this, summary);
         cleanForm();
-        createNotification();
     }
 
     private void cleanForm() {
