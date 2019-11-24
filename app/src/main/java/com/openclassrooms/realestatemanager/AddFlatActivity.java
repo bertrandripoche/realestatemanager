@@ -1,17 +1,17 @@
 package com.openclassrooms.realestatemanager;
 
 import android.Manifest;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,6 +27,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -93,6 +95,8 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
     private static int AGENT_ID = 0;
     final String FLATID = "flatId";
     final String SELECTEDFLAT = "selectedFlat";
+    private static final String CHANNEL_ID = "1";
+    private final String NOTIFICATION_TAG = "FIREBASE_NOTIF";
     private static final int REQUEST_CAMERA_TAKE_PICTURE = 0;
     private static final int REQUEST_SELECT_PIC_GALLERY = 1;
     private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -337,6 +341,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         this.mFlatViewModel.createFlat(flat, mFlatPicList);
 
         cleanForm();
+        createNotification();
     }
 
     private void cleanForm() {
@@ -487,5 +492,26 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         mCurrentPhotoPath = image.getAbsolutePath();
 
         return image;
+    }
+
+    private void createNotification() {
+//        Intent intent = new Intent(this, FlatDetailActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(getResources().getString(R.string.notification_title))
+                .setContentText(getResources().getString(R.string.notification_text))
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+//                .setContentIntent(pendingIntent)
+//                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                ;
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        int notificationId = 1;
+        notificationManager.notify(notificationId, builder.build());
     }
 }

@@ -78,6 +78,7 @@ public class FlatViewModel extends ViewModel {
                 pic.setFlatId((int)flatId);
                 mPicDataSource.createPic(pic);
             }
+
         });
     }
 
