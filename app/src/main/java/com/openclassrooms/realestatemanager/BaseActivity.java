@@ -16,6 +16,8 @@ import butterknife.ButterKnife;
 public class BaseActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar mToolbar;
     MenuItem mEditBtn;
+    MenuItem mListBtn;
+    MenuItem mMapBtn;
     FlatDetailFragment mFlatDetailFragment;
     protected Long mFlatId = -1L;
     protected int mSelectedFlat = -1;
@@ -36,7 +38,9 @@ public class BaseActivity extends AppCompatActivity {
         // Top menu creation
         getMenuInflater().inflate(R.menu.secondary_menu, menu);
         mEditBtn = menu.findItem(R.id.secondary_menu_edit);
-
+        mListBtn = menu.findItem(R.id.secondary_menu_list);
+        mMapBtn = menu.findItem(R.id.secondary_menu_map);
+        hideListBtn();
         return true;
     }
 
@@ -49,6 +53,9 @@ public class BaseActivity extends AppCompatActivity {
                 return true;
             case R.id.secondary_menu_edit:
                 launchActivity("EditFlatActivity");
+                return true;
+            case R.id.secondary_menu_map:
+                launchActivity("MapActivity");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -70,6 +77,10 @@ public class BaseActivity extends AppCompatActivity {
                 mFlatId = createBundleWithFlatId(mFlatId, FLATID);
                 myClass = EditFlatActivity.class;
                 break;
+            case "MapActivity":
+                mFlatId = createBundleWithFlatId(mFlatId, FLATID);
+                myClass = MapActivity.class;
+                break;
             default:
                 myClass = MainActivity.class;
         }
@@ -85,7 +96,7 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void configureToolbar(){
         setSupportActionBar(mToolbar);
-        mFlatDetailFragment = (FlatDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
+//        mFlatDetailFragment = (FlatDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
     }
 
     protected void configureAndShowFlatDetailFragment(){
@@ -98,10 +109,13 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void hideEditBtn() {
-        if (mEditBtn != null) mEditBtn.setVisible(false);
-    }
+    protected void hideListBtn() {if (mListBtn != null) mListBtn.setVisible(false);}
+    protected void displayListBtn() {if (mListBtn != null) mListBtn.setVisible(true);}
 
+    protected void hideMapBtn() {if (mMapBtn != null) mMapBtn.setVisible(false);}
+    protected void displayMapBtn() {if (mMapBtn != null) mMapBtn.setVisible(true);}
+
+    protected void hideEditBtn() {if (mEditBtn != null) mEditBtn.setVisible(false);}
     protected void displayEditBtn() {
         if (mEditBtn != null) mEditBtn.setVisible(true);
     }

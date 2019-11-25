@@ -363,6 +363,7 @@
                         android:text="@string/sold"
                         android:textColor="@color/white"
                         android:textStyle="bold"
+                        android:textSize="@dimen/title_size"
                         android:background="@drawable/rounded_button"/>
                 </LinearLayout>
 

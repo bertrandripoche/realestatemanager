@@ -24,10 +24,11 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline"/>
 
     <TextView
-        android:id="@+id/item_delete_flat_pic"
+        android:id="@+id/sold_panel"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="5dp"
         android:text="@string/big_sold"
         android:background="@color/dark_green_transparent"
         android:textSize="@dimen/title_size_max"

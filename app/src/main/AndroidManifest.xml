@@ -28,15 +28,22 @@
         </activity>
         <activity android:name="com.openclassrooms.realestatemanager.FlatDetailActivity"></activity>
         <activity android:name="com.openclassrooms.realestatemanager.AddFlatActivity"
-            android:label="Add a flat to the database"
+            android:label="Add a flat"
             android:parentActivityName="com.openclassrooms.realestatemanager.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.openclassrooms.realestatemanager.MainActivity" />
         </activity>
         <activity android:name="com.openclassrooms.realestatemanager.EditFlatActivity"
-            android:label="Edit a flat in the database"
+            android:label="Edit a flat"
             android:parentActivityName="com.openclassrooms.realestatemanager.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.openclassrooms.realestatemanager.MainActivity" />
+        </activity>
+        <activity android:name="com.openclassrooms.realestatemanager.MapActivity"
+            android:label="Map"
+            android:parentActivityName="com.openclassrooms.realestatemanager.MapActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.openclassrooms.realestatemanager.MainActivity" />

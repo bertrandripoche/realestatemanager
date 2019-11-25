@@ -363,6 +363,7 @@
                         android:layout_margin="@dimen/middle_padding"
                         android:text="@string/sold"
                         android:textColor="@color/white"
+                        android:textSize="@dimen/title_size"
                         android:textStyle="bold"
                         android:background="@drawable/rounded_button"/>
                 </LinearLayout>

@@ -94,6 +94,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
 
     private int mSelectedFlat = -1;
     private static int AGENT_ID = 0;
+    private static final String TABLET = "tablet";
     final String FLATID = "flatId";
     final String SELECTEDFLAT = "selectedFlat";
     private static final String CHANNEL_ID = "1";
@@ -346,8 +347,8 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
                 mShop.isChecked(),
                 AGENT_ID);
 
-        this.mFlatViewModel.createFlat(flat, mFlatPicList);
-        mNotificationService.createNotification(this, summary);
+        long flatId = this.mFlatViewModel.createFlat(flat, mFlatPicList);
+        mNotificationService.createNotification(this, summary, flatId);
         cleanForm();
     }
 

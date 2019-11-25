@@ -5,7 +5,7 @@
 
     <dimen name="basic_padding">10dip</dimen>
 
-    <dimen name="title_size_max">60sp</dimen>
+    <dimen name="title_size_max">50sp</dimen>
     <dimen name="title_size_big">24sp</dimen>
     <dimen name="title_size">20sp</dimen>
     <dimen name="title_size_small">18sp</dimen>

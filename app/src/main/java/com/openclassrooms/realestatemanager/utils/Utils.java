@@ -1,10 +1,13 @@
 package com.openclassrooms.realestatemanager.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -71,4 +74,5 @@ public class Utils {
         else address = city;
         return address;
     }
+
 }

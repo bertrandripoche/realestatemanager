@@ -22,6 +22,8 @@ public class FlatViewModel extends ViewModel {
     private final PicDataRepository mPicDataSource;
     private final Executor executor;
 
+    private long flatId;
+
     // DATA
     @Nullable
     private LiveData<Agent> mCurrentUser;
@@ -70,7 +72,7 @@ public class FlatViewModel extends ViewModel {
         return mFlatDataSource.getFlatFromId(flatId);
     }
 
-    public void createFlat(Flat flat, List<Pic> flatPicList) {
+    public long createFlat(Flat flat, List<Pic> flatPicList) {
         executor.execute(() -> {
             long flatId = mFlatDataSource.createFlat(flat);
 
@@ -80,6 +82,7 @@ public class FlatViewModel extends ViewModel {
             }
 
         });
+        return flatId;
     }
 
     public void deleteFlat(long flatId) {
