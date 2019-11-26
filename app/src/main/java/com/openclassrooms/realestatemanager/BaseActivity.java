@@ -57,6 +57,9 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.secondary_menu_map:
                 launchActivity("MapActivity");
                 return true;
+            case R.id.secondary_menu_list:
+                launchActivity("MainActivity");
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -80,6 +83,10 @@ public class BaseActivity extends AppCompatActivity {
             case "MapActivity":
                 mFlatId = createBundleWithFlatId(mFlatId, FLATID);
                 myClass = MapActivity.class;
+                break;
+            case "MainActivity":
+                mFlatId = createBundleWithFlatId(mFlatId, FLATID);
+                myClass = MainActivity.class;
                 break;
             default:
                 myClass = MainActivity.class;
