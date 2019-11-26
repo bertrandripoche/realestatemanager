@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -21,11 +22,12 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
-public class MapActivity extends BaseActivity implements OnMapReadyCallback {
+public class MapActivity extends BaseActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
     private GoogleMap mMap;
     private List<Flat> mFlatList;
     private FlatViewModel mFlatViewModel;
     private static int AGENT_ID = 0;
+    private static final int DEFAULT_ZOOM = 11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,22 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
         mMap = googleMap;
     }
 
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+
+        // Retrieve the data from the marker.
+        Flat flat = (Flat) marker.getTag();
+
+        Bundle args = new Bundle();
+        args.putLong(FLATID, flat.getId());
+        Intent intent = new Intent(this, FlatDetailActivity.class);
+        intent.putExtras(args);
+        startActivity(intent);
+
+        return false;
+    }
+
+
     private void configureViewModel() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         this.mFlatViewModel = ViewModelProviders.of(this, mViewModelFactory).get(FlatViewModel.class);
@@ -70,15 +88,33 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
 
         boolean isFirst = true;
         for (Flat flat: mFlatList) {
-            LatLng latLng = new LatLng(flat.getLatitude(), flat.getLongitude());
-            String price = getResources().getString(R.string.euro, flat.getPrice());
-            Marker myMarker = mMap.addMarker(new MarkerOptions().position(latLng).snippet(price).title(flat.getSummary()));
-            myMarker.setTag(flat.getPicPath());
-            if (isFirst) mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            isFirst = false;
+            if (!flat.getIsSold()) {
+                LatLng latLng = new LatLng(flat.getLatitude(), flat.getLongitude());
+                String price = getResources().getString(R.string.euro, flat.getPrice());
+                Marker myMarker = mMap.addMarker(new MarkerOptions().position(latLng).snippet(price).title(flat.getSummary()));
+                myMarker.setTag(flat);
+                if (isFirst)
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM));
+                isFirst = false;
+            }
         }
 
         mMap.setInfoWindowAdapter(new CustomInfoAdapter(this));
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+
+                // Retrieve the data from the marker.
+                Flat flat = (Flat) marker.getTag();
+
+                Bundle args = new Bundle();
+                args.putLong(FLATID, flat.getId());
+                Intent intent = new Intent(getApplicationContext(), FlatDetailActivity.class);
+                intent.putExtras(args);
+                startActivity(intent);
+            }
+        });
     }
 
 }

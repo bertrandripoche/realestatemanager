@@ -38,17 +38,16 @@ public class CustomInfoAdapter implements GoogleMap.InfoWindowAdapter {
     }
 
     private void render(Marker marker, View view) {
-
-        String picPath = (String) marker.getTag();
-        if (picPath.equals("")) ((ImageView) view.findViewById(R.id.pic)).setImageResource(R.drawable.default_flat);
-        else ((ImageView) view.findViewById(R.id.pic)).setImageBitmap(BitmapFactory.decodeFile(picPath));
+        Flat flat = (Flat) marker.getTag();
+        if (flat.getPicPath().equals("")) ((ImageView) view.findViewById(R.id.pic)).setImageResource(R.drawable.default_flat);
+        else ((ImageView) view.findViewById(R.id.pic)).setImageBitmap(BitmapFactory.decodeFile(flat.getPicPath()));
 
         String title = marker.getTitle();
         TextView titleUi = ((TextView) view.findViewById(R.id.title));
         if (title != null) {
             // Spannable string allows us to edit the formatting of the text.
             SpannableString titleText = new SpannableString(title);
-            titleText.setSpan(new ForegroundColorSpan(Color.WHITE), 0, titleText.length(), 0);
+            titleText.setSpan(new ForegroundColorSpan(Color.BLACK), 0, titleText.length(), 0);
             titleUi.setText(titleText);
         } else {
             titleUi.setText("");
