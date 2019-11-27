@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,8 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
     public void onBindViewHolder(@NonNull FlatViewHolder holder, int position) {
         holder.updateWithFlat(this.mFlatList.get(position));
 
-        if (index != -1 && index==position) setSelected(holder);
+//        if (index != -1 && index==position) setSelected(holder);
+        if (index != -1 && index==this.mFlatList.get(position).getId()) setSelected(holder);
         else unsetSelected(holder);
     }
 

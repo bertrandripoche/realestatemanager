@@ -19,12 +19,11 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Stetho.initializeWithDefaults(this);
-        configureAndShowFlatListFragment();
+        createNotificationChannel();
 
         mFlatId = getFlatId();
-
         checkPreviousFlatSelection();
-        createNotificationChannel();
+        configureAndShowFlatListFragment();
     }
 
     private void checkPreviousFlatSelection() {

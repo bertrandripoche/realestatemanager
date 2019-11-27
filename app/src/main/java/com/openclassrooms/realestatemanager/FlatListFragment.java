@@ -36,6 +36,7 @@ public class FlatListFragment extends Fragment {
     private static int AGENT_ID = 0;
     final String FLATID = "flatId";
     final String SELECTEDFLAT = "selectedFlat";
+    private boolean mTabletSize;
 
     public FlatListFragment() {}
 
@@ -44,6 +45,7 @@ public class FlatListFragment extends Fragment {
         super.onCreateView(inflater,container,savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_flat_list, container, false);
         ButterKnife.bind(this, view);
+        mTabletSize = getResources().getBoolean(R.bool.isTablet);
 
         configureRecyclerView();
         configureViewModel();
@@ -113,13 +115,17 @@ public class FlatListFragment extends Fragment {
                         args.putLong(FLATID, flatId);
                         args.putInt(SELECTEDFLAT, position);
                         MainActivity mainActivity = (MainActivity) getActivity();
-                        mainActivity.mSelectedFlat = position;
-                        mSelectedFlat = position;
+//                        mainActivity.mSelectedFlat = position;
+//                        mSelectedFlat = position;
+                        mainActivity.mSelectedFlat = flatId.intValue();
+                        mSelectedFlat = flatId.intValue();
 
                         mFlatDetailFragment = (FlatDetailFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
                         // Tablet
-                        if (getActivity().findViewById(R.id.container_fragment_flat_detail) != null) {
-                            mAdapter.index = position;
+//                        if (getActivity().findViewById(R.id.container_fragment_flat_detail) != null) {
+                         if (mTabletSize) {
+//                            mAdapter.index = position;
+                            mAdapter.index = flatId.intValue();
                             mAdapter.notifyDataSetChanged();
 
                             mFlatDetailFragment = new FlatDetailFragment();

@@ -41,7 +41,7 @@ import butterknife.ButterKnife;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-public class MapActivity extends BaseActivity implements GoogleMap.OnMarkerClickListener, GoogleMap.OnMyLocationButtonClickListener, OnMapReadyCallback {
+public class MapActivity extends BaseActivity implements GoogleMap.OnMyLocationClickListener, GoogleMap.OnMyLocationButtonClickListener, OnMapReadyCallback {
     private GoogleMap mMap;
     private List<Flat> mFlatList;
     private FlatViewModel mFlatViewModel;
@@ -58,12 +58,15 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMarkerClick
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final String PERMS = ACCESS_FINE_LOCATION;
     private static final int RC_ACCESS_PERMS = 100;
+    private boolean mTabletSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         ButterKnife.bind(this);
+        mTabletSize = getResources().getBoolean(R.bool.isTablet);
+
         this.configureToolbar();
         this.configureViewModel();
         this.getFlats();
@@ -74,6 +77,7 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMarkerClick
         moveCompassButton(mMapFragment.getView());
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
     }
 
     @Override
@@ -103,19 +107,7 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMarkerClick
 //        updateLocationUI();
         setMyLocationEnabled();
         getDeviceLocation();
-    }
-
-    @Override
-    public boolean onMarkerClick(final Marker marker) {
-        Flat flat = (Flat) marker.getTag();
-
-        Bundle args = new Bundle();
-        args.putLong(FLATID, flat.getId());
-        Intent intent = new Intent(this, FlatDetailActivity.class);
-        intent.putExtras(args);
-        startActivity(intent);
-
-        return false;
+        mMap.setOnMyLocationClickListener(this);
     }
 
     @Override
@@ -123,18 +115,6 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMarkerClick
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
-
-//    private void enableMyLocation() {
-//        if (ContextCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this,
-//                    new String[]{ACCESS_FINE_LOCATION},
-//                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-//        } else if (mMap != null) {
-//            mMap.setMyLocationEnabled(true);
-//            mMap.getUiSettings().setMapToolbarEnabled(true);
-//        }
-//    }
 
     @AfterPermissionGranted(RC_ACCESS_PERMS)
     private void setMyLocationEnabled() {
@@ -162,7 +142,7 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMarkerClick
                             Log.d(TAG, "Location successful.");
                             mLastKnownLocation = task.getResult();
                             if (mLastKnownLocation != null) {
-                                mLatLngLastKnownLocation =  new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                                mLatLngLastKnownLocation = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLngLastKnownLocation, DEFAULT_ZOOM));
                             }
                         }
@@ -174,56 +154,7 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMarkerClick
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.permissions_issue), RC_ACCESS_PERMS, PERMS);
         }
-
-//        try {
-//            if (mLocationPermissionGranted) {
-//                Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
-//                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Location> task) {
-//                        if (task.isSuccessful()) {
-//                            Log.d(TAG, "Location successful.");
-//                            mLastKnownLocation = task.getResult();
-//                            mLatLngLastKnownLocation =  new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
-//                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLngLastKnownLocation, DEFAULT_ZOOM));
-//                        }
-//                    }
-//                });
-//            }
-//        } catch (SecurityException e)  {
-//            Log.e("Exception: %s", e.getMessage());
-//        }
     }
-
-//    private void updateLocationUI() {
-//        if (mMap == null) {
-//            return;
-//        }
-//        try {
-//            if (mLocationPermissionGranted) {
-//                mMap.setMyLocationEnabled(true);
-//            } else {
-//                mMap.setMyLocationEnabled(false);
-//                mLastKnownLocation = null;
-//                getLocationPermission();
-//            }
-//        } catch (SecurityException e)  {
-//            Log.e("Exception: %s", e.getMessage());
-//        }
-//    }
-
-//    private void getLocationPermission() {
-//        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-//                ACCESS_FINE_LOCATION)
-//                == PackageManager.PERMISSION_GRANTED) {
-//            mLocationPermissionGranted = true;
-//            mMap.setMyLocationEnabled(true);
-//        } else {
-//            ActivityCompat.requestPermissions(this,
-//                    new String[]{ACCESS_FINE_LOCATION},
-//                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-//        }
-//    }
 
     private void configureViewModel() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
@@ -260,11 +191,20 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMarkerClick
                 // Retrieve the data from the marker.
                 Flat flat = (Flat) marker.getTag();
 
-                Bundle args = new Bundle();
-                args.putLong(FLATID, flat.getId());
-                Intent intent = new Intent(getApplicationContext(), FlatDetailActivity.class);
-                intent.putExtras(args);
-                startActivity(intent);
+                if (mTabletSize) {
+                    Bundle args = new Bundle();
+                    args.putLong(FLATID, flat.getId());
+                    args.putInt(SELECTEDFLAT, flat.getId());
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtras(args);
+                    startActivity(intent);
+                } else {
+                    Bundle args = new Bundle();
+                    args.putLong(FLATID, flat.getId());
+                    Intent intent = new Intent(getApplicationContext(), FlatDetailActivity.class);
+                    intent.putExtras(args);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -278,7 +218,7 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMarkerClick
 
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END, RelativeLayout.TRUE);
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-            layoutParams.setMargins(0, 100, 20, 0);
+            layoutParams.setMargins(0, 150, 20, 0);
 
             view.setLayoutParams(layoutParams);
             view.setBackgroundColor(getResources().getColor(R.color.white));
@@ -291,5 +231,10 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMarkerClick
     @Override
     public boolean onMyLocationButtonClick() {
         return false;
+    }
+
+    @Override
+    public void onMyLocationClick(@NonNull Location location) {
+
     }
 }
