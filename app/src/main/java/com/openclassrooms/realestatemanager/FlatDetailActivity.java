@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
+import android.view.Menu;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -38,6 +39,18 @@ public class FlatDetailActivity extends BaseActivity {
         mFlatId = getTagIdFromBundle();
 
         configureAndShowFlatDetailFragment();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Top menu creation
+        getMenuInflater().inflate(R.menu.secondary_menu, menu);
+        mEditBtn = menu.findItem(R.id.secondary_menu_edit);
+        mListBtn = menu.findItem(R.id.secondary_menu_list);
+        mMapBtn = menu.findItem(R.id.secondary_menu_map);
+        hideListBtn();
+        hideMapBtn();
+        return true;
     }
 
     private Bundle getBundle() {
