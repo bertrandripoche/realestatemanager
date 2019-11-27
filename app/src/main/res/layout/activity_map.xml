@@ -6,7 +6,9 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context="com.openclassrooms.realestatemanager.MapActivity">
 
-<include layout="@layout/toolbar"/>
+<include layout="@layout/toolbar"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"/>
 
 <fragment
     xmlns:android="http://schemas.android.com/apk/res/android"
