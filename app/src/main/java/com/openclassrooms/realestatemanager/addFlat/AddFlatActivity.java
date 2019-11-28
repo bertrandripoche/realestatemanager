@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.openclassrooms.realestatemanager.FlatDetailActivity;
 import com.openclassrooms.realestatemanager.FlatPicAdapter;
 import com.openclassrooms.realestatemanager.MainActivity;
 import com.openclassrooms.realestatemanager.R;
@@ -92,6 +93,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
     private String mSelectedImagePath;
     private ArrayList<Pic> mFlatPicList = new ArrayList();
     private FlatPicAdapter mAdapter;
+    private boolean mIsTablet;
 
     private int mSelectedFlat = -1;
     private static int AGENT_ID = 0;
@@ -115,6 +117,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_flat);
         ButterKnife.bind(this);
+        mIsTablet = getResources().getBoolean(R.bool.isTablet);
 
         this.configureToolbar();
         this.configureViewModel();
@@ -325,6 +328,9 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         String address = Utils.buildAddress(streetNb, this.mStreet.getText().toString(), postalCode, this.mCity.getText().toString());
         Address flatAddress = getAddressFromSearchString(address);
 
+        Double latitude = (flatAddress == null) ? null : flatAddress.getLatitude();
+        Double longitude = (flatAddress == null) ? null : flatAddress.getLongitude();
+
         Flat flat = new Flat(
                 picPath,
                 summary,
@@ -339,8 +345,8 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
                 street,
                 postalCode,
                 city,
-                flatAddress.getLatitude(),
-                flatAddress.getLongitude(),
+                latitude,
+                longitude,
                 mSchool.isChecked(),
                 mPostOffice.isChecked(),
                 mRestaurant.isChecked(),
@@ -348,8 +354,8 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
                 mShop.isChecked(),
                 AGENT_ID);
 
-        long flatId = this.mFlatViewModel.createFlat(flat, mFlatPicList);
-        mNotificationService.createNotification(this, summary, flatId);
+        this.mFlatViewModel.createFlat(this, flat, mFlatPicList, mIsTablet);
+//        mNotificationService.createNotification(this, summary, flatId, mIsTablet);
         cleanForm();
     }
 
@@ -503,24 +509,4 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         return image;
     }
 
-    private void createNotification() {
-//        Intent intent = new Intent(this, FlatDetailActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(getResources().getString(R.string.notification_title))
-                .setContentText(getResources().getString(R.string.notification_text))
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-//                .setContentIntent(pendingIntent)
-//                .setAutoCancel(true)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                ;
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-
-        int notificationId = 1;
-        notificationManager.notify(notificationId, builder.build());
-    }
 }

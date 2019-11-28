@@ -1,5 +1,7 @@
 package com.openclassrooms.realestatemanager.addFlat;
 
+import android.content.Context;
+
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -7,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.openclassrooms.realestatemanager.model.Agent;
 import com.openclassrooms.realestatemanager.model.Flat;
 import com.openclassrooms.realestatemanager.model.Pic;
+import com.openclassrooms.realestatemanager.notifications.NotificationService;
 import com.openclassrooms.realestatemanager.repositories.AgentDataRepository;
 import com.openclassrooms.realestatemanager.repositories.FlatDataRepository;
 import com.openclassrooms.realestatemanager.repositories.PicDataRepository;
@@ -72,7 +75,7 @@ public class FlatViewModel extends ViewModel {
         return mFlatDataSource.getFlatFromId(flatId);
     }
 
-    public long createFlat(Flat flat, List<Pic> flatPicList) {
+    public long createFlat(Context context, Flat flat, List<Pic> flatPicList, boolean isTablet) {
         executor.execute(() -> {
             long flatId = mFlatDataSource.createFlat(flat);
 
@@ -80,6 +83,8 @@ public class FlatViewModel extends ViewModel {
                 pic.setFlatId((int)flatId);
                 mPicDataSource.createPic(pic);
             }
+            NotificationService notificationService = new NotificationService();
+            notificationService.createNotification(context, flat.getSummary(), flatId, isTablet);
 
         });
         return flatId;

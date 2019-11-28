@@ -58,14 +58,14 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMyLocationC
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final String PERMS = ACCESS_FINE_LOCATION;
     private static final int RC_ACCESS_PERMS = 100;
-    private boolean mTabletSize;
+    private boolean mIsTablet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         ButterKnife.bind(this);
-        mTabletSize = getResources().getBoolean(R.bool.isTablet);
+        mIsTablet = getResources().getBoolean(R.bool.isTablet);
 
         this.configureToolbar();
         this.configureViewModel();
@@ -171,7 +171,7 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMyLocationC
 
         boolean isFirst = true;
         for (Flat flat: mFlatList) {
-            if (!flat.getIsSold()) {
+            if (!flat.getIsSold() && flat.getLatitude() != null && flat.getLongitude() != null) {
                 LatLng latLng = new LatLng(flat.getLatitude(), flat.getLongitude());
                 String price = getResources().getString(R.string.euro, flat.getPrice());
                 Marker myMarker = mMap.addMarker(new MarkerOptions().position(latLng).snippet(price).title(flat.getSummary()));
@@ -191,7 +191,7 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMyLocationC
                 // Retrieve the data from the marker.
                 Flat flat = (Flat) marker.getTag();
 
-                if (mTabletSize) {
+                if (mIsTablet) {
                     Bundle args = new Bundle();
                     args.putLong(FLATID, flat.getId());
                     args.putInt(SELECTEDFLAT, flat.getId());
