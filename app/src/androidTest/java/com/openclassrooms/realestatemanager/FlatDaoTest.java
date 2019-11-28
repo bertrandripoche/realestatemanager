@@ -28,9 +28,9 @@ public class FlatDaoTest {
     private RealEstateManagerDatabase database;
     private static long AGENT_ID = 1;
     private static Agent AGENT_DEMO = new Agent("Philippe", "Dubois","Philippe.Dubois@gmail.com");
-    private static Flat NEW_Flat1 = new Flat( "Urbain et stylé", "blablabla", "Appartement", 480000, 67, 3 , 2, 1, 5, "rue des Petites Écuries", 75010, "Paris", 48.7, 2.35, false, true, true, false, false, 1);
-    private static Flat NEW_Flat2 = new Flat( "Familial de luxe", "blablabla", "Appartement", 1560000, 138, 6 , 4, 2, 121, "rue de Rivoli", 75001, "Paris", 48.7, 2.35, false, true, true, false, false, 1);
-    private static Flat NEW_Flat3 = new Flat( "Pour grande famille", "blablabla", "Duplex", 980000, 108, 4 , 2, 2, 34, "rue de Trévise", 75009, "Paris",48.7, 2.35, false, true, true, false, false, 1);
+    private static Flat NEW_Flat1 = new Flat("", "Urbain et stylé", "blablabla", "Appartement", 480000, 67, 3 , 2, 1, 5, "rue des Petites Écuries", 75010, "Paris", 48.7, 2.35, false, true, true, false, false, 1);
+    private static Flat NEW_Flat2 = new Flat("", "Familial de luxe", "blablabla", "Appartement", 1560000, 138, 6 , 4, 2, 121, "rue de Rivoli", 75001, "Paris", 48.7, 2.35, false, true, true, false, false, 1);
+    private static Flat NEW_Flat3 = new Flat( "","Pour grande famille", "blablabla", "Duplex", 980000, 108, 4 , 2, 2, 34, "rue de Trévise", 75009, "Paris",48.7, 2.35, false, true, true, false, false, 1);
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
