@@ -88,7 +88,8 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
     private Uri mPhotoURI;
     private String mCurrentPhotoPath;
     private String mSelectedImagePath;
-    private boolean picsHaveBeenModified = false;
+    private boolean mIsModified = false;
+    private boolean isRotated = false;
 
     private static int AGENT_ID = 0;
     private static final int REQUEST_CAMERA_TAKE_PICTURE = 0;
@@ -166,19 +167,23 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("flatPicList", mFlatPicList);
+        outState.putBoolean("picsHaveBeenModified", mIsModified);
     }
 
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mFlatPicList = savedInstanceState.getParcelableArrayList("flatPicList");
+        mIsModified = savedInstanceState.getBoolean("picsHaveBeenModified");
         if (mFlatPicList.size() != 0) checkRecyclerView();
+        isRotated = true;
     }
 
     private void checkRecyclerView() {
         if (mFlatPicList == null || mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
         else {
             mFlatPhotosRecyclerView.setVisibility(View.VISIBLE);
-            this.configureRecyclerView();
+            if (mAdapter == null) this.configureRecyclerView();
+            else mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -196,7 +201,7 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         Pic pic = mAdapter.getFlatPic(position);
         Toast.makeText(this, R.string.warning_removal_not_saved, Toast.LENGTH_SHORT).show();
         mFlatPicList.remove(pic);
-        picsHaveBeenModified = true;
+        mIsModified = true;
         mAdapter.notifyDataSetChanged();
         if (mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
     }
@@ -221,7 +226,7 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
 
                 Pic pic = new Pic(uriImageSelected, mSelectedImagePath, mCaption.getText().toString(), 0);
                 mFlatPicList.add(pic);
-                picsHaveBeenModified = true;
+                mIsModified = true;
 
                 Toast.makeText(this, R.string.picture_saved, Toast.LENGTH_SHORT).show();
                 mCaption.setText("");
@@ -430,7 +435,7 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
             if (mFlat.isShop()) mShop.setChecked(true);
         }
 
-        getPics(mFlat.getId());
+        if (!isRotated) getPics(mFlat.getId());
     }
 
     private void getPics(int flatId) {
@@ -483,10 +488,10 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         mFlat.setTheater(mTheater.isChecked());
         mFlat.setShop(mShop.isChecked());
 
-        if (picsHaveBeenModified) this.mFlatViewModel.updateFlat(mFlat, mFlatPicList);
+        if (mIsModified) this.mFlatViewModel.updateFlat(mFlat, mFlatPicList);
         else this.mFlatViewModel.updateFlat(mFlat);
 
-        picsHaveBeenModified = false;
+        mIsModified = false;
     }
 
     private Integer getNumber(String str) {

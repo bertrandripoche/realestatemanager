@@ -10,6 +10,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.openclassrooms.realestatemanager.addFlat.AddFlatActivity;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

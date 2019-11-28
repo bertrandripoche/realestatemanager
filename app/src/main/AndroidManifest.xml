@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.openclassrooms.realestatemanager.FlatDetailActivity"></activity>
-        <activity android:name="com.openclassrooms.realestatemanager.AddFlatActivity"
+        <activity android:name="com.openclassrooms.realestatemanager.addFlat.AddFlatActivity"
             android:label="Add a flat"
             android:parentActivityName="com.openclassrooms.realestatemanager.MainActivity">
             <meta-data

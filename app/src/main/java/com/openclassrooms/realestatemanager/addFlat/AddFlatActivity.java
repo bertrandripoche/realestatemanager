@@ -1,7 +1,6 @@
-package com.openclassrooms.realestatemanager;
+package com.openclassrooms.realestatemanager.addFlat;
 
 import android.Manifest;
-import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -35,7 +34,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
+import com.openclassrooms.realestatemanager.FlatPicAdapter;
+import com.openclassrooms.realestatemanager.MainActivity;
+import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Flat;
@@ -134,7 +135,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
     @Override
     public void onBackPressed()
     {
-        Intent intent = new Intent(AddFlatActivity.this,MainActivity.class);
+        Intent intent = new Intent(AddFlatActivity.this, MainActivity.class);
         Bundle b = new Bundle();
         if (mFlatId != null) b.putLong(FLATID, mFlatId);
         b.putInt(SELECTEDFLAT, mSelectedFlat);
