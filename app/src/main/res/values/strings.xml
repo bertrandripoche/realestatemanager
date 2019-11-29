@@ -85,6 +85,19 @@
     <string name="pic_deleted">Pic deleted</string>
     <string name="map">Map</string>
     <string name="list">List</string>
+    <string name="title_filter">Filters</string>
+    <string name="title_filter_poi">Searching a flat close to...</string>
+    <string name="min">Mini...</string>
+    <string name="max">Maxi...</string>
+    <string name="filter_city">In this city...</string>
+    <string name="title_filter_sale">Searching for sale status...</string>
+    <string name="on_sale">Only \"on sale\"</string>
+    <string name="sold_filter">Only \"sold\"</string>
+    <string name="available_filter">Available from</string>
+    <string name="date_filter">DD/MM/YYYY</string>
+    <string name="sold_date_filter">Sold date...</string>
+    <string name="date_filter_max">before... (DD/MM/YYYY)</string>
+    <string name="date_filter_min">After... (DD/MM/YYYY)</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>

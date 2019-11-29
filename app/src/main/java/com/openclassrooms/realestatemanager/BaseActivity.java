@@ -21,6 +21,7 @@ public class BaseActivity extends AppCompatActivity {
     MenuItem mListBtn;
     MenuItem mMapBtn;
     FlatDetailFragment mFlatDetailFragment;
+    SearchFragment mSearchFragment;
     protected Long mFlatId = -1L;
     protected int mSelectedFlat = -1;
     final String FLATID = "flatId";
@@ -62,6 +63,9 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.secondary_menu_list:
                 launchActivity("MainActivity");
                 return true;
+            case R.id.secondary_menu_search:
+                launchActivity("SearchActivity");
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -90,6 +94,10 @@ public class BaseActivity extends AppCompatActivity {
                 mFlatId = createBundleWithFlatId(mFlatId, FLATID);
                 myClass = MainActivity.class;
                 break;
+            case "SearchActivity":
+                mFlatId = createBundleWithFlatId(mFlatId, FLATID);
+                myClass = SearchActivity.class;
+                break;
             default:
                 myClass = MainActivity.class;
         }
@@ -114,6 +122,16 @@ public class BaseActivity extends AppCompatActivity {
             mFlatDetailFragment = new FlatDetailFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container_fragment_flat_detail, mFlatDetailFragment)
+                    .commit();
+        }
+    }
+
+    protected void configureAndShowSearchFragment(){
+        mSearchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_search);
+        if (mSearchFragment == null && findViewById(R.id.container_fragment_search) != null) {
+            mSearchFragment = new SearchFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container_fragment_search, mSearchFragment)
                     .commit();
         }
     }

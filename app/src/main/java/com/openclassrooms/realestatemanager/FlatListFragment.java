@@ -115,16 +115,12 @@ public class FlatListFragment extends Fragment {
                         args.putLong(FLATID, flatId);
                         args.putInt(SELECTEDFLAT, position);
                         MainActivity mainActivity = (MainActivity) getActivity();
-//                        mainActivity.mSelectedFlat = position;
-//                        mSelectedFlat = position;
                         mainActivity.mSelectedFlat = flatId.intValue();
                         mSelectedFlat = flatId.intValue();
 
                         mFlatDetailFragment = (FlatDetailFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
                         // Tablet
-//                        if (getActivity().findViewById(R.id.container_fragment_flat_detail) != null) {
                          if (mTabletSize) {
-//                            mAdapter.index = position;
                             mAdapter.index = flatId.intValue();
                             mAdapter.notifyDataSetChanged();
 
