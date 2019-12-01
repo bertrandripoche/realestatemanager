@@ -168,12 +168,14 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("flatPicList", mFlatPicList);
         outState.putBoolean("picsHaveBeenModified", mIsModified);
+        outState.putString("photoTaken", mCurrentPhotoPath);
     }
 
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mFlatPicList = savedInstanceState.getParcelableArrayList("flatPicList");
         mIsModified = savedInstanceState.getBoolean("picsHaveBeenModified");
+        mCurrentPhotoPath = savedInstanceState.getString("photoTaken");
         if (mFlatPicList.size() != 0) checkRecyclerView();
         isRotated = true;
     }

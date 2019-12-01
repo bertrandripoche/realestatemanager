@@ -180,12 +180,14 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("flatPicList", mFlatPicList);
+        outState.putString("photoTaken", mCurrentPhotoPath);
     }
 
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mFlatPicList = savedInstanceState.getParcelableArrayList("flatPicList");
         if (mFlatPicList.size() != 0) checkRecyclerView();
+        mCurrentPhotoPath = savedInstanceState.getString("photoTaken");
     }
 
     @Override

@@ -91,13 +91,17 @@
     <string name="max">Maxi...</string>
     <string name="filter_city">In this city...</string>
     <string name="title_filter_sale">Searching for sale status...</string>
-    <string name="on_sale">Only \"on sale\"</string>
-    <string name="sold_filter">Only \"sold\"</string>
-    <string name="available_filter">Available from</string>
+    <string name="on_sale_filter_title">\"On sale\" only</string>
+    <string name="sold_filter_title">\"Sold\" only</string>
+    <string name="available_date_filter">Available date *</string>
+    <string name="sold_filter">Sold date *</string>
     <string name="date_filter">DD/MM/YYYY</string>
     <string name="sold_date_filter">Sold date...</string>
-    <string name="date_filter_max">before... (DD/MM/YYYY)</string>
-    <string name="date_filter_min">After... (DD/MM/YYYY)</string>
+    <string name="date_filter_max">Before...</string>
+    <string name="date_filter_min">After...</string>
+    <string name="warning_date">* Format for date is "DD/MM/YYYY"</string>
+    <string name="city_filter">City</string>
+    <string name="price_filter">Price</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>
