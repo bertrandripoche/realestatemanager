@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.EditText;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,12 +15,9 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 
 import java.util.Objects;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SearchActivity extends AppCompatActivity {
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+public class SearchActivity extends BaseActivity {
     final String FLATID = "flatId";
     public Long mFlatId;
     private Bundle mExtras;
@@ -47,7 +45,8 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    private void configureToolbar(){
+    @Override
+    protected void configureToolbar(){
         setSupportActionBar(mToolbar);
         ActionBar ab = getSupportActionBar();
         Objects.requireNonNull(ab).setDisplayHomeAsUpEnabled(true);

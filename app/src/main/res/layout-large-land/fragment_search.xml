@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:rsb="http://schemas.android.com/tools">
 
     <ScrollView
         android:id="@+id/search_scrollview_container"
@@ -42,7 +42,7 @@
                         android:text="@string/title_filter"
                         android:drawableStart="@drawable/ic_filter"
                         android:drawablePadding="@dimen/middle_padding"
-                        android:textSize="@dimen/title_size_big"
+                        android:textSize="@dimen/title_size_small"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
                 </TableRow>
@@ -77,7 +77,7 @@
                     android:paddingEnd="@dimen/basic_padding">
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:textAlignment="center"
@@ -86,38 +86,48 @@
                         android:textStyle="bold"
                         android:textSize="@dimen/title_size_small" />
 
-                    <EditText
-                        android:id="@+id/filter_price_mini"
+                    <RelativeLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|start"
-                        android:padding="@dimen/basic_padding"
-                        android:layout_marginRight="@dimen/basic_padding"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/title_size_small"
-                        android:background="@color/light_grey_transparent"
-                        android:inputType="number"
-                        android:hint="@string/min"/>
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+                        <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                            android:id="@+id/priceRangeSeekbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:corner_radius="10"
+                            app:min_value="0"
+                            app:max_value="2000000"
+                            app:steps="50000"
+                            app:gap="50000"
+                            app:bar_color="@color/dark_green"
+                            app:bar_highlight_color="@color/pink"
+                            app:left_thumb_image="@drawable/thumb"
+                            app:right_thumb_image="@drawable/thumb"
+                            app:data_type="_integer"/>
+                        <TextView
+                            android:id="@+id/priceMin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size"
+                            android:layout_below="@+id/priceRangeSeekbar"
+                            android:layout_alignParentStart="true"/>
+                        <TextView
+                            android:id="@+id/priceMax"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size"
+                            android:layout_below="@+id/priceRangeSeekbar"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
 
-                    <EditText
-                        android:id="@+id/filter_price_max"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|start"
-                        android:padding="@dimen/basic_padding"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/title_size_small"
-                        android:background="@color/light_grey_transparent"
-                        android:inputType="number"
-                        android:hint="@string/max"/>
                 </TableRow>
                 <TableRow android:layout_margin="2dp"
                     android:paddingEnd="@dimen/basic_padding">
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:textAlignment="center"
@@ -126,38 +136,48 @@
                         android:textStyle="bold"
                         android:textSize="@dimen/title_size_small" />
 
-                    <EditText
-                        android:id="@+id/filter_surface_mini"
+                    <RelativeLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|start"
-                        android:padding="@dimen/basic_padding"
-                        android:layout_marginRight="@dimen/basic_padding"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/title_size_small"
-                        android:background="@color/light_grey_transparent"
-                        android:inputType="number"
-                        android:hint="@string/min"/>
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+                        <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                            android:id="@+id/surfaceRangeSeekbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:corner_radius="10"
+                            app:min_value="0"
+                            app:max_value="500"
+                            app:steps="10"
+                            app:gap="10"
+                            app:bar_color="@color/dark_green"
+                            app:bar_highlight_color="@color/pink"
+                            app:left_thumb_image="@drawable/thumb"
+                            app:right_thumb_image="@drawable/thumb"
+                            app:data_type="_integer"/>
+                        <TextView
+                            android:id="@+id/surfaceMin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size"
+                            android:layout_below="@+id/surfaceRangeSeekbar"
+                            android:layout_alignParentStart="true"/>
+                        <TextView
+                            android:id="@+id/surfaceMax"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size"
+                            android:layout_below="@+id/surfaceRangeSeekbar"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
 
-                    <EditText
-                        android:id="@+id/filter_surface_max"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|start"
-                        android:padding="@dimen/basic_padding"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/title_size_small"
-                        android:background="@color/light_grey_transparent"
-                        android:inputType="number"
-                        android:hint="@string/max"/>
                 </TableRow>
                 <TableRow android:layout_margin="2dp"
                     android:paddingEnd="@dimen/basic_padding">
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:textAlignment="center"
@@ -166,38 +186,47 @@
                         android:textStyle="bold"
                         android:textSize="@dimen/title_size_small" />
 
-                    <EditText
-                        android:id="@+id/filter_room_mini"
+                    <RelativeLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|start"
-                        android:padding="@dimen/basic_padding"
-                        android:layout_marginRight="@dimen/basic_padding"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/title_size_small"
-                        android:background="@color/light_grey_transparent"
-                        android:inputType="number"
-                        android:hint="@string/min"/>
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+                        <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                            android:id="@+id/roomRangeSeekbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:corner_radius="10"
+                            app:min_value="0"
+                            app:max_value="10"
+                            app:steps="1"
+                            app:bar_color="@color/dark_green"
+                            app:bar_highlight_color="@color/pink"
+                            app:left_thumb_image="@drawable/thumb"
+                            app:right_thumb_image="@drawable/thumb"
+                            app:data_type="_integer"/>
+                        <TextView
+                            android:id="@+id/roomMin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size"
+                            android:layout_below="@+id/roomRangeSeekbar"
+                            android:layout_alignParentStart="true"/>
+                        <TextView
+                            android:id="@+id/roomMax"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size"
+                            android:layout_below="@+id/roomRangeSeekbar"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
 
-                    <EditText
-                        android:id="@+id/filter_room_max"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|start"
-                        android:padding="@dimen/basic_padding"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/title_size_small"
-                        android:background="@color/light_grey_transparent"
-                        android:inputType="number"
-                        android:hint="@string/max"/>
                 </TableRow>
                 <TableRow android:layout_margin="2dp"
                     android:paddingEnd="@dimen/basic_padding">
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:textAlignment="center"
@@ -206,38 +235,47 @@
                         android:textStyle="bold"
                         android:textSize="@dimen/title_size_small" />
 
-                    <EditText
-                        android:id="@+id/filter_bedroom_mini"
+                    <RelativeLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|start"
-                        android:padding="@dimen/basic_padding"
-                        android:layout_marginRight="@dimen/basic_padding"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/title_size_small"
-                        android:background="@color/light_grey_transparent"
-                        android:inputType="number"
-                        android:hint="@string/min"/>
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+                        <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                            android:id="@+id/bedroomRangeSeekbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:corner_radius="10"
+                            app:min_value="0"
+                            app:max_value="10"
+                            app:steps="1"
+                            app:bar_color="@color/dark_green"
+                            app:bar_highlight_color="@color/pink"
+                            app:left_thumb_image="@drawable/thumb"
+                            app:right_thumb_image="@drawable/thumb"
+                            app:data_type="_integer"/>
+                        <TextView
+                            android:id="@+id/bedroomMin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size"
+                            android:layout_below="@+id/bedroomRangeSeekbar"
+                            android:layout_alignParentStart="true"/>
+                        <TextView
+                            android:id="@+id/bedroomMax"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size"
+                            android:layout_below="@+id/bedroomRangeSeekbar"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
 
-                    <EditText
-                        android:id="@+id/filter_bedroom_max"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|start"
-                        android:padding="@dimen/basic_padding"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/title_size_small"
-                        android:background="@color/light_grey_transparent"
-                        android:inputType="number"
-                        android:hint="@string/max"/>
                 </TableRow>
                 <TableRow android:layout_margin="2dp"
                     android:paddingEnd="@dimen/basic_padding">
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:textAlignment="center"
@@ -246,32 +284,41 @@
                         android:textStyle="bold"
                         android:textSize="@dimen/title_size_small" />
 
-                    <EditText
-                        android:id="@+id/filter_bathroom_mini"
+                    <RelativeLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|start"
-                        android:padding="@dimen/basic_padding"
-                        android:layout_marginRight="@dimen/basic_padding"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/title_size_small"
-                        android:background="@color/light_grey_transparent"
-                        android:inputType="number"
-                        android:hint="@string/min"/>
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+                        <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                            android:id="@+id/bathroomRangeSeekbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:corner_radius="10"
+                            app:min_value="0"
+                            app:max_value="10"
+                            app:steps="1"
+                            app:bar_color="@color/dark_green"
+                            app:bar_highlight_color="@color/pink"
+                            app:left_thumb_image="@drawable/thumb"
+                            app:right_thumb_image="@drawable/thumb"
+                            app:data_type="_integer"/>
+                        <TextView
+                            android:id="@+id/bathroomMin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size"
+                            android:layout_below="@+id/bathroomRangeSeekbar"
+                            android:layout_alignParentStart="true"/>
+                        <TextView
+                            android:id="@+id/bathroomMax"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size"
+                            android:layout_below="@+id/bathroomRangeSeekbar"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
 
-                    <EditText
-                        android:id="@+id/filter_bathroom_max"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|start"
-                        android:padding="@dimen/basic_padding"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/title_size_small"
-                        android:background="@color/light_grey_transparent"
-                        android:inputType="number"
-                        android:hint="@string/max"/>
                 </TableRow>
 
             </TableLayout>
@@ -466,6 +513,7 @@
                     </TableRow>
 
                     <TableRow android:layout_margin="2dp"
+                        android:paddingBottom="@dimen/basic_padding"
                         android:paddingEnd="@dimen/basic_padding">
 
                         <LinearLayout
@@ -606,7 +654,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/middle_padding"
-                        android:gravity="center_vertical|start"
+                        android:gravity="center_vertical|center"
                         android:text="@string/warning_date"
                         android:textSize="@dimen/title_size_small"
                         android:textStyle="italic"
@@ -616,8 +664,8 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
+
     </ScrollView>
 
     <androidx.constraintlayout.widget.Guideline
@@ -633,7 +681,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.95"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_add_flat"
+        android:id="@+id/btn_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -641,7 +689,7 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_go_search"
-        app:backgroundTint="@color/light_grey"
+        app:backgroundTint="@color/pink"
         app:fabSize="normal"
         app:maxImageSize="40dp"
         app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal"

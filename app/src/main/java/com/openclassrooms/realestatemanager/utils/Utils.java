@@ -10,8 +10,13 @@ import android.util.Log;
 import android.view.Display;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.zip.DataFormatException;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 
@@ -20,7 +25,7 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
  */
 
 public class Utils {
-
+    private static final DateFormat RIGHT_DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
     /**
      * Price conversion (Euros to Dollars)
      * @param dollars amount to convert
@@ -45,11 +50,41 @@ public class Utils {
      * @return
      */
     public static String getTodayDate(){
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
         Calendar thisDay = Calendar.getInstance();
         long today = thisDay.getTimeInMillis();
 
-        return dateFormat.format(today);
+        return RIGHT_DATE_FORMAT.format(today);
+    }
+
+    /**
+     * Method to check that input date is correct
+     * @param date is a String representing a date to be tested
+     * @return true if the String represents a valid Date
+     */
+    public static boolean isCorrectDate(String date) {
+        RIGHT_DATE_FORMAT.setLenient(false);
+        if (!date.equals(""))  {
+            try {
+                RIGHT_DATE_FORMAT.parse(date);
+            } catch (ParseException e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isBeforeOrEqualTo(String dateString1, String dateString2) {
+        Date date1;
+        Date date2;
+        try {
+            date1 = RIGHT_DATE_FORMAT.parse(dateString1);
+            date2 = RIGHT_DATE_FORMAT.parse(dateString2);
+            if (date1.compareTo(date2) > 0) return false;
+            return true;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**

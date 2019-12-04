@@ -1,13 +1,16 @@
 package com.openclassrooms.realestatemanager.addFlat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.location.Address;
 import android.location.Geocoder;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,15 +29,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
+import androidx.exifinterface.media.ExifInterface;
 import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.openclassrooms.realestatemanager.FlatDetailActivity;
 import com.openclassrooms.realestatemanager.FlatPicAdapter;
 import com.openclassrooms.realestatemanager.MainActivity;
 import com.openclassrooms.realestatemanager.R;
@@ -206,6 +207,8 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
                 } else {
                     uriImageSelected = mPhotoURI;
                     mSelectedImagePath = mCurrentPhotoPath;
+                    int rotationValue = getOrientationEXIF(this, mSelectedImagePath);
+                    System.out.println("Orientation : "+rotationValue);
                 }
 
                 Pic pic = new Pic(uriImageSelected, mSelectedImagePath, mCaption.getText().toString(), 0);
@@ -492,7 +495,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
 
             if (photoFile != null) {
                 mPhotoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
+                        "com.openclassrooms.realestatemanager.fileprovider",
                         photoFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoURI);
                 startActivityForResult(intent, REQUEST_CAMERA_TAKE_PICTURE);
@@ -510,5 +513,79 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
 
         return image;
     }
+
+//    private void rotateImage(String imagePath) {
+//        Matrix matrix = new Matrix();
+//        ExifInterface exifReader = null;
+//        try {
+//            exifReader = new ExifInterface(imagePath);
+//            int orientation = Integer.parseInt(exifReader.getAttribute(ExifInterface.TAG_ORIENTATION));
+//            String exifOrientation = exifReader.getAttribute(ExifInterface.TAG_ORIENTATION);
+//
+//            System.out.println("Exif : "+exifOrientation);
+//            if (orientation ==ExifInterface.ORIENTATION_NORMAL) {
+//System.out.println("Photo Normale");
+//            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+//System.out.println("Photo 90");
+//                matrix.postRotate(90);
+//            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
+//System.out.println("Photo 180");
+//                matrix.postRotate(180);
+//            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+//System.out.println("Photo 270");
+//                matrix.postRotate(270);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    public static int getOrientationEXIF(Context context, String imagePath) {
+
+        int orientation = 0;
+
+        try {
+            ExifInterface exif = new ExifInterface(imagePath);
+
+            orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+            switch (orientation) {
+
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    orientation = 90;
+                    return orientation;
+
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    orientation = 180;
+                    return orientation;
+
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    orientation = 270;
+                    return orientation;
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    public static Bitmap rotate(float rotationValue, String filePath) {
+        Bitmap original= BitmapFactory.decodeFile(filePath);
+
+        int width = original.getWidth();
+        int height = original.getHeight();
+
+        Matrix matrix = new Matrix();
+
+        matrix.postRotate(rotationValue);
+
+        Bitmap rotated = Bitmap.createBitmap(original, 0, 0, width, height, matrix, true);
+
+        return rotated;
+    }
+
 
 }
