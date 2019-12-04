@@ -97,7 +97,7 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
 
     @OnClick(R.id.btn_sold)
     public void onClickSoldButton() {
-        if (mFlat.getIsSold()) flatNotSold();
+        if (mFlat.isSold()) flatNotSold();
         else flatSold();
     }
 
@@ -175,7 +175,7 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
             if (mFlat.isShop()) mShop.setImageResource(R.drawable.ic_ok);
             else mShop.setImageResource(R.drawable.ic_ko);
 
-            if (mFlat.getIsSold()) disableSoldBtn();
+            if (mFlat.isSold()) disableSoldBtn();
             else enableSoldBtn();
 
             String address = Utils.buildAddress(mFlat.getNumberAddress(), mFlat.getStreetAddress(), mFlat.getPostalCodeAddress(), mFlat.getCityAddress());

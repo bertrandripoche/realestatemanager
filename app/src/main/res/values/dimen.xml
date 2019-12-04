@@ -28,5 +28,11 @@
     <integer name="gallery_orientation">1</integer>
     <integer name="gallery_pic_orientation">0</integer>
 
+    <integer name="price_max_filter">2000000</integer>
+    <integer name="surface_max_filter">500</integer>
+    <integer name="room_max_filter">10</integer>
+    <integer name="bedroom_max_filter">10</integer>
+    <integer name="bathroom_max_filter">10</integer>
+
     <dimen name="nav_header_height">240dp</dimen>
 </resources>

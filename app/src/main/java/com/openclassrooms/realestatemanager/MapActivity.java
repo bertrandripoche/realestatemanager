@@ -171,7 +171,7 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMyLocationC
 
         boolean isFirst = true;
         for (Flat flat: mFlatList) {
-            if (!flat.getIsSold() && flat.getLatitude() != null && flat.getLongitude() != null) {
+            if (!flat.isSold() && flat.getLatitude() != null && flat.getLongitude() != null) {
                 LatLng latLng = new LatLng(flat.getLatitude(), flat.getLongitude());
                 String price = getResources().getString(R.string.euro, flat.getPrice());
                 Marker myMarker = mMap.addMarker(new MarkerOptions().position(latLng).snippet(price).title(flat.getSummary()));

@@ -40,7 +40,7 @@ class FlatViewHolder extends RecyclerView.ViewHolder {
         this.mFlatPrice.setText(this.itemView.getResources().getString(R.string.euro, flat.getPrice()));
         this.mFlatType.setText(flat.getType());
         this.mFlatConstraintLayout.setTag(flat.getId());
-        if (flat.getIsSold()) mFlatSold.setVisibility(View.VISIBLE);
+        if (flat.isSold()) mFlatSold.setVisibility(View.VISIBLE);
         else mFlatSold.setVisibility(View.GONE);
     }
 

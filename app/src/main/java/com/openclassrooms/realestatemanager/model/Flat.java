@@ -87,7 +87,7 @@ public class Flat {
     public boolean isRestaurant() {return isRestaurant;}
     public boolean isTheater() {return isTheater;}
     public boolean isShop() {return isShop;}
-    public boolean getIsSold() {return isSold;}
+    public boolean isSold() {return isSold;}
     public String getSoldDate() {return soldDate;}
     public String getAvailableDate() {return availableDate;}
     public int getAgentId() {return agentId;}

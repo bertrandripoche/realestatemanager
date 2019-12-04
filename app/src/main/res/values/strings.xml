@@ -102,6 +102,7 @@
     <string name="warning_date">* Format for date is "DD/MM/YYYY"</string>
     <string name="city_filter">City</string>
     <string name="price_filter">Price</string>
+    <string name="warning_wrong_form">Some fields of the \"Searching for sale status...\" were inacurrately filled./nPlease double-check.</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>
