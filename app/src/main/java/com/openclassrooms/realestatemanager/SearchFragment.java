@@ -273,10 +273,10 @@ public class SearchFragment extends Fragment {
             boolean isChecked = pair.getValue();
             if (isChecked) {
                 if (isFirstFilter) {
-                    mySQLQuery = mySQLQuery + " WHERE (" + field + " = 'true') ";
+                    mySQLQuery = mySQLQuery + " WHERE (" + field + " = 1) ";
                     isFirstFilter = false;
                 }
-                else mySQLQuery = mySQLQuery + " AND (" + field + " = 'true') ";
+                else mySQLQuery = mySQLQuery + " AND (" + field + " = 1) ";
             }
         }
 

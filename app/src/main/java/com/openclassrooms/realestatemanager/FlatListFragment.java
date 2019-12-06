@@ -61,7 +61,7 @@ public class FlatListFragment extends Fragment {
         }
         else {
             getFlatsFromQuery(mMainActivity.mQuery);
-            Toast.makeText(getContext(), R.string.search_result, Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.search_result, Toast.LENGTH_SHORT).show();
             mMainActivity.displayBackToListBtn();
         }
 
