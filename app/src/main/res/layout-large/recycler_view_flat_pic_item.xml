@@ -24,7 +24,7 @@
         android:textSize="@dimen/title_size_small"
         android:paddingEnd="@dimen/middle_padding"
         android:textStyle="bold"
-        android:background="@color/black_alpha"
+        android:background="@color/light_black_transparent"
         android:text="Légende"
         android:textColor="@color/white"
         android:padding="@dimen/middle_padding"

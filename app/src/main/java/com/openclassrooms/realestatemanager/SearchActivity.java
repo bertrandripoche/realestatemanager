@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.openclassrooms.realestatemanager.addFlat.AddFlatActivity;
 import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
@@ -35,6 +37,25 @@ public class SearchActivity extends BaseActivity {
         configureAndShowSearchFragment();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    protected void configureToolbar(){
+        setSupportActionBar(mToolbar);
+        ActionBar ab = getSupportActionBar();
+        Objects.requireNonNull(ab).setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(ab).setTitle(R.string.search_title);
+    }
+
     protected void configureAndShowSearchFragment(){
         mSearchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_search);
         if (mSearchFragment == null && findViewById(R.id.container_fragment_search) != null) {
@@ -43,14 +64,6 @@ public class SearchActivity extends BaseActivity {
                     .add(R.id.container_fragment_search, mSearchFragment)
                     .commit();
         }
-    }
-
-    @Override
-    protected void configureToolbar(){
-        setSupportActionBar(mToolbar);
-        ActionBar ab = getSupportActionBar();
-        Objects.requireNonNull(ab).setDisplayHomeAsUpEnabled(true);
-        Objects.requireNonNull(ab).setTitle(R.string.search);
     }
 
     private Bundle getBundle() {

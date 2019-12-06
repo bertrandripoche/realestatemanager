@@ -114,6 +114,7 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         checkRecyclerView();
 
         getFlat(mFlatId);
+
     }
 
     @Override
@@ -169,6 +170,23 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         outState.putParcelableArrayList("flatPicList", mFlatPicList);
         outState.putBoolean("picsHaveBeenModified", mIsModified);
         outState.putString("photoTaken", mCurrentPhotoPath);
+        if (!this.mSummary.getText().toString().equals("")) outState.putString("summary", this.mSummary.getText().toString());
+        if (!this.mDescription.getText().toString().equals("")) outState.putString("description", this.mDescription.getText().toString());
+        if (!this.mFlatType.getSelectedItem().toString().equals("")) outState.putString("flatType", this.mFlatType.getSelectedItem().toString());
+        if (!this.mPrice.getText().toString().equals("")) outState.putString("price", this.mPrice.getText().toString());
+        if (!this.mSurface.getText().toString().equals("")) outState.putString("surface", this.mSurface.getText().toString());
+        if (!this.mRoomNb.getText().toString().equals("")) outState.putString("room", this.mRoomNb.getText().toString());
+        if (!this.mBedroomNb.getText().toString().equals("")) outState.putString("bedroom", this.mBedroomNb.getText().toString());
+        if (!this.mBathroomNb.getText().toString().equals("")) outState.putString("bathroom", this.mBathroomNb.getText().toString());
+        if (!this.mStreetNb.getText().toString().equals("")) outState.putString("streetNb", this.mStreetNb.getText().toString());
+        if (!this.mStreet.getText().toString().equals("")) outState.putString("street", this.mStreet.getText().toString());
+        if (!this.mPostalCode.getText().toString().equals("")) outState.putString("postalCode", this.mPostalCode.getText().toString());
+        if (!this.mCity.getText().toString().equals("")) outState.putString("city", this.mCity.getText().toString());
+        outState.putBoolean("school", mSchool.isChecked());
+        outState.putBoolean("postOffice", mPostOffice.isChecked());
+        outState.putBoolean("restaurant", mRestaurant.isChecked());
+        outState.putBoolean("theater", mTheater.isChecked());
+        outState.putBoolean("shop", mShop.isChecked());
     }
 
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -176,6 +194,24 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         mFlatPicList = savedInstanceState.getParcelableArrayList("flatPicList");
         mIsModified = savedInstanceState.getBoolean("picsHaveBeenModified");
         mCurrentPhotoPath = savedInstanceState.getString("photoTaken");
+        this.mSummary.setText(savedInstanceState.getString("summary"));
+        this.mDescription.setText(savedInstanceState.getString("description"));
+        setSpinner(mFlatType, savedInstanceState.getString("flatType"));
+        this.mPrice.setText(savedInstanceState.getString("price"));
+        this.mSurface.setText(savedInstanceState.getString("surface"));
+        this.mRoomNb.setText(savedInstanceState.getString("room"));
+        this.mBedroomNb.setText(savedInstanceState.getString("bedroom"));
+        this.mBathroomNb.setText(savedInstanceState.getString("bathroom"));
+        this.mStreetNb.setText(savedInstanceState.getString("streetNb"));
+        this.mStreet.setText(savedInstanceState.getString("street"));
+        this.mPostalCode.setText(savedInstanceState.getString("postalCode"));
+        this.mCity.setText(savedInstanceState.getString("city"));
+        this.mSchool.setChecked(savedInstanceState.getBoolean("school"));
+        this.mPostOffice.setChecked(savedInstanceState.getBoolean("postOffice"));
+        this.mRestaurant.setChecked(savedInstanceState.getBoolean("restaurant"));
+        this.mTheater.setChecked(savedInstanceState.getBoolean("theater"));
+        this.mShop.setChecked(savedInstanceState.getBoolean("shop"));
+
         if (mFlatPicList.size() != 0) checkRecyclerView();
         isRotated = true;
     }
@@ -280,7 +316,7 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
 
             if (photoFile != null) {
                 mPhotoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
+                        "com.openclassrooms.realestatemanager.fileprovider",
                         photoFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoURI);
                 startActivityForResult(intent, REQUEST_CAMERA_TAKE_PICTURE);
@@ -407,7 +443,7 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
 
     private void populateData(Flat flat) {
         mFlat = flat;
-        if (mFlat != null) {
+        if (mFlat != null && !isRotated) {
             mSummary.setText(mFlat.getSummary());
             mDescription.setText(getString(R.string.description_text, mFlat.getDescription()));
             if (mFlat.getPrice() != null) mPrice.setText(String.valueOf(mFlat.getPrice()));
@@ -470,8 +506,8 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         String address = Utils.buildAddress(streetNb, this.mStreet.getText().toString(), postalCode, this.mCity.getText().toString());
         Address flatAddress = getAddressFromSearchString(address);
 
-        mFlat.setSummary(this.mSummary.getText().toString());
-        mFlat.setDescription(this.mDescription.getText().toString());
+        mFlat.setSummary(Utils.capitalizeFirstLetterOfASingleWord(this.mSummary.getText().toString()));
+        mFlat.setDescription(Utils.capitalizeFirstLetterOfASingleWord(this.mDescription.getText().toString()));
         mFlat.setType(this.mFlatType.getSelectedItem().toString());
         mFlat.setPrice(price);
         mFlat.setSurface(surface);
@@ -481,7 +517,7 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         mFlat.setNumberAddress(streetNb);
         mFlat.setStreetAddress(this.mStreet.getText().toString());
         mFlat.setPostalCodeAddress(postalCode);
-        mFlat.setCityAddress(this.mCity.getText().toString());
+        mFlat.setCityAddress(Utils.capitalizeFirstLetterOfASingleWord(this.mCity.getText().toString()));
         mFlat.setLatitude(flatAddress.getLatitude());
         mFlat.setLongitude(flatAddress.getLongitude());
         mFlat.setSchool(mSchool.isChecked());

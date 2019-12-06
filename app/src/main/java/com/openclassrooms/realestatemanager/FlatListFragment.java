@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
@@ -22,11 +25,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class FlatListFragment extends Fragment {
-    @BindView(R.id.fragment_flat_list_recycler_view)
+    @BindView(R.id.fragment_flat_list_recycler_view) RecyclerView mRecyclerView;
 
-    RecyclerView mRecyclerView;
+    private MainActivity mMainActivity;
     private FlatAdapter mAdapter;
     private List<Flat> mFlatList;
     private FlatDetailFragment mFlatDetailFragment;
@@ -46,11 +50,20 @@ public class FlatListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_flat_list, container, false);
         ButterKnife.bind(this, view);
         mTabletSize = getResources().getBoolean(R.bool.isTablet);
+        mMainActivity = (MainActivity) getActivity();
 
         configureRecyclerView();
         configureViewModel();
         configureOnClickRecyclerView();
-        getFlats();
+        if (mMainActivity.mQuery == null || mMainActivity.mQuery.equals("") ) {
+            getFlats();
+            mMainActivity.hideBackToListBtn();
+        }
+        else {
+            getFlatsFromQuery(mMainActivity.mQuery);
+            Toast.makeText(getContext(), R.string.search_result, Toast.LENGTH_LONG).show();
+            mMainActivity.displayBackToListBtn();
+        }
 
         return view;
     }
@@ -67,16 +80,20 @@ public class FlatListFragment extends Fragment {
         if (savedInstanceState != null) {
             mSelectedFlat = savedInstanceState.getInt(SELECTEDFLAT, -1);
 
-            MainActivity mainActivity = (MainActivity) getActivity();
             if (mSelectedFlat != -1) {
-                mainActivity.displayEditBtn();
+                mMainActivity.displayEditBtn();
                 mAdapter.index = mSelectedFlat;
             }
-            else mainActivity.hideEditBtn();
+            else mMainActivity.hideEditBtn();
         }
     }
 
-    private void getFlats() {
+    private void getFlatsFromQuery(String queryString) {
+        SimpleSQLiteQuery query = new SimpleSQLiteQuery(queryString);
+        this.mFlatViewModel.getFlatsFromQuery(query).observe(this, this::updateFlatsList);
+    }
+
+    public void getFlats() {
         this.mFlatViewModel.getFlats().observe(this, this::updateFlatsList);
     }
 

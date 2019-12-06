@@ -181,7 +181,7 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
             String address = Utils.buildAddress(mFlat.getNumberAddress(), mFlat.getStreetAddress(), mFlat.getPostalCodeAddress(), mFlat.getCityAddress());
             mAddress.setText(address);
 
-            mAgent.setText("Pierre Poljack");
+            mAgent.setText("Marc Antoine");
 
             if (mFlat.getLatitude() != null) {
                 LatLng flatLatLng =  new LatLng(mFlat.getLatitude(), mFlat.getLongitude());

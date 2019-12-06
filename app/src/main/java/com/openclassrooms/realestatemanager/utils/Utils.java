@@ -25,7 +25,33 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
  */
 
 public class Utils {
+
     private static final DateFormat RIGHT_DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+
+    /**
+     * Capitalize the first letter of a String a set the rest to lower case
+     * @param original is the string on which we operate
+     * @return a String with a capital as a first letter
+     */
+    public static String capitalizeFirstLetter(String original) {
+        if (original == null || original.length() == 0) {
+            return original;
+        }
+        return original.substring(0, 1).toUpperCase() + original.substring(1);
+    }
+
+    /**
+     * Capitalize the first letter of a String a set the rest to lower case
+     * @param original is the string on which we operate
+     * @return a String with a capital as a first letter
+     */
+    public static String capitalizeFirstLetterOfASingleWord(String original) {
+        if (original == null || original.length() == 0) {
+            return original;
+        }
+        return original.substring(0, 1).toUpperCase() + original.substring(1).toLowerCase();
+    }
+
     /**
      * Price conversion (Euros to Dollars)
      * @param dollars amount to convert

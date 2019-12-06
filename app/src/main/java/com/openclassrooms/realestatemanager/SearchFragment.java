@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,15 +20,14 @@ import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static java.lang.Integer.parseInt;
 import static java.lang.String.valueOf;
 
 public class SearchFragment extends Fragment {
@@ -71,8 +71,88 @@ public class SearchFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         configureSeekBar();
+        configureTextWatchers();
 
         return view;
+    }
+
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (!this.mCity.getText().toString().equals("")) outState.putString("city", this.mCity.getText().toString());
+        outState.putString("priceMin", this.mPriceMin.getText().toString());
+        outState.putString("surfaceMin", this.mSurfaceMin.getText().toString());
+        outState.putString("roomMin", this.mRoomMin.getText().toString());
+        outState.putString("bedroomMin", this.mBedroomMin.getText().toString());
+        outState.putString("bathroomMin", this.mBathroomMin.getText().toString());
+        outState.putString("priceMax", this.mPriceMax.getText().toString());
+        outState.putString("surfaceMax", this.mSurfaceMax.getText().toString());
+        outState.putString("roomMax", this.mRoomMax.getText().toString());
+        outState.putString("bedroomMax", this.mBedroomMax.getText().toString());
+        outState.putString("bathroomMax", this.mBathroomMax.getText().toString());
+        outState.putBoolean("school", mSchool.isChecked());
+        outState.putBoolean("postOffice", mPostOffice.isChecked());
+        outState.putBoolean("restaurant", mRestaurant.isChecked());
+        outState.putBoolean("theater", mTheater.isChecked());
+        outState.putBoolean("shop", mShop.isChecked());
+        outState.putBoolean("soldOnly", mSoldOnly.isChecked());
+        outState.putBoolean("onSaleOnly", mOnSaleOnly.isChecked());
+        if (!this.mAvailableDateMin.getText().toString().equals("")) outState.putString("availableDateMin", this.mAvailableDateMin.getText().toString());
+        if (!this.mAvailableDateMax.getText().toString().equals("")) outState.putString("availableDateMax", this.mAvailableDateMax.getText().toString());
+        if (!this.mSoldDateMin.getText().toString().equals("")) outState.putString("soldDateMin", this.mSoldDateMin.getText().toString());
+        if (!this.mSoldDateMax.getText().toString().equals("")) outState.putString("soldDateMax", this.mSoldDateMax.getText().toString());
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            this.mCity.setText(savedInstanceState.getString("city"));
+            this.mPriceMin.setText(savedInstanceState.getString("priceMin"));
+            this.mPriceMax.setText(savedInstanceState.getString("priceMax"));
+            mPriceRangeSeekbar.setMinValue(0)
+                    .setMaxValue(getResources().getInteger(R.integer.price_max_filter))
+                    .setMinStartValue(Float.parseFloat(savedInstanceState.getString("priceMin")))
+                    .setMaxStartValue(Float.parseFloat(savedInstanceState.getString("priceMax")))
+                    .apply();
+            this.mSurfaceMin.setText(savedInstanceState.getString("surfaceMin"));
+            this.mSurfaceMax.setText(savedInstanceState.getString("surfaceMax"));
+            mSurfaceRangeSeekbar.setMinValue(0)
+                    .setMaxValue(getResources().getInteger(R.integer.surface_max_filter))
+                    .setMinStartValue(Float.parseFloat(savedInstanceState.getString("surfaceMin")))
+                    .setMaxStartValue(Float.parseFloat(savedInstanceState.getString("surfaceMax")))
+                    .apply();
+            this.mRoomMin.setText(savedInstanceState.getString("roomMin"));
+            this.mRoomMax.setText(savedInstanceState.getString("roomMax"));
+            mRoomRangeSeekbar.setMinValue(0)
+                    .setMaxValue(getResources().getInteger(R.integer.room_max_filter))
+                    .setMinStartValue(Float.parseFloat(savedInstanceState.getString("roomMin")))
+                    .setMaxStartValue(Float.parseFloat(savedInstanceState.getString("roomMax")))
+                    .apply();
+            this.mBedroomMin.setText(savedInstanceState.getString("bedroomMin"));
+            this.mBedroomMax.setText(savedInstanceState.getString("bedroomMax"));
+            mBedroomRangeSeekbar.setMinValue(0)
+                    .setMaxValue(getResources().getInteger(R.integer.bedroom_max_filter))
+                    .setMinStartValue(Float.parseFloat(savedInstanceState.getString("bedroomMin")))
+                    .setMaxStartValue(Float.parseFloat(savedInstanceState.getString("bedroomMax")))
+                    .apply();
+            this.mBathroomMin.setText(savedInstanceState.getString("bathroomMin"));
+            this.mBathroomMax.setText(savedInstanceState.getString("bathroomMax"));
+            mBathroomRangeSeekbar.setMinValue(0)
+                    .setMaxValue(getResources().getInteger(R.integer.bathroom_max_filter))
+                    .setMinStartValue(Float.parseFloat(savedInstanceState.getString("bathroomMin")))
+                    .setMaxStartValue(Float.parseFloat(savedInstanceState.getString("bathroomMax")))
+                    .apply();
+            this.mSchool.setChecked(savedInstanceState.getBoolean("school"));
+            this.mPostOffice.setChecked(savedInstanceState.getBoolean("postOffice"));
+            this.mRestaurant.setChecked(savedInstanceState.getBoolean("restaurant"));
+            this.mTheater.setChecked(savedInstanceState.getBoolean("theater"));
+            this.mShop.setChecked(savedInstanceState.getBoolean("shop"));
+            this.mSoldOnly.setChecked(savedInstanceState.getBoolean("soldOnly"));
+            this.mOnSaleOnly.setChecked(savedInstanceState.getBoolean("onSaleOnly"));
+            this.mAvailableDateMin.setText(savedInstanceState.getString("availableDateMin"));
+            this.mAvailableDateMax.setText(savedInstanceState.getString("availableDateMax"));
+            this.mSoldDateMin.setText(savedInstanceState.getString("soldDateMin"));
+            this.mSoldDateMax.setText(savedInstanceState.getString("soldDateMax"));
+        }
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
@@ -86,8 +166,8 @@ public class SearchFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable s) {
-            if ((!mSoldDateMin.getText().toString().equals("") || !mSoldDateMax.getText().toString().equals(""))&& mSoldOnly.isChecked()) {
-                mSoldOnly.setChecked(false);
+            if ((!mSoldDateMin.getText().toString().equals("") || !mSoldDateMax.getText().toString().equals(""))&& mOnSaleOnly.isChecked()) {
+                mOnSaleOnly.setChecked(false);
             }
         }
     };
@@ -118,8 +198,19 @@ public class SearchFragment extends Fragment {
         if (checkFormValidity()) {
             String mySQLQuery = createSQLQuery();
             System.out.println("Ma query : "+mySQLQuery);
+
+            startSearchDisplayOnMainActivity(mySQLQuery);
         }
         else Toast.makeText(getContext(), R.string.warning_wrong_form,Toast.LENGTH_LONG).show();
+    }
+
+    private void startSearchDisplayOnMainActivity(String query) {
+        final String QUERY = "Query";
+        Bundle args = new Bundle();
+        args.putString(QUERY, query);
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.putExtras(args);
+        startActivity(intent);
     }
 
     private String createSQLQuery() {
@@ -128,7 +219,7 @@ public class SearchFragment extends Fragment {
 
         // For the city
         if (!mCity.getText().toString().equals("")) {
-            mySQLQuery = mySQLQuery + " WHERE (city LIKE " + mCity.getText().toString() + ") ";
+            mySQLQuery = mySQLQuery + " WHERE (cityAddress LIKE '%" + Utils.capitalizeFirstLetterOfASingleWord(mCity.getText().toString()) + "%') ";
             isFirstFilter = false;
         }
 

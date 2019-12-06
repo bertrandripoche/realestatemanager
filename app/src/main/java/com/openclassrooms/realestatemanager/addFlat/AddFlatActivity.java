@@ -326,7 +326,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         Integer bedroom = getNumber(this.mBedroomNb.getText().toString());
         Integer bathroom = getNumber(this.mBathroomNb.getText().toString());
         String street = this.mStreet.getText().toString();
-        String city = this.mCity.getText().toString();
+        String city = Utils.capitalizeFirstLetterOfASingleWord(this.mCity.getText().toString());
         Integer streetNb = getNumber(this.mStreetNb.getText().toString());
         Integer postalCode = getNumber(this.mPostalCode.getText().toString());
 

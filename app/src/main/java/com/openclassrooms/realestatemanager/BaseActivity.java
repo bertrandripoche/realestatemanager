@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,6 +22,7 @@ public class BaseActivity extends AppCompatActivity {
     MenuItem mEditBtn;
     MenuItem mListBtn;
     MenuItem mMapBtn;
+    MenuItem mSearchBtn;
     FlatDetailFragment mFlatDetailFragment;
     SearchFragment mSearchFragment;
     protected Long mFlatId = -1L;
@@ -145,6 +148,11 @@ public class BaseActivity extends AppCompatActivity {
     protected void hideEditBtn() {if (mEditBtn != null) mEditBtn.setVisible(false);}
     protected void displayEditBtn() {
         if (mEditBtn != null) mEditBtn.setVisible(true);
+    }
+
+    protected void hideSearchBtn() {if (mSearchBtn != null) mSearchBtn.setVisible(false);}
+    protected void displaySearchBtn() {
+        if (mSearchBtn != null) mSearchBtn.setVisible(true);
     }
 
     protected Long createBundleWithFlatId(Long flatId, String FLATID) {

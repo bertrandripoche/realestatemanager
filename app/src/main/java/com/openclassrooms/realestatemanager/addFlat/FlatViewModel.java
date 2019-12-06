@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.openclassrooms.realestatemanager.model.Agent;
 import com.openclassrooms.realestatemanager.model.Flat;
@@ -64,6 +65,8 @@ public class FlatViewModel extends ViewModel {
     public LiveData<List<Flat>> getFlats() {
         return mFlatDataSource.getFlats();
     }
+
+    public LiveData<List<Flat>> getFlatsFromQuery(SupportSQLiteQuery query) {return mFlatDataSource.getFlatsFromQuery(query);}
 
     public LiveData<List<Flat>> getFlatsPerAgent(long agentId) {return mFlatDataSource.getFlatsPerAgent(agentId);}
 

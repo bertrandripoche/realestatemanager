@@ -65,7 +65,7 @@
     <string name="title_edit_pics">Pictures</string>
     <string name="photo_caption">Caption</string>
     <string name="caption">Caption</string>
-    <string name="edit_caption">Caption...</string>
+    <string name="edit_caption">Caption…</string>
     <string name="new_photo">Add photo</string>
     <string name="invalid_caption">Please enter a caption first.</string>
     <string name="permissions_issue">You need permissions first.</string>
@@ -86,23 +86,27 @@
     <string name="map">Map</string>
     <string name="list">List</string>
     <string name="title_filter">Filters</string>
-    <string name="title_filter_poi">Searching a flat close to...</string>
-    <string name="min">Mini...</string>
-    <string name="max">Maxi...</string>
-    <string name="filter_city">In this city...</string>
-    <string name="title_filter_sale">Searching for sale status...</string>
+    <string name="title_filter_poi">Searching a flat close to…</string>
+    <string name="min">Min…</string>
+    <string name="max">Max…</string>
+    <string name="filter_city">In this city…</string>
+    <string name="title_filter_sale">Searching for sale status…</string>
     <string name="on_sale_filter_title">\"On sale\" only</string>
     <string name="sold_filter_title">\"Sold\" only</string>
     <string name="available_date_filter">Available date *</string>
     <string name="sold_filter">Sold date *</string>
     <string name="date_filter">DD/MM/YYYY</string>
-    <string name="sold_date_filter">Sold date...</string>
-    <string name="date_filter_max">Before...</string>
-    <string name="date_filter_min">After...</string>
+    <string name="sold_date_filter">Sold date…</string>
+    <string name="date_filter_max">Before…</string>
+    <string name="date_filter_min">After…</string>
     <string name="warning_date">* Format for date is "DD/MM/YYYY"</string>
     <string name="city_filter">City</string>
     <string name="price_filter">Price</string>
-    <string name="warning_wrong_form">Some fields of the \"Searching for sale status...\" were inacurrately filled./nPlease double-check.</string>
+    <string name="warning_wrong_form">Some fields of the \"Searching for sale status…\" were inacurrately filled.\nPlease double-check.</string>
+    <string name="search_result">This is the result of your search.</string>
+    <string name="previous_search_result">This is the result of your previous search.</string>
+    <string name="back_to_full_listing">Back to the full list</string>
+    <string name="search_title">Search</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>

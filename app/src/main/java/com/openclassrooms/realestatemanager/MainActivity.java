@@ -6,14 +6,25 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+
+import androidx.annotation.NonNull;
 
 import com.facebook.stetho.Stetho;
 
-public class MainActivity extends BaseActivity {
+import butterknife.BindView;
+import butterknife.OnClick;
 
-    FlatDetailFragment mFlatDetailFragment;
-    FlatListFragment mFlatListFragment;
+public class MainActivity extends BaseActivity {
+    @BindView(R.id.btn_back_to_list) Button mBackToListBtn;
+
+    private FlatDetailFragment mFlatDetailFragment;
+    private FlatListFragment mFlatListFragment;
     private static final String CHANNEL_ID = "1";
+    private static final String QUERY = "Query";
+    protected String mQuery = "";
+    private boolean mIsFullListRequestedAfterSearchCleaning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +32,10 @@ public class MainActivity extends BaseActivity {
         Stetho.initializeWithDefaults(this);
         createNotificationChannel();
 
-        mFlatId = getFlatId();
+        mQuery = (mIsFullListRequestedAfterSearchCleaning) ? "" : getQuery();
+        mFlatId = (mQuery == null || mQuery == "") ? getFlatId() : null;
+        if (mIsFullListRequestedAfterSearchCleaning) mIsFullListRequestedAfterSearchCleaning = false;
+
         checkPreviousFlatSelection();
         configureAndShowFlatListFragment();
     }
@@ -68,6 +82,21 @@ public class MainActivity extends BaseActivity {
        return true;
     }
 
+    @OnClick(R.id.btn_back_to_list)
+    public void onClickBackToListButton() {
+        mFlatListFragment.getFlats();
+        mQuery = "";
+        mIsFullListRequestedAfterSearchCleaning = true;
+        hideBackToListBtn();
+
+        Bundle args = getIntent().getExtras();
+        if (args != null) {
+            args.putString(QUERY, "");
+            args.putInt(SELECTEDFLAT, -1);
+            getIntent().putExtras(args);
+        }
+    }
+
     protected Long getFlatId() {
         Long mFlatId = -1L;
         final String FLATID = "flatId";
@@ -76,6 +105,15 @@ public class MainActivity extends BaseActivity {
             mFlatId = i.getExtras().getLong(FLATID);
         }
         return mFlatId;
+    }
+
+    protected String getQuery() {
+        String query = "";
+        Intent i = getIntent();
+        if (i != null && i.getExtras() != null) {
+            query = i.getExtras().getString("Query");
+        }
+        return query;
     }
 
     protected int getSelectedFlat() {
@@ -99,4 +137,7 @@ public class MainActivity extends BaseActivity {
             notificationManager.createNotificationChannel(channel);
         }
     }
+
+    protected void hideBackToListBtn() {if (mBackToListBtn != null) mBackToListBtn.setVisibility(View.GONE);}
+    protected void displayBackToListBtn() {if (mBackToListBtn != null) mBackToListBtn.setVisibility(View.VISIBLE);}
 }

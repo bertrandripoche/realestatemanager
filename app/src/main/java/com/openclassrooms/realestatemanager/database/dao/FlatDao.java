@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.openclassrooms.realestatemanager.model.Flat;
 
@@ -23,6 +25,9 @@ public interface FlatDao {
 
     @Query("SELECT * FROM Flat WHERE description = :description ORDER BY id DESC LIMIT 0,1")
     LiveData<Flat> getFlatFromDescription(String description);
+
+    @RawQuery(observedEntities = Flat.class)
+    LiveData<List<Flat>> getFlatsFromQuery(SupportSQLiteQuery query);
 
     @Query("SELECT MAX(Id) FROM Flat")
     LiveData<Integer> getLastFlatId();
