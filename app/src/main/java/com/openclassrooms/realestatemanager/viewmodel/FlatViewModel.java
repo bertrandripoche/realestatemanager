@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.addFlat;
+package com.openclassrooms.realestatemanager.viewmodel;
 
 import android.content.Context;
 

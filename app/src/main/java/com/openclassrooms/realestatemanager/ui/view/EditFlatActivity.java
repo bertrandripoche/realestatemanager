@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager;
+package com.openclassrooms.realestatemanager.ui.view;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -31,11 +31,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
+import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.viewmodel.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Flat;
 import com.openclassrooms.realestatemanager.model.Pic;
+import com.openclassrooms.realestatemanager.ui.recyclerview.FlatPicAdapter;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.io.File;
@@ -128,7 +130,7 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
     {
         final String FLATID = "flatId";
 
-        Intent intent = new Intent(EditFlatActivity.this,MainActivity.class);
+        Intent intent = new Intent(EditFlatActivity.this, MainActivity.class);
         Bundle b = new Bundle();
         b.putLong(FLATID, mFlatId);
         b.putInt(SELECTEDFLAT, mSelectedFlat);

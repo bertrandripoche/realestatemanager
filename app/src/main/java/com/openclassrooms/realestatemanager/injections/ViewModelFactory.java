@@ -3,7 +3,7 @@ package com.openclassrooms.realestatemanager.injections;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
+import com.openclassrooms.realestatemanager.viewmodel.FlatViewModel;
 import com.openclassrooms.realestatemanager.repositories.AgentDataRepository;
 import com.openclassrooms.realestatemanager.repositories.FlatDataRepository;
 import com.openclassrooms.realestatemanager.repositories.PicDataRepository;

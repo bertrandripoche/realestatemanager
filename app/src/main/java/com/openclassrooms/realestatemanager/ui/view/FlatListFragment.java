@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager;
+package com.openclassrooms.realestatemanager.ui.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,23 +9,24 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
-import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
+import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.viewmodel.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 import com.openclassrooms.realestatemanager.model.Flat;
+import com.openclassrooms.realestatemanager.ui.recyclerview.FlatAdapter;
+import com.openclassrooms.realestatemanager.utils.ItemClickSupport;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class FlatListFragment extends Fragment {
     @BindView(R.id.fragment_flat_list_recycler_view) RecyclerView mRecyclerView;

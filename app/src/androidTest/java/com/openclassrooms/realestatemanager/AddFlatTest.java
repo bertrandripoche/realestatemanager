@@ -15,6 +15,7 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.openclassrooms.realestatemanager.ui.view.MainActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

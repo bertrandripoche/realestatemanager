@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager;
+package com.openclassrooms.realestatemanager.ui.customview;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
+import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.model.Flat;
 
 public class CustomInfoAdapter implements GoogleMap.InfoWindowAdapter {
@@ -19,7 +20,7 @@ public class CustomInfoAdapter implements GoogleMap.InfoWindowAdapter {
     private final View mWindow;
     private final View mContents;
 
-    CustomInfoAdapter(Context context) {
+    public CustomInfoAdapter(Context context) {
         LayoutInflater inflater = LayoutInflater.from(context);
         mWindow = inflater.inflate(R.layout.marker_custom_info, null);
         mContents = inflater.inflate(R.layout.marker_customer_contents, null);

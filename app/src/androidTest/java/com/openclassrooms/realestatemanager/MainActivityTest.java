@@ -7,10 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import androidx.room.Room;
-import androidx.test.core.app.ApplicationProvider;
-import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.filters.LargeTest;
@@ -18,15 +14,11 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiDevice;
 
-import com.openclassrooms.realestatemanager.database.RealEstateManagerDatabase;
-import com.openclassrooms.realestatemanager.model.Agent;
-import com.openclassrooms.realestatemanager.model.Flat;
+import com.openclassrooms.realestatemanager.ui.view.MainActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,17 +1,13 @@
-package com.openclassrooms.realestatemanager;
+package com.openclassrooms.realestatemanager.ui.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.EditText;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.openclassrooms.realestatemanager.addFlat.AddFlatActivity;
-import com.openclassrooms.realestatemanager.addFlat.FlatViewModel;
+import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.viewmodel.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 

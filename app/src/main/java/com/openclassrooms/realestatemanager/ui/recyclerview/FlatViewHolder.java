@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager;
+package com.openclassrooms.realestatemanager.ui.recyclerview;
 
 import android.graphics.BitmapFactory;
 import android.view.View;
@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.model.Flat;
 
 import butterknife.BindView;

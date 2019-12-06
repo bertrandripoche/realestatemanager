@@ -9,8 +9,8 @@ import android.os.Bundle;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.openclassrooms.realestatemanager.FlatDetailActivity;
-import com.openclassrooms.realestatemanager.MainActivity;
+import com.openclassrooms.realestatemanager.ui.view.FlatDetailActivity;
+import com.openclassrooms.realestatemanager.ui.view.MainActivity;
 import com.openclassrooms.realestatemanager.R;
 
 public class NotificationService {

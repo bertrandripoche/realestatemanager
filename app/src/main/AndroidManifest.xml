@@ -19,41 +19,41 @@
         tools:replace="android:appComponentFactory"
         android:appComponentFactory="androidx">
 
-        <activity android:name="com.openclassrooms.realestatemanager.MainActivity">
+        <activity android:name="com.openclassrooms.realestatemanager.ui.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.openclassrooms.realestatemanager.FlatDetailActivity"></activity>
-        <activity android:name="com.openclassrooms.realestatemanager.addFlat.AddFlatActivity"
+        <activity android:name="com.openclassrooms.realestatemanager.ui.view.FlatDetailActivity"></activity>
+        <activity android:name="com.openclassrooms.realestatemanager.ui.view.AddFlatActivity"
             android:label="Add a flat"
-            android:parentActivityName="com.openclassrooms.realestatemanager.MainActivity">
+            android:parentActivityName="com.openclassrooms.realestatemanager.ui.view.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.openclassrooms.realestatemanager.MainActivity" />
+                android:value="com.openclassrooms.realestatemanager.ui.view.MainActivity" />
         </activity>
-        <activity android:name="com.openclassrooms.realestatemanager.EditFlatActivity"
+        <activity android:name="com.openclassrooms.realestatemanager.ui.view.EditFlatActivity"
             android:label="Edit a flat"
-            android:parentActivityName="com.openclassrooms.realestatemanager.MainActivity">
+            android:parentActivityName="com.openclassrooms.realestatemanager.ui.view.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.openclassrooms.realestatemanager.MainActivity" />
+                android:value="com.openclassrooms.realestatemanager.ui.view.MainActivity" />
         </activity>
-        <activity android:name="com.openclassrooms.realestatemanager.MapActivity"
+        <activity android:name="com.openclassrooms.realestatemanager.ui.view.MapActivity"
             android:label="Map"
-            android:parentActivityName="com.openclassrooms.realestatemanager.MapActivity">
+            android:parentActivityName="com.openclassrooms.realestatemanager.ui.view.MapActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.openclassrooms.realestatemanager.MainActivity" />
+                android:value="com.openclassrooms.realestatemanager.ui.view.MainActivity" />
         </activity>
-        <activity android:name="com.openclassrooms.realestatemanager.SearchActivity"
+        <activity android:name="com.openclassrooms.realestatemanager.ui.view.SearchActivity"
             android:label="Search"
-            android:parentActivityName="com.openclassrooms.realestatemanager.SearchActivity">
+            android:parentActivityName="com.openclassrooms.realestatemanager.ui.view.SearchActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.openclassrooms.realestatemanager.MainActivity" />
+                android:value="com.openclassrooms.realestatemanager.ui.view.MainActivity" />
         </activity>
         <meta-data
             android:name="com.google.android.gms.version"

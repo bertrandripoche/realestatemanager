@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager;
+package com.openclassrooms.realestatemanager.ui.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.ui.view.MainActivity;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.util.HashMap;

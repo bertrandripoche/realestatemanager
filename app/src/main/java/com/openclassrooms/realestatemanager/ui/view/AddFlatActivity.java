@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.addFlat;
+package com.openclassrooms.realestatemanager.ui.view;
 
 import android.Manifest;
 import android.content.Context;
@@ -36,8 +36,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.openclassrooms.realestatemanager.FlatPicAdapter;
-import com.openclassrooms.realestatemanager.MainActivity;
+import com.openclassrooms.realestatemanager.viewmodel.FlatViewModel;
+import com.openclassrooms.realestatemanager.ui.recyclerview.FlatPicAdapter;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;

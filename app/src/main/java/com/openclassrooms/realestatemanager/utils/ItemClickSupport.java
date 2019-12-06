@@ -1,6 +1,5 @@
-package com.openclassrooms.realestatemanager;
+package com.openclassrooms.realestatemanager.utils;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
