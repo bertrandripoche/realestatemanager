@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.ui.view;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.lifecycle.ViewModelProviders;
@@ -13,9 +14,11 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 
 import java.util.Objects;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SearchActivity extends BaseActivity {
+    private static final String SEARCH = "Search";
     final String FLATID = "flatId";
     public Long mFlatId;
     private Bundle mExtras;
@@ -30,17 +33,13 @@ public class SearchActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         configureToolbar();
-        configureAndShowSearchFragment();
+//        loadFragment(new SearchFragment(), R.id.container_fragment_search);
+        configureFragment(new SearchFragment(), R.id.container_fragment_search, SEARCH);
+        //configureAndShowSearchFragment();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
         return true;
     }
 

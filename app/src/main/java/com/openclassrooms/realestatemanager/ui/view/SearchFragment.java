@@ -29,15 +29,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static java.lang.Integer.parseInt;
 import static java.lang.String.valueOf;
 
 public class SearchFragment extends Fragment {
-    private static final String PRICE_MAX = "2000000";
-    private static final String SURFACE_MAX = "500";
-    private static final String ROOM_MAX = "10";
-    private static final String BEDROOM_MAX = "10";
-    private static final String BATHROOM_MAX = "10";
+
+    private static final String ORIGINAL_SQL_QUERY = "SELECT * FROM Flat";
     @BindView(R.id.btn_search) FloatingActionButton mSearchBtn;
     @BindView(R.id.filter_city) EditText mCity;
     @BindView(R.id.priceRangeSeekbar) CrystalRangeSeekbar mPriceRangeSeekbar;
@@ -199,9 +195,10 @@ public class SearchFragment extends Fragment {
     public void onClickSearchButton() {
         if (checkFormValidity()) {
             String mySQLQuery = createSQLQuery();
-            System.out.println("Ma query : "+mySQLQuery);
+System.out.println("Ma query : "+mySQLQuery);
 
-            startSearchDisplayOnMainActivity(mySQLQuery);
+            if (!mySQLQuery.equals(ORIGINAL_SQL_QUERY)) startSearchDisplayOnMainActivity(mySQLQuery);
+            else Toast.makeText(getContext(), R.string.warning_no_filter_filled,Toast.LENGTH_SHORT).show();
         }
         else Toast.makeText(getContext(), R.string.warning_wrong_form,Toast.LENGTH_LONG).show();
     }
@@ -217,7 +214,7 @@ public class SearchFragment extends Fragment {
 
     private String createSQLQuery() {
         boolean isFirstFilter = true;
-        String mySQLQuery = "SELECT * FROM Flat";
+        String mySQLQuery = ORIGINAL_SQL_QUERY;
 
         // For the city
         if (!mCity.getText().toString().equals("")) {

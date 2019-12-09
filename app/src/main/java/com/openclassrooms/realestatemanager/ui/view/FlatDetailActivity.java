@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 
 public class FlatDetailActivity extends BaseActivity {
 
+    private static final String DETAIL = "Detail";
     final String FLATID = "flatId";
     public Long mFlatId;
     private Bundle mExtras;
@@ -33,7 +34,9 @@ public class FlatDetailActivity extends BaseActivity {
         mExtras = getBundle();
         mFlatId = getTagIdFromBundle();
 
-        configureAndShowFlatDetailFragment();
+//        loadFragment(new FlatDetailFragment(), R.id.container_fragment_flat_detail);
+        configureFragment(new FlatDetailFragment(), R.id.container_fragment_flat_detail, DETAIL);
+        // configureAndShowFlatDetailFragment();
     }
 
     @Override

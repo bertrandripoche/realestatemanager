@@ -94,9 +94,8 @@
     <string name="on_sale_filter_title">\"On sale\" only</string>
     <string name="sold_filter_title">\"Sold\" only</string>
     <string name="available_date_filter">Available date *</string>
-    <string name="sold_filter">Sold date *</string>
+    <string name="sold_date_filter">Sold date *</string>
     <string name="date_filter">DD/MM/YYYY</string>
-    <string name="sold_date_filter">Sold date…</string>
     <string name="date_filter_max">Before…</string>
     <string name="date_filter_min">After…</string>
     <string name="warning_date">* Format for date is "DD/MM/YYYY"</string>
@@ -107,6 +106,7 @@
     <string name="previous_search_result">This is the result of your previous search.</string>
     <string name="back_to_full_listing">Back to the full list</string>
     <string name="search_title">Search</string>
+    <string name="warning_no_filter_filled">You didn\'t make\\nany filter selection.</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>

@@ -90,6 +90,7 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMyLocationC
         super.onCreateOptionsMenu(menu);
         hideEditBtn();
         hideMapBtn();
+        hideSearchBtn();
         displayListBtn();
         return true;
     }

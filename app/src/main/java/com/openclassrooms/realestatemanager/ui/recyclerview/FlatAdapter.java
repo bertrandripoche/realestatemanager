@@ -16,10 +16,12 @@ import java.util.List;
 public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
 
     private List<Flat> mFlatList;
+    private boolean mIsTablet;
     public int index;
 
-    public FlatAdapter(List<Flat> mFlatList) {
-        this.mFlatList = mFlatList;
+    public FlatAdapter(List<Flat> flatList, boolean isTablet) {
+        this.mFlatList = flatList;
+        this.mIsTablet = isTablet;
     }
 
     /**
@@ -45,8 +47,7 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
     public void onBindViewHolder(@NonNull FlatViewHolder holder, int position) {
         holder.updateWithFlat(this.mFlatList.get(position));
 
-//        if (index != -1 && index==position) setSelected(holder);
-        if (index != -1 && index==this.mFlatList.get(position).getId()) setSelected(holder);
+        if (index != -1 && index==this.mFlatList.get(position).getId() && mIsTablet) setSelected(holder);
         else unsetSelected(holder);
     }
 

@@ -41,7 +41,7 @@ public class FlatListFragment extends Fragment {
     private static int AGENT_ID = 0;
     final String FLATID = "flatId";
     final String SELECTEDFLAT = "selectedFlat";
-    private boolean mTabletSize;
+    private boolean mIsTablet;
 
     public FlatListFragment() {}
 
@@ -50,7 +50,7 @@ public class FlatListFragment extends Fragment {
         super.onCreateView(inflater,container,savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_flat_list, container, false);
         ButterKnife.bind(this, view);
-        mTabletSize = getResources().getBoolean(R.bool.isTablet);
+        mIsTablet = getResources().getBoolean(R.bool.isTablet);
         mMainActivity = (MainActivity) getActivity();
 
         configureRecyclerView();
@@ -62,6 +62,7 @@ public class FlatListFragment extends Fragment {
         }
         else {
             getFlatsFromQuery(mMainActivity.mQuery);
+            mSelectedFlat = -1;
             Toast.makeText(getContext(), R.string.search_result, Toast.LENGTH_SHORT).show();
             mMainActivity.displayBackToListBtn();
         }
@@ -114,7 +115,7 @@ public class FlatListFragment extends Fragment {
 
         mFlatList = new ArrayList<>();
 
-        mAdapter = new FlatAdapter(mFlatList);
+        mAdapter = new FlatAdapter(mFlatList, mIsTablet);
         mAdapter.index = mainActivity.mSelectedFlat;
 
         mRecyclerView.setHasFixedSize(true);
@@ -136,9 +137,8 @@ public class FlatListFragment extends Fragment {
                         mainActivity.mSelectedFlat = flatId.intValue();
                         mSelectedFlat = flatId.intValue();
 
-                        mFlatDetailFragment = (FlatDetailFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
                         // Tablet
-                         if (mTabletSize) {
+                         if (mIsTablet) {
                             mAdapter.index = flatId.intValue();
                             mAdapter.notifyDataSetChanged();
 

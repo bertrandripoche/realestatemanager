@@ -29,14 +29,16 @@
         <activity android:name="com.openclassrooms.realestatemanager.ui.view.FlatDetailActivity"></activity>
         <activity android:name="com.openclassrooms.realestatemanager.ui.view.AddFlatActivity"
             android:label="Add a flat"
-            android:parentActivityName="com.openclassrooms.realestatemanager.ui.view.MainActivity">
+            android:parentActivityName="com.openclassrooms.realestatemanager.ui.view.MainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.openclassrooms.realestatemanager.ui.view.MainActivity" />
         </activity>
         <activity android:name="com.openclassrooms.realestatemanager.ui.view.EditFlatActivity"
             android:label="Edit a flat"
-            android:parentActivityName="com.openclassrooms.realestatemanager.ui.view.MainActivity">
+            android:parentActivityName="com.openclassrooms.realestatemanager.ui.view.MainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.openclassrooms.realestatemanager.ui.view.MainActivity" />

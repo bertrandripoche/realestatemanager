@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.openclassrooms.realestatemanager.R;
 
@@ -16,6 +17,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BaseActivity extends AppCompatActivity {
+    private static final String LIST = "List";
+    private static final String DETAIL = "Detail";
+    private static final String SEARCH = "Search";
     @BindView(R.id.toolbar) Toolbar mToolbar;
     MenuItem mEditBtn;
     MenuItem mListBtn;
@@ -23,6 +27,7 @@ public class BaseActivity extends AppCompatActivity {
     MenuItem mSearchBtn;
     FlatDetailFragment mFlatDetailFragment;
     SearchFragment mSearchFragment;
+    boolean mIsTablet;
     protected Long mFlatId = -1L;
     protected int mSelectedFlat = -1;
     final String FLATID = "flatId";
@@ -33,6 +38,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mIsTablet = getResources().getBoolean(R.bool.isTablet);
 
         this.configureToolbar();
     }
@@ -44,6 +50,7 @@ public class BaseActivity extends AppCompatActivity {
         mEditBtn = menu.findItem(R.id.secondary_menu_edit);
         mListBtn = menu.findItem(R.id.secondary_menu_list);
         mMapBtn = menu.findItem(R.id.secondary_menu_map);
+        mSearchBtn = menu.findItem(R.id.secondary_menu_search);
         hideListBtn();
         return true;
     }
@@ -65,7 +72,12 @@ public class BaseActivity extends AppCompatActivity {
                 launchActivity("MainActivity");
                 return true;
             case R.id.secondary_menu_search:
-                launchActivity("SearchActivity");
+                if (mIsTablet) {
+//                    loadFragment(new SearchFragment(), R.id.container_fragment_flat_detail);
+                    configureFragment(new SearchFragment(), R.id.container_fragment_flat_detail, SEARCH);
+                    hideEditBtn();
+                }
+                else launchActivity("SearchActivity");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -112,30 +124,68 @@ public class BaseActivity extends AppCompatActivity {
         this.startActivity(myIntent);
     }
 
+    private void launchFragment(String searchFragment) {
+        mSelectedFlat = -1;
+
+        mSearchFragment = new SearchFragment();
+        this.getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container_fragment_flat_detail, mSearchFragment, "Search")
+                .commit();
+        hideEditBtn();
+    }
+
+    protected void loadFragment(Fragment fragment, int container) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    protected void configureFragment(Fragment fragment, int container, String type) {
+        fragment =  getSupportFragmentManager().findFragmentById(container);
+
+        if (fragment == null) {
+            switch (type) {
+                case LIST :
+                    fragment = new FlatListFragment();
+                    break;
+                case DETAIL :
+                    fragment = new FlatDetailFragment();
+                    break;
+                case SEARCH :
+                    fragment = new SearchFragment();
+                    break;
+            }
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(container, fragment)
+                    .commit();
+        }
+    }
+
     protected void configureToolbar(){
         setSupportActionBar(mToolbar);
+    }
+
+//    protected void configureAndShowFlatDetailFragment(){
 //        mFlatDetailFragment = (FlatDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
-    }
-
-    protected void configureAndShowFlatDetailFragment(){
-        mFlatDetailFragment = (FlatDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
-        if (mFlatDetailFragment == null && findViewById(R.id.container_fragment_flat_detail) != null) {
-            mFlatDetailFragment = new FlatDetailFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_fragment_flat_detail, mFlatDetailFragment)
-                    .commit();
-        }
-    }
-
-    protected void configureAndShowSearchFragment(){
-        mSearchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_search);
-        if (mSearchFragment == null && findViewById(R.id.container_fragment_search) != null) {
-            mSearchFragment = new SearchFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_fragment_search, mSearchFragment)
-                    .commit();
-        }
-    }
+//        if (mFlatDetailFragment == null && findViewById(R.id.container_fragment_flat_detail) != null) {
+//            mFlatDetailFragment = new FlatDetailFragment();
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.container_fragment_flat_detail, mFlatDetailFragment)
+//                    .commit();
+//        }
+//    }
+//
+//    protected void configureAndShowSearchFragment(){
+//        mSearchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_search);
+//        if (mSearchFragment == null && findViewById(R.id.container_fragment_search) != null) {
+//            mSearchFragment = new SearchFragment();
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.container_fragment_search, mSearchFragment)
+//                    .commit();
+//        }
+//    }
 
     protected void hideListBtn() {if (mListBtn != null) mListBtn.setVisible(false);}
     protected void displayListBtn() {if (mListBtn != null) mListBtn.setVisible(true);}
@@ -144,14 +194,10 @@ public class BaseActivity extends AppCompatActivity {
     protected void displayMapBtn() {if (mMapBtn != null) mMapBtn.setVisible(true);}
 
     protected void hideEditBtn() {if (mEditBtn != null) mEditBtn.setVisible(false);}
-    protected void displayEditBtn() {
-        if (mEditBtn != null) mEditBtn.setVisible(true);
-    }
+    protected void displayEditBtn() {if (mEditBtn != null) mEditBtn.setVisible(true);}
 
     protected void hideSearchBtn() {if (mSearchBtn != null) mSearchBtn.setVisible(false);}
-    protected void displaySearchBtn() {
-        if (mSearchBtn != null) mSearchBtn.setVisible(true);
-    }
+    protected void displaySearchBtn() {if (mSearchBtn != null) mSearchBtn.setVisible(true);}
 
     protected Long createBundleWithFlatId(Long flatId, String FLATID) {
         if (mFlatDetailFragment != null) flatId = mFlatDetailFragment.getFlatId();

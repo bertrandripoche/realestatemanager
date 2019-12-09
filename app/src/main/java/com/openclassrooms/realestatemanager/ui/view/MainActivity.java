@@ -9,6 +9,9 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.facebook.stetho.Stetho;
 import com.openclassrooms.realestatemanager.R;
 
@@ -16,6 +19,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
+    private static final String LIST = "List";
     @BindView(R.id.btn_back_to_list) Button mBackToListBtn;
 
     private FlatDetailFragment mFlatDetailFragment;
@@ -36,7 +40,9 @@ public class MainActivity extends BaseActivity {
         if (mIsFullListRequestedAfterSearchCleaning) mIsFullListRequestedAfterSearchCleaning = false;
 
         checkPreviousFlatSelection();
-        configureAndShowFlatListFragment();
+        configureFragment(new FlatListFragment(), R.id.container_fragment_flat_list, LIST);
+//        loadFragment(new FlatListFragment(), R.id.container_fragment_flat_list);
+        //configureAndShowFlatListFragment();
     }
 
     private void checkPreviousFlatSelection() {
@@ -83,17 +89,13 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.btn_back_to_list)
     public void onClickBackToListButton() {
-        mFlatListFragment.getFlats();
-        mQuery = "";
         mIsFullListRequestedAfterSearchCleaning = true;
+        mQuery = "";
+        if (mIsTablet) mFlatListFragment.getFlats();
         hideBackToListBtn();
 
-        Bundle args = getIntent().getExtras();
-        if (args != null) {
-            args.putString(QUERY, "");
-            args.putInt(SELECTEDFLAT, -1);
-            getIntent().putExtras(args);
-        }
+        Intent myIntent = new Intent(this, MainActivity.class);
+        startActivity(myIntent);
     }
 
     protected Long getFlatId() {
