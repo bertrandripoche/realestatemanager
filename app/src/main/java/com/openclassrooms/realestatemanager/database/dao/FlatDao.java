@@ -1,5 +1,7 @@
 package com.openclassrooms.realestatemanager.database.dao;
 
+import android.database.Cursor;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -14,6 +16,9 @@ import java.util.List;
 
 @Dao
 public interface FlatDao {
+    @Query("SELECT * FROM Flat")
+    Cursor getFlatsWithCursor();
+
     @Query("SELECT * FROM Flat ORDER BY isSold, id DESC")
     LiveData<List<Flat>> getFlats();
 

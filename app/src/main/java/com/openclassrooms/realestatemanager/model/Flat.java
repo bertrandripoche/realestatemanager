@@ -1,7 +1,10 @@
 package com.openclassrooms.realestatemanager.model;
 
+import android.content.ContentValues;
+
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -38,6 +41,10 @@ public class Flat {
     private String soldDate;
     private String availableDate;
     private int agentId;
+
+    @Ignore
+    public Flat() {
+    }
 
     public Flat(String picPath, String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, Double latitude, Double longitude, boolean isSchool, boolean isPostOffice, boolean isRestaurant, boolean isTheater, boolean isShop, int agentId) {
         this.picPath = picPath;
@@ -114,9 +121,40 @@ public class Flat {
     public void setRestaurant(boolean restaurant) {this.isRestaurant = restaurant;}
     public void setTheater(boolean theater) {this.isTheater = theater;}
     public void setShop(boolean shop) {this.isShop = shop;}
-    public void setIsSold(boolean isSold) {this.isSold = isSold;}
+    public void setSold(boolean isSold) {this.isSold = isSold;}
     public void setSoldDate(String soldDate) {this.soldDate = soldDate;}
     public void setAvailableDate(String availableDate) {this.availableDate = availableDate;}
     public void setAgentId(int agentId) {this.agentId = agentId;}
 
+    // For contentProvider data
+    public static Flat fromContentValues(ContentValues values) {
+        final Flat flat = new Flat();
+
+        if (values.containsKey("picPath")) flat.setPicPath(values.getAsString("picPath"));
+        if (values.containsKey("summary")) flat.setSummary(values.getAsString("summary"));
+        if (values.containsKey("description")) flat.setDescription(values.getAsString("description"));
+        if (values.containsKey("type")) flat.setType(values.getAsString("type"));
+        if (values.containsKey("price")) flat.setPrice(values.getAsInteger("price"));
+        if (values.containsKey("surface")) flat.setSurface(values.getAsInteger("surface"));
+        if (values.containsKey("room")) flat.setRoom(values.getAsInteger("room"));
+        if (values.containsKey("bedroom")) flat.setBedroom(values.getAsInteger("bedroom"));
+        if (values.containsKey("bathroom")) flat.setBathroom(values.getAsInteger("bathroom"));
+        if (values.containsKey("numberAddress")) flat.setNumberAddress(values.getAsInteger("numberAddress"));
+        if (values.containsKey("streetAddress")) flat.setStreetAddress(values.getAsString("streetAddress"));
+        if (values.containsKey("postalCodeAddress")) flat.setPostalCodeAddress(values.getAsInteger("postalCodeAddress"));
+        if (values.containsKey("cityAddress")) flat.setCityAddress(values.getAsString("cityAddress"));
+        if (values.containsKey("latitude")) flat.setLatitude(values.getAsDouble("latitude"));
+        if (values.containsKey("longitude")) flat.setLatitude(values.getAsDouble("longitude"));
+        if (values.containsKey("isSchool")) flat.setSchool(values.getAsBoolean("isSchool"));
+        if (values.containsKey("isPostOffice")) flat.setPostOffice(values.getAsBoolean("isPostOffice"));
+        if (values.containsKey("isRestaurant")) flat.setRestaurant(values.getAsBoolean("isRestaurant"));
+        if (values.containsKey("isTheater")) flat.setTheater(values.getAsBoolean("isTheater"));
+        if (values.containsKey("isShop")) flat.setShop(values.getAsBoolean("isShop"));
+        if (values.containsKey("isSold")) flat.setSold(values.getAsBoolean("isSold"));
+        if (values.containsKey("soldDate")) flat.setSoldDate(values.getAsString("soldDate"));
+        if (values.containsKey("availableDate")) flat.setAvailableDate(values.getAsString("availableDate"));
+        if (values.containsKey("agentId")) flat.setAgentId(values.getAsInteger("agentId"));
+
+        return flat;
+    }
 }
