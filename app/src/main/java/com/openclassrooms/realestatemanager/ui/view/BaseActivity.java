@@ -144,6 +144,19 @@ public class BaseActivity extends AppCompatActivity {
     protected void configureFragment(Fragment fragment, int container, String type) {
         fragment =  getSupportFragmentManager().findFragmentById(container);
 
+        switch (type) {
+            case DETAIL :
+                mFlatDetailFragment = (FlatDetailFragment) getSupportFragmentManager().findFragmentById(container);
+                if (mFlatDetailFragment == null) mFlatDetailFragment = new FlatDetailFragment();
+                break;
+            case SEARCH :
+                mSearchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(container);
+                if (mSearchFragment == null) mSearchFragment = new SearchFragment();
+                break;
+            default :
+                break;
+        }
+
         if (fragment == null) {
             switch (type) {
                 case LIST :
@@ -154,6 +167,8 @@ public class BaseActivity extends AppCompatActivity {
                     break;
                 case SEARCH :
                     fragment = new SearchFragment();
+                    break;
+                default :
                     break;
             }
 
@@ -167,15 +182,15 @@ public class BaseActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
     }
 
-//    protected void configureAndShowFlatDetailFragment(){
-//        mFlatDetailFragment = (FlatDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
-//        if (mFlatDetailFragment == null && findViewById(R.id.container_fragment_flat_detail) != null) {
-//            mFlatDetailFragment = new FlatDetailFragment();
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.container_fragment_flat_detail, mFlatDetailFragment)
-//                    .commit();
-//        }
-//    }
+    protected void configureAndShowFlatDetailFragment(){
+        mFlatDetailFragment = (FlatDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
+        if (mFlatDetailFragment == null && findViewById(R.id.container_fragment_flat_detail) != null) {
+            mFlatDetailFragment = new FlatDetailFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container_fragment_flat_detail, mFlatDetailFragment)
+                    .commit();
+        }
+    }
 //
 //    protected void configureAndShowSearchFragment(){
 //        mSearchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_search);

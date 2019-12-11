@@ -107,6 +107,7 @@
     <string name="back_to_full_listing">Back to the full list</string>
     <string name="search_title">Search</string>
     <string name="warning_no_filter_filled">You didn\'t make\\nany filter selection.</string>
+    <string name="loan">Loan</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>

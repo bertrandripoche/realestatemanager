@@ -35,14 +35,17 @@ class FlatViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void updateWithFlat(Flat flat) {
-        if (!flat.getPicPath().equals("")) this.mFlatPic.setImageBitmap(BitmapFactory.decodeFile(flat.getPicPath()));
-        this.mFlatSummary.setText(flat.getSummary());
-        this.mFlatCity.setText(flat.getCityAddress());
-        this.mFlatPrice.setText(this.itemView.getResources().getString(R.string.euro, flat.getPrice()));
-        this.mFlatType.setText(flat.getType());
-        this.mFlatConstraintLayout.setTag(flat.getId());
-        if (flat.isSold()) mFlatSold.setVisibility(View.VISIBLE);
-        else mFlatSold.setVisibility(View.GONE);
+        if (flat != null) {
+            if (flat.getPicPath() != null && !flat.getPicPath().equals(""))
+                this.mFlatPic.setImageBitmap(BitmapFactory.decodeFile(flat.getPicPath()));
+            this.mFlatSummary.setText(flat.getSummary());
+            this.mFlatCity.setText(flat.getCityAddress());
+            this.mFlatPrice.setText(this.itemView.getResources().getString(R.string.euro, flat.getPrice()));
+            this.mFlatType.setText(flat.getType());
+            this.mFlatConstraintLayout.setTag(flat.getId());
+            if (flat.isSold()) mFlatSold.setVisibility(View.VISIBLE);
+            else mFlatSold.setVisibility(View.GONE);
+        }
     }
 
 }

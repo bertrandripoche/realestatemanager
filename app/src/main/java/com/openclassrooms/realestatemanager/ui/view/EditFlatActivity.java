@@ -473,9 +473,9 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
             if (mFlat.isRestaurant()) mRestaurant.setChecked(true);
             if (mFlat.isTheater()) mTheater.setChecked(true);
             if (mFlat.isShop()) mShop.setChecked(true);
-        }
 
-        if (!isRotated) getPics(mFlat.getId());
+            if (!isRotated) getPics(mFlat.getId());
+        }
     }
 
     private void getPics(int flatId) {

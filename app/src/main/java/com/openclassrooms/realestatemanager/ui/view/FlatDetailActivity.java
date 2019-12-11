@@ -35,8 +35,8 @@ public class FlatDetailActivity extends BaseActivity {
         mFlatId = getTagIdFromBundle();
 
 //        loadFragment(new FlatDetailFragment(), R.id.container_fragment_flat_detail);
-        configureFragment(new FlatDetailFragment(), R.id.container_fragment_flat_detail, DETAIL);
-        // configureAndShowFlatDetailFragment();
+//        configureFragment(new FlatDetailFragment(), R.id.container_fragment_flat_detail, DETAIL);
+        configureAndShowFlatDetailFragment();
     }
 
     @Override

@@ -18,7 +18,7 @@ public class FlatContentProvider extends ContentProvider {
     // FOR DATA
     public static final String AUTHORITY = "com.openclassrooms.realestatemanager.provider";
     public static final String TABLE_NAME = Flat.class.getSimpleName();
-    public static final Uri URI_ITEM = Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
+    public static final Uri URI_FLAT = Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
 
     @Override
     public boolean onCreate() { return true; }
