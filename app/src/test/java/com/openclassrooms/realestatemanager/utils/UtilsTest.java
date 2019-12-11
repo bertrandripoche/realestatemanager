@@ -69,4 +69,10 @@ public class UtilsTest {
         String result = myTestedUtilsClass.getTodayDate();
         assertThat(result).isEqualTo("03/03/2018");
     }
+
+    @Test
+    public void calculateMensualityShouldReturn1265Test() {
+        String result = String.valueOf(Utils.calculateMensuality(200000,4.5,20));
+        assertThat(result).isEqualTo("1265");
+    }
 }

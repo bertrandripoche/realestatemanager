@@ -99,6 +99,12 @@ public class Utils {
         return true;
     }
 
+    /**
+     * This method compares two dates
+     * @param dateString1 date to compare to the reference date
+     * @param dateString2 reference date
+     * @return true if dateString1 is before or the same date as the reference date
+     */
     public static boolean isBeforeOrEqualTo(String dateString1, String dateString2) {
         Date date1;
         Date date2;
@@ -126,6 +132,14 @@ public class Utils {
         return networkInfo != null && networkInfo.isAvailable();
     }
 
+    /**
+     * This method allows to build a readable address
+     * @param streetNb is the street number
+     * @param street is the name of the street
+     * @param postCode is the post code of the city
+     * @param city is the name of the city
+     * @return a String which is the address of the flat in a correct format
+     */
     public static String buildAddress(Integer streetNb, String street, Integer postCode, String city) {
         String address = "";
         if (streetNb != null && street != null) address = String.valueOf(streetNb) + ", " + street;
@@ -134,6 +148,21 @@ public class Utils {
         else if (postCode == null && address != null) address = address + "\n" + city;
         else address = city;
         return address;
+    }
+
+    public static int calculateMensuality(double amount, double rate, double year) {
+        double mensuality = 0;
+        if (amount != 0) {
+            double percentRate = rate/100;
+            double month = year * 12;
+            double mensualRate = percentRate / 12;
+            double numerator = amount * mensualRate;
+            double forDenominator = 1 + mensualRate;
+            double power = -month;
+            double denominator = 1 - (Math.pow(forDenominator, power));
+            mensuality = numerator / denominator;
+        }
+        return (int)mensuality;
     }
 
 }
