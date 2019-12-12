@@ -5,8 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
@@ -58,6 +64,14 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
     @BindView(R.id.shop) AppCompatImageView mShop;
     @BindView(R.id.available_from) AppCompatTextView mAvailable_from;
     @BindView(R.id.btn_sold) Button mBtnIsSold;
+    @BindView(R.id.btn_loan) Button mBtnLoan;
+    @Nullable @BindView(R.id.loan_contribution) EditText mContribution;
+    @Nullable @BindView(R.id.loan_rate) EditText mRate;
+    @Nullable @BindView(R.id.loan_duration) EditText mDuration;
+    @Nullable @BindView(R.id.loan_result) TextView mLoanResult;
+    @Nullable @BindView(R.id.loan_display) TableRow mLoanDisplay;
+    @Nullable @BindView(R.id.btn_loan_submit) Button mBtnSubmitLoan;
+    @Nullable @BindView(R.id.btn_loan_close) Button mBtnCloseLoan;
 
     private List<Flat> mFlatList;
     private Flat mFlat;
@@ -67,6 +81,7 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
     private List<Pic> mFlatPicList;
     private FlatPicAdapter mAdapter;
     private GoogleMap mMap;
+    private View popupInputDialogView = null;
 
     private static int AGENT_ID = 0;
     private static final String TAG = "Detail Fragment";
@@ -102,6 +117,62 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
         if (mFlat.isSold()) flatNotSold();
         else flatSold();
     }
+
+    @OnClick(R.id.btn_loan)
+    public void onClickLoanButton() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        alertDialogBuilder.setCancelable(false);
+
+        initPopupViewControls();
+        alertDialogBuilder.setView(popupInputDialogView);
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        mBtnSubmitLoan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!mRate.getText().toString().equals("") && !mDuration.getText().toString().equals("")) {
+                    int price = Integer.parseInt(mFlat.getPrice().toString());
+                    int contribution = mContribution.getText().toString().equals("") ? 0 : Integer.parseInt(mContribution.getText().toString());
+                    int amountToBeLoaned = price - contribution;
+                    double rate = Double.parseDouble(mRate.getText().toString());
+                    int duration = Integer.parseInt(mDuration.getText().toString());
+                    if (amountToBeLoaned > 0) {
+                        int mensuality = Utils.calculateMensuality(amountToBeLoaned, rate, duration);
+                        mLoanDisplay.setVisibility(View.VISIBLE);
+                        mLoanResult.setText(getString(R.string.loan_result, mensuality, duration));
+                    } else {
+                        Toast.makeText(getContext(), R.string.warning_wrong_contribution, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), R.string.warning_wrong_information, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        mBtnCloseLoan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.cancel();
+            }
+        });
+    }
+
+    private void initPopupViewControls() {
+        LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+
+        popupInputDialogView = layoutInflater.inflate(R.layout.popup_loan, null);
+
+        mContribution = popupInputDialogView.findViewById(R.id.loan_contribution);
+        mRate  = popupInputDialogView.findViewById(R.id.loan_rate);
+        mDuration  = popupInputDialogView.findViewById(R.id.loan_duration);
+        mLoanDisplay  = popupInputDialogView.findViewById(R.id.loan_display);
+        mLoanResult  = popupInputDialogView.findViewById(R.id.loan_result);
+        mBtnSubmitLoan = popupInputDialogView.findViewById(R.id.btn_loan_submit);
+        mBtnCloseLoan = popupInputDialogView.findViewById(R.id.btn_loan_close);
+    }
+
 
     private void flatSold() {
         String soldDate = Utils.getTodayDate();

@@ -150,16 +150,14 @@ public class Utils {
         return address;
     }
 
-    public static int calculateMensuality(double amount, double rate, double year) {
+    public static int calculateMensuality(int amount, double rate, int year) {
         double mensuality = 0;
         if (amount != 0) {
             double percentRate = rate/100;
             double month = year * 12;
             double mensualRate = percentRate / 12;
             double numerator = amount * mensualRate;
-            double forDenominator = 1 + mensualRate;
-            double power = -month;
-            double denominator = 1 - (Math.pow(forDenominator, power));
+            double denominator = 1 - (Math.pow(1 + mensualRate, -month));
             mensuality = numerator / denominator;
         }
         return (int)mensuality;

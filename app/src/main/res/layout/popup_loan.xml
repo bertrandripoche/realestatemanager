@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_pink"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pink"
+        android:layout_marginBottom="@dimen/basic_padding">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:drawableStart="@drawable/ic_loan"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:text="@string/loan_calculation"
+            android:textStyle="bold"
+            android:padding="@dimen/basic_padding"
+            android:textSize="@dimen/title_size" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/basic_padding">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:text="@string/contribution"
+            android:textStyle="bold"
+            android:textSize="@dimen/title_size_small" />
+
+        <EditText
+            android:id="@+id/loan_contribution"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical|start"
+            android:padding="@dimen/basic_padding"
+            android:textAlignment="center"
+            android:background="@color/light_grey_transparent"
+            android:textSize="@dimen/title_size_small"
+            android:inputType="number"
+            android:hint="@string/hint_contribution"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/basic_padding">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:text="@string/rate"
+            android:textStyle="bold"
+            android:textSize="@dimen/title_size_small" />
+
+        <EditText
+            android:id="@+id/loan_rate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical|start"
+            android:padding="@dimen/basic_padding"
+            android:textAlignment="center"
+            android:background="@color/light_grey_transparent"
+            android:textSize="@dimen/title_size_small"
+            android:inputType="numberDecimal"
+            android:hint="@string/hint_rate"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/basic_padding"
+        android:layout_marginBottom="@dimen/basic_padding">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:text="@string/duration"
+            android:textStyle="bold"
+            android:textSize="@dimen/title_size_small" />
+
+        <EditText
+            android:id="@+id/loan_duration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical|start"
+            android:padding="@dimen/basic_padding"
+            android:textAlignment="center"
+            android:background="@color/light_grey_transparent"
+            android:textSize="@dimen/title_size_small"
+            android:inputType="number"
+            android:hint="@string/hint_duration"/>
+
+    </TableRow>
+
+
+    <TableRow android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/btn_loan_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_black_button"
+            android:drawableStart="@drawable/ic_submit"
+            android:padding="@dimen/basic_padding"
+            android:layout_margin="@dimen/basic_padding"
+            android:text="@string/submit"
+            android:textColor="@color/green"/>
+
+        <Button
+            android:id="@+id/btn_loan_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_black_button"
+            android:drawableStart="@drawable/ic_cancel"
+            android:padding="@dimen/basic_padding"
+            android:layout_margin="@dimen/basic_padding"
+            android:text="@string/close"
+            android:textColor="@color/pink"/>
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/loan_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_green"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/middle_padding">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:padding="@dimen/basic_padding"
+            android:src="@drawable/ic_dollar"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/loan_result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:text="@string/loan_result"
+            android:textStyle="bold"
+            android:padding="@dimen/basic_padding"
+            android:textSize="@dimen/title_size" />
+    </TableRow>
+
+</TableLayout>

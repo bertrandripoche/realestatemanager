@@ -4,12 +4,14 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.Button;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.viewmodel.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FlatDetailActivity extends BaseActivity {

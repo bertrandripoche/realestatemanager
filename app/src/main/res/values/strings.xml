@@ -108,6 +108,19 @@
     <string name="search_title">Search</string>
     <string name="warning_no_filter_filled">You didn\'t make\\nany filter selection.</string>
     <string name="loan">Loan</string>
+    <string name="contribution">Contribution (€)</string>
+    <string name="loan_calculation">Loan calculation</string>
+    <string name="rate">Rate (%)</string>
+    <string name="hint_contribution">Enter contribution...</string>
+    <string name="hint_rate">Enter rate...</string>
+    <string name="duration">Duration (years)</string>
+    <string name="hint_duration">Enter duration...</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="loan_result">Your mensuality will be of\n <b>%1$d €</b>\n during <b>%2$d</b> years.</string>
+    <string name="close">Close</string>
+    <string name="warning_wrong_contribution">Lucky you !\nYou got the money !</string>
+    <string name="warning_wrong_information">Something is going wrong here !\nCheck your value &amp; try again !</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>

@@ -384,7 +384,7 @@
                             android:textColor="@color/white"
                             android:textStyle="bold"
                             android:textSize="@dimen/title_size_big"
-                            android:background="@drawable/rounded_green_button"/>
+                            android:background="@drawable/rounded_black_button"/>
                     </LinearLayout>
                 </LinearLayout>
 
