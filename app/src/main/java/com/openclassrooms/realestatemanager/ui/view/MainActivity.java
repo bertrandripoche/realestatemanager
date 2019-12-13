@@ -91,7 +91,9 @@ public class MainActivity extends BaseActivity {
     public void onClickBackToListButton() {
         mIsFullListRequestedAfterSearchCleaning = true;
         mQuery = "";
-        if (mIsTablet) mFlatListFragment.getFlats();
+//        if (mIsTablet) {
+//            mFlatListFragment.getFlats();
+//        }
         hideBackToListBtn();
 
         Intent myIntent = new Intent(this, MainActivity.class);
