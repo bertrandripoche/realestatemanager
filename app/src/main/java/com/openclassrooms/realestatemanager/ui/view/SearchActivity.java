@@ -34,8 +34,8 @@ public class SearchActivity extends BaseActivity {
 
         configureToolbar();
 //        loadFragment(new SearchFragment(), R.id.container_fragment_search);
-        configureFragment(new SearchFragment(), R.id.container_fragment_search, SEARCH);
-        //configureAndShowSearchFragment();
+        //configureFragment(new SearchFragment(), R.id.container_fragment_search, SEARCH);
+        configureAndShowSearchFragment();
     }
 
     @Override

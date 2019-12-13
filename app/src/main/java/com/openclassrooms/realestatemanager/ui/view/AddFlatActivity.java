@@ -374,6 +374,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
 
     private void emptyFields() {
         mFlatType.setSelection(0,true);
+        mCaption.setText("");
         mSummary.setText("");
         mDescription.setText("");
         mSurface.setText("");

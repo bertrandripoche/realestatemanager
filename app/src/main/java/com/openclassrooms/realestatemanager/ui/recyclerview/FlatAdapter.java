@@ -46,7 +46,7 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull FlatViewHolder holder, int position) {
         holder.updateWithFlat(this.mFlatList.get(position));
-
+System.out.println("***Position "+position + " / Index" + index);
         if (index != -1 && index==this.mFlatList.get(position).getId() && mIsTablet) setSelected(holder);
         else unsetSelected(holder);
     }

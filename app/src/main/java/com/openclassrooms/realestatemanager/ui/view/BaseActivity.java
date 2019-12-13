@@ -73,8 +73,8 @@ public class BaseActivity extends AppCompatActivity {
                 return true;
             case R.id.secondary_menu_search:
                 if (mIsTablet) {
-//                    loadFragment(new SearchFragment(), R.id.container_fragment_flat_detail);
-                    configureFragment(new SearchFragment(), R.id.container_fragment_flat_detail, SEARCH);
+                    loadFragment(new SearchFragment(), R.id.container_fragment_flat_detail);
+//                    configureFragment(new SearchFragment(), R.id.container_fragment_flat_detail, SEARCH);
                     hideEditBtn();
                 }
                 else launchActivity("SearchActivity");
@@ -191,16 +191,16 @@ public class BaseActivity extends AppCompatActivity {
                     .commit();
         }
     }
-//
-//    protected void configureAndShowSearchFragment(){
-//        mSearchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_search);
-//        if (mSearchFragment == null && findViewById(R.id.container_fragment_search) != null) {
-//            mSearchFragment = new SearchFragment();
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.container_fragment_search, mSearchFragment)
-//                    .commit();
-//        }
-//    }
+
+    protected void configureAndShowSearchFragment(){
+        mSearchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_search);
+        if (mSearchFragment == null && findViewById(R.id.container_fragment_search) != null) {
+            mSearchFragment = new SearchFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container_fragment_search, mSearchFragment)
+                    .commit();
+        }
+    }
 
     protected void hideListBtn() {if (mListBtn != null) mListBtn.setVisible(false);}
     protected void displayListBtn() {if (mListBtn != null) mListBtn.setVisible(true);}

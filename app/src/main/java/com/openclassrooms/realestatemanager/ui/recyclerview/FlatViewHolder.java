@@ -45,6 +45,10 @@ class FlatViewHolder extends RecyclerView.ViewHolder {
             this.mFlatConstraintLayout.setTag(flat.getId());
             if (flat.isSold()) mFlatSold.setVisibility(View.VISIBLE);
             else mFlatSold.setVisibility(View.GONE);
+System.out.println("********************************");
+System.out.println("***PicPath : "+ flat.getPicPath());
+System.out.println("***FlatId : "+ flat.getId());
+System.out.println("***Summary : "+ flat.getSummary());
         }
     }
 
