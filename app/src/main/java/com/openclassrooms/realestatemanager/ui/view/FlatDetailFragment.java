@@ -81,7 +81,8 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
     private List<Pic> mFlatPicList;
     private FlatPicAdapter mAdapter;
     private GoogleMap mMap;
-    private View popupInputDialogView = null;
+    private View mPopupInputDialogView = null;
+    private boolean mIsLoanDialogDisplayed;
 
     private static int AGENT_ID = 0;
     private static final String TAG = "Detail Fragment";
@@ -112,6 +113,32 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
         map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mIsLoanDialogDisplayed) {
+            outState.putBoolean("loanDialogDisplayed", true);
+            if (this.mContribution != null && !this.mContribution.getText().toString().equals("")) outState.putString("contribution", this.mContribution.getText().toString());
+            if (this.mRate != null && !this.mRate.getText().toString().equals("")) outState.putString("rate", this.mRate.getText().toString());
+            if (this.mDuration != null && !this.mDuration.getText().toString().equals("")) outState.putString("duration", this.mDuration.getText().toString());
+
+        }
+   }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            if (savedInstanceState.getBoolean("loanDialogDisplayed")) {
+                int contribution = savedInstanceState.getString("contribution") == null ? 0 : Integer.parseInt(savedInstanceState.getString("contribution"));
+                double rate = savedInstanceState.getString("rate") == null ? 0 : Double.parseDouble(savedInstanceState.getString("rate"));
+                int duration = savedInstanceState.getString("duration") == null ? 0 : Integer.parseInt(savedInstanceState.getString("duration"));
+                createLoanAlertDialog(contribution, rate, duration);
+            }
+        }
+
+    }
+
     @OnClick(R.id.btn_sold)
     public void onClickSoldButton() {
         if (mFlat.isSold()) flatNotSold();
@@ -120,14 +147,23 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
 
     @OnClick(R.id.btn_loan)
     public void onClickLoanButton() {
+        createLoanAlertDialog(0,0,0);
+    }
+
+    private void createLoanAlertDialog(int contribution, double rate, int duration) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setCancelable(false);
 
         initPopupViewControls();
-        alertDialogBuilder.setView(popupInputDialogView);
+        alertDialogBuilder.setView(mPopupInputDialogView);
 
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+        mIsLoanDialogDisplayed = true;
+
+        if (contribution != 0) mContribution.setText(String.valueOf(contribution));
+        if (rate != 0) mRate.setText(String.valueOf(rate));
+        if (duration != 0) mDuration.setText(String.valueOf(duration));
 
         mBtnSubmitLoan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,23 +190,26 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
         mBtnCloseLoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mIsLoanDialogDisplayed = false;
+                mContribution.setText("");
+                mRate.setText("");
+                mDuration.setText("");
                 alertDialog.cancel();
             }
         });
     }
-
     private void initPopupViewControls() {
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
 
-        popupInputDialogView = layoutInflater.inflate(R.layout.popup_loan, null);
+        mPopupInputDialogView = layoutInflater.inflate(R.layout.popup_loan, null);
 
-        mContribution = popupInputDialogView.findViewById(R.id.loan_contribution);
-        mRate  = popupInputDialogView.findViewById(R.id.loan_rate);
-        mDuration  = popupInputDialogView.findViewById(R.id.loan_duration);
-        mLoanDisplay  = popupInputDialogView.findViewById(R.id.loan_display);
-        mLoanResult  = popupInputDialogView.findViewById(R.id.loan_result);
-        mBtnSubmitLoan = popupInputDialogView.findViewById(R.id.btn_loan_submit);
-        mBtnCloseLoan = popupInputDialogView.findViewById(R.id.btn_loan_close);
+        mContribution = mPopupInputDialogView.findViewById(R.id.loan_contribution);
+        mRate  = mPopupInputDialogView.findViewById(R.id.loan_rate);
+        mDuration  = mPopupInputDialogView.findViewById(R.id.loan_duration);
+        mLoanDisplay  = mPopupInputDialogView.findViewById(R.id.loan_display);
+        mLoanResult  = mPopupInputDialogView.findViewById(R.id.loan_result);
+        mBtnSubmitLoan = mPopupInputDialogView.findViewById(R.id.btn_loan_submit);
+        mBtnCloseLoan = mPopupInputDialogView.findViewById(R.id.btn_loan_close);
     }
 
 
