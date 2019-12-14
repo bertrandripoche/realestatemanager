@@ -221,7 +221,7 @@ System.out.println("Ma query : "+mySQLQuery);
             mySQLQuery = mySQLQuery + " WHERE (cityAddress LIKE '%" + Utils.capitalizeFirstLetterOfASingleWord(mCity.getText().toString()) + "%') ";
             isFirstFilter = false;
         }
-
+        
         // For the "range" filters
         String[] priceFilter = {"price", mPriceMin.getText().toString(), mPriceMax.getText().toString(),  valueOf(getResources().getInteger(R.integer.price_max_filter))};
         String[] surfaceFilter = {"surface", mSurfaceMin.getText().toString(), mSurfaceMax.getText().toString(), valueOf(getResources().getInteger(R.integer.surface_max_filter))};

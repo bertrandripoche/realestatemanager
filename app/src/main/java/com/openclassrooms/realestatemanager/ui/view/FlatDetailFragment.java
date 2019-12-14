@@ -152,7 +152,7 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
 
     private void createLoanAlertDialog(int contribution, double rate, int duration) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        alertDialogBuilder.setCancelable(true);
+        alertDialogBuilder.setCancelable(false);
 
         initPopupViewControls();
         alertDialogBuilder.setView(mPopupInputDialogView);

@@ -354,40 +354,7 @@
                         android:gravity="center_vertical"
                         android:padding="@dimen/basic_padding"
                         android:textSize="@dimen/title_size" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-                        <Button
-                            android:id="@+id/btn_sold"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:padding="@dimen/basic_padding"
-                            android:layout_margin="@dimen/basic_padding"
-                            android:drawableStart="@drawable/ic_sold"
-                            android:text="@string/sold"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/title_size_big"
-                            android:background="@drawable/rounded_button"/>
-                        <Button
-                            android:id="@+id/btn_loan"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:padding="@dimen/basic_padding"
-                            android:layout_margin="@dimen/basic_padding"
-                            android:drawableStart="@drawable/ic_loan"
-                            android:text="@string/loan"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/title_size_big"
-                            android:background="@drawable/rounded_black_button"/>
-                    </LinearLayout>
                 </LinearLayout>
-
 
                 <fragment
                     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -405,6 +372,40 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/flat_status">
+        <Button
+            android:id="@+id/btn_sold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="@dimen/basic_padding"
+            android:layout_margin="@dimen/basic_padding"
+            android:drawableStart="@drawable/ic_sold"
+            android:text="@string/sold"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/title_size_big"
+            android:background="@drawable/rounded_button"/>
+        <Button
+            android:id="@+id/btn_loan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="@dimen/basic_padding"
+            android:layout_margin="@dimen/basic_padding"
+            android:drawableStart="@drawable/ic_loan"
+            android:text="@string/loan"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/title_size_big"
+            android:background="@drawable/rounded_black_button"/>
+    </LinearLayout>
 
     <TableRow
         android:id="@+id/flat_status"

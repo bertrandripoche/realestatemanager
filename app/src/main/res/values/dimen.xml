@@ -6,6 +6,7 @@
     <dimen name="basic_padding">10dip</dimen>
     <dimen name="middle_padding">20dip</dimen>
     <dimen name="extra_padding">30dip</dimen>
+    <dimen name="extra_large_padding">50dip</dimen>
 
 
     <dimen name="title_size_max">60sp</dimen>

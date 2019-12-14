@@ -340,48 +340,14 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/address"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
-                        android:padding="@dimen/basic_padding"
-                        android:textSize="@dimen/title_size_mini" />
-                    <Button
-                        android:id="@+id/btn_loan"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:padding="@dimen/basic_padding"
-                        android:layout_gravity="center"
-                        android:layout_margin="@dimen/basic_padding"
-                        android:drawableStart="@drawable/ic_loan"
-                        android:text="@string/loan"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/title_size"
-                        android:background="@drawable/rounded_black_button"/>
-                    <Button
-                        android:id="@+id/btn_sold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:padding="@dimen/basic_padding"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="@dimen/basic_padding"
-                        android:drawableStart="@drawable/ic_sold"
-                        android:text="@string/sold"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/title_size"
-                        android:background="@drawable/rounded_button"/>
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/basic_padding"
+                    android:textSize="@dimen/title_size_mini" />
 
                 <fragment
                     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -399,6 +365,43 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toTopOf="@id/flat_status">
+
+        <Button
+            android:id="@+id/btn_loan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/basic_padding"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/basic_padding"
+            android:drawableStart="@drawable/ic_loan"
+            android:text="@string/loan"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/title_size"
+            android:background="@drawable/rounded_black_button"/>
+        <Button
+            android:id="@+id/btn_sold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/basic_padding"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/basic_padding"
+            android:drawableStart="@drawable/ic_sold"
+            android:text="@string/sold"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/title_size"
+            android:background="@drawable/rounded_button"/>
+    </LinearLayout>
 
     <TableRow
         android:id="@+id/flat_status"
