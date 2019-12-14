@@ -17,11 +17,14 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -94,6 +97,13 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
     private String mSelectedImagePath;
     private ArrayList<Pic> mFlatPicList = new ArrayList();
     private FlatPicAdapter mAdapter;
+    private View mPopupPhotoChoiceView = null;
+    private TextView mPopupPhotoChoiceTitle;
+    private Button mBtnGallery;
+    private Button mBtnTakePicture;
+    private Button mBtnCancel;
+    private AlertDialog mAlertDialog;
+    private boolean mIsDialogDisplayed = false;
     private boolean mIsTablet;
 
     private int mSelectedFlat = -1;
@@ -182,6 +192,11 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("flatPicList", mFlatPicList);
         outState.putString("photoTaken", mCurrentPhotoPath);
+        if (mIsDialogDisplayed) {
+            mAlertDialog.cancel();
+            outState.putBoolean("dialogDisplayed", true);
+            outState.putString("caption", mCaption.getText().toString());
+        }
     }
 
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -189,6 +204,9 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         mFlatPicList = savedInstanceState.getParcelableArrayList("flatPicList");
         if (mFlatPicList.size() != 0) checkRecyclerView();
         mCurrentPhotoPath = savedInstanceState.getString("photoTaken");
+        if (savedInstanceState.getBoolean("dialogDisplayed")) {
+            selectImage(savedInstanceState.getString("caption"));
+        }
     }
 
     @Override
@@ -456,24 +474,72 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
     }
 
     private void selectImage(String caption) {
-        final CharSequence[] items = { "Take Photo", "Choose from Library", "Cancel" };
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddFlatActivity.this, R.style.AlertDialogTheme);
-        builder.setTitle(getString(R.string.add_photo, caption));
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setCancelable(false);
 
-        builder.setItems(items, new DialogInterface.OnClickListener() {
+        initPopupViewControls();
+        alertDialogBuilder.setView(mPopupPhotoChoiceView);
+        mPopupPhotoChoiceTitle.setText(getString(R.string.add_photo, caption));
+
+        mAlertDialog = alertDialogBuilder.create();
+        mAlertDialog.show();
+        mIsDialogDisplayed = true;
+
+        mBtnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (items[item].equals("Take Photo")) {
-                    cameraIntent();
-                } else if (items[item].equals("Choose from Library")) {
-                    galleryIntent();
-                } else if (items[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
+            public void onClick(View view) {
+                galleryIntent();
+                mAlertDialog.cancel();
             }
         });
-        builder.show();
+
+        mBtnTakePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cameraIntent();
+                mAlertDialog.cancel();
+            }
+        });
+
+        mBtnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mIsDialogDisplayed = false;
+                mAlertDialog.cancel();
+            }
+        });
     }
+
+    private void initPopupViewControls() {
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+
+        mPopupPhotoChoiceView = layoutInflater.inflate(R.layout.popup_photo_choice, null);
+
+        mPopupPhotoChoiceTitle = mPopupPhotoChoiceView.findViewById(R.id.popup_photo_choice_title);
+        mBtnGallery  = mPopupPhotoChoiceView.findViewById(R.id.btn_gallery);
+        mBtnTakePicture = mPopupPhotoChoiceView.findViewById(R.id.btn_take_picture);
+        mBtnCancel= mPopupPhotoChoiceView.findViewById(R.id.btn_cancel);
+    }
+
+//    private void selectImage2(String caption) {
+//        final CharSequence[] items = { "Take Photo", "Choose from Library", "Cancel" };
+//        AlertDialog.Builder builder = new AlertDialog.Builder(AddFlatActivity.this, R.style.AlertDialogTheme);
+//        builder.setTitle(getString(R.string.add_photo, caption));
+//
+//        builder.setItems(items, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int item) {
+//                if (items[item].equals("Take Photo")) {
+//                    cameraIntent();
+//                } else if (items[item].equals("Choose from Library")) {
+//                    galleryIntent();
+//                } else if (items[item].equals("Cancel")) {
+//                    dialog.dismiss();
+//                }
+//            }
+//        });
+//        builder.show();
+//    }
 
     private void galleryIntent() {
         Intent intent = new Intent();

@@ -121,6 +121,8 @@
     <string name="close">Close</string>
     <string name="warning_wrong_contribution">Lucky you !\nYou got the money !</string>
     <string name="warning_wrong_information">Something is going wrong here !\nCheck your value &amp; try again !</string>
+    <string name="take_picture">Take picture</string>
+    <string name="gallery">Choose from gallery</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>

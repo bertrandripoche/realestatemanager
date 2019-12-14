@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_pink"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pink"
+        android:layout_marginBottom="@dimen/basic_padding">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/popup_photo_choice_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:drawableStart="@drawable/ic_add_photo_off"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:text="@string/add_photo"
+            android:textStyle="bold"
+            android:padding="@dimen/basic_padding"
+            android:textSize="@dimen/title_size" />
+    </TableRow>
+
+    <TableRow android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/btn_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_green_button"
+            android:drawableStart="@drawable/ic_photos"
+            android:padding="@dimen/basic_padding"
+            android:layout_margin="@dimen/basic_padding"
+            android:text="@string/gallery"
+            android:textColor="@color/white"/>
+    </TableRow>
+
+    <TableRow android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/btn_take_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_green_button"
+            android:drawableStart="@drawable/ic_camera"
+            android:padding="@dimen/basic_padding"
+            android:layout_margin="@dimen/basic_padding"
+            android:text="@string/take_picture"
+            android:textColor="@color/white"/>
+    </TableRow>
+
+    <TableRow android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_black_button"
+            android:drawableStart="@drawable/ic_cancel"
+            android:padding="@dimen/basic_padding"
+            android:layout_margin="@dimen/basic_padding"
+            android:text="@string/cancel"
+            android:textColor="@color/pink"/>
+
+    </TableRow>
+
+</TableLayout>

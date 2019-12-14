@@ -121,7 +121,6 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
             if (this.mContribution != null && !this.mContribution.getText().toString().equals("")) outState.putString("contribution", this.mContribution.getText().toString());
             if (this.mRate != null && !this.mRate.getText().toString().equals("")) outState.putString("rate", this.mRate.getText().toString());
             if (this.mDuration != null && !this.mDuration.getText().toString().equals("")) outState.putString("duration", this.mDuration.getText().toString());
-
         }
    }
 
@@ -136,7 +135,6 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
                 createLoanAlertDialog(contribution, rate, duration);
             }
         }
-
     }
 
     @OnClick(R.id.btn_sold)
@@ -198,6 +196,7 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
             }
         });
     }
+
     private void initPopupViewControls() {
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
 
