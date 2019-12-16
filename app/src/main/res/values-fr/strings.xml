@@ -1,0 +1,139 @@
+<resources>
+    <string name="app_name">Real Estate Manager</string>
+    <string name="search">Recherche</string>
+    <string name="add">Ajouter</string>
+    <string name="edit">Éditer</string>
+
+    <!-- FLAT DETAIL -->
+    <string name="euro">%1$d €</string>
+    <string name="metre_carre">%1$d m&#178;</string>
+    <string name="location">Localisation</string>
+    <string name="no_related_flat">Aucun appartement correspondant</string>
+    <string name="info">Information</string>
+    <string name="description">Description *</string>
+    <string name="description_text">%1$s\n</string>
+    <string name="surface">Surface</string>
+
+    <!-- FLAT ADD ACTIVITY -->
+    <string name="title_edit_flat_presentation">Présentation</string>
+    <string name="title_edit_flat_address">Adresse</string>
+    <string name="title_edit_flat_poi">Autour de l\'appartement</string>
+    <string name="title_edit_flat_agent">Responsable</string>
+
+    <string name="flat_type">Type</string>
+    <string name="summary">Résumé *</string>
+    <string name="flat_description">Description *</string>
+    <string name="surface_form">Surface (m&#178;) *</string>
+    <string name="bedroom">Chambres</string>
+    <string name="room">Pièces</string>
+    <string name="bathroom">Salles de bains</string>
+    <string name="price">Prix (€) *</string>
+    <string name="street_nb">Numéro de rue</string>
+    <string name="street">Rue</string>
+    <string name="postal_code">Code postal</string>
+    <string name="city">Ville *</string>
+
+    <string name="edit_price"><i>Saisir prix&#8230;</i></string>
+    <string name="edit_street_nb"><i>Saisir numéro&#8230;</i></string>
+    <string name="edit_summary"><i>Saisir résumé&#8230;</i></string>
+    <string name="edit_description"><i>Saisir description&#8230;</i></string>
+    <string name="edit_city"><i>Saisir ville&#8230;</i></string>
+    <string name="edit_steeet"><i>Saisir rue&#8230;</i></string>
+    <string name="edit_surface"><i>Saisir  surface&#8230;</i></string>
+    <string name="edit_room"><i>Saisir nb de pièces&#8230;</i></string>
+    <string name="edit_bedroom"><i>Saisir nb de chambres&#8230;</i></string>
+    <string name="edit_bathroom"><i>Saisir nb de sdb&#8230;</i></string>
+    <string name="edit_postal_code"><i>Saisir code postal&#8230;</i></string>
+
+    <string name="school">Écoles</string>
+    <string name="restaurant">Restaurants</string>
+    <string name="post_office">Bureaux de poste</string>
+    <string name="theater">Théâtres</string>
+    <string name="shop">Commerces</string>
+    <string name="flat_agent">Agent</string>
+
+    <string name="addFlat">Ajout appartement</string>
+    <string name="mandatory_information">*  =  champ obligatoire</string>
+    <string name="btn_add_label">Ajout appartement</string>
+    <string name="flat_saved">Appartement enregistré en base.</string>
+    <string name="invalid_form">ATTENTION :\nLes champs Résumé, Description, Surface, Prix et Ville ne peuvent être vides.</string>
+    <string name="editFlat">Édition appartement</string>
+    <string name="flat_updated">Appartement modifié en base.</string>
+    <string name="title_edit_pics">Photos</string>
+    <string name="photo_caption">Légende</string>
+    <string name="caption">Légende</string>
+    <string name="edit_caption">Légende&#8230;</string>
+    <string name="new_photo">Ajout photo</string>
+    <string name="invalid_caption">Entrez d\'abord une légende.</string>
+    <string name="permissions_issue">Permissions requises.</string>
+    <string name="add_photo">Ajout photo \"%1$s\"</string>
+    <string name="no_picture_selected">Aucune photo sélectionnée</string>
+    <string name="picture_saved">Photo sauvée.</string>
+    <string name="is_it_sold">Vendu ?</string>
+    <string name="sold">Sold</string>
+    <string name="big_sold">VENDU !</string>
+    <string name="sold_date">Vendu le %1$s</string>
+    <string name="available_date">À VENDRE depuis le %1$s</string>
+    <string name="warning_removal_not_saved">N\'oubliez pas de valider la modification de l\'appartement.</string>
+    <string name="notification_title">Nouvel appartement enregistré.</string>
+    <string name="notification_text">%1$s</string>
+    <string name="pic_deleted">Photo effacée</string>
+    <string name="map">Carte</string>
+    <string name="list">Liste</string>
+    <string name="title_filter">Filtres</string>
+    <string name="title_filter_poi">Appartement près de&#8230;</string>
+    <string name="min">Min&#8230;</string>
+    <string name="max">Max&#8230;</string>
+    <string name="filter_city">Ville&#8230;</string>
+    <string name="title_filter_sale">Par statut de vente&#8230;</string>
+    <string name="on_sale_filter_title">\"À vendre\" seulement</string>
+    <string name="sold_filter_title">\"Vendu\" seulement</string>
+    <string name="available_date_filter">Disponible depuis *</string>
+    <string name="sold_date_filter">Date de vente *</string>
+    <string name="date_filter">DD/MM/YYYY</string>
+    <string name="date_filter_max">Avant&#8230;</string>
+    <string name="date_filter_min">Après&#8230;</string>
+    <string name="warning_date">* Format de date "DD/MM/YYYY"</string>
+    <string name="city_filter">Ville</string>
+    <string name="price_filter">Prix</string>
+    <string name="warning_wrong_form">Des champs \"Par statut de vente&#8230;\" sont incorrects.\nVérifiez vos informations.</string>
+    <string name="search_result">Ceci est le résultat de votre recherche.</string>
+    <string name="previous_search_result">Ceci est toujours le résultat de votre recherche.</string>
+    <string name="back_to_full_listing">Retour à la liste complète</string>
+    <string name="search_title">Recherche</string>
+    <string name="warning_no_filter_filled">Vous n\'avez appliqué aucun filtre.</string>
+    <string name="loan">Prêt</string>
+    <string name="contribution">Apport (€)</string>
+    <string name="loan_calculation">Calcul du prêt</string>
+    <string name="rate">Taux (%)</string>
+    <string name="hint_contribution">Saisir apport&#8230;</string>
+    <string name="hint_rate">Saisir taux&#8230;</string>
+    <string name="duration">Durée (années)</string>
+    <string name="hint_duration">Saisir durée&#8230;</string>
+    <string name="cancel">Annuler</string>
+    <string name="submit">Valider</string>
+    <string name="loan_result">Votre mensualité sera de\n <b>%1$d €</b>\n pendant <b>%2$d</b> ans.</string>
+    <string name="close">Fermer</string>
+    <string name="warning_wrong_contribution">Jour de chance !\nVous avez l\'argent !</string>
+    <string name="warning_wrong_information">Informations incohérentes !\nVërifiez vos informations !</string>
+    <string name="take_picture">Prendre une photo</string>
+    <string name="gallery">Choisir depuis la galerie</string>
+
+    <string-array name="flat_type">
+        <item>Appartement</item>
+        <item>Duplex</item>
+        <item>Maison</item>
+        <item>Loft</item>
+        <item>Souplex</item>
+        <item>Triplex</item>
+    </string-array>
+
+    <string-array name="flat_agent">
+        <item>Marc Antoine</item>
+        <item>Agnès Isard</item>
+        <item>Naïma Lassim</item>
+        <item>Pierre Martin</item>
+        <item>Roger Dumont</item>
+        <item>Abdel Malat</item>
+    </string-array>
+</resources>

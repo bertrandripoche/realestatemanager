@@ -150,6 +150,13 @@ public class Utils {
         return address;
     }
 
+    /**
+     * This method calculates the mensuality depending on several factors
+     * @param amount is the amount of money that user wants to borrow
+     * @param rate is the rate of the loan
+     * @param year is the number of years required by the user to reimburse the loan
+     * @return the mensuality that will have to be paid
+     */
     public static int calculateMensuality(int amount, double rate, int year) {
         double mensuality = 0;
         if (amount != 0) {

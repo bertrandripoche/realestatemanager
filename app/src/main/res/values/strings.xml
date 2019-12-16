@@ -7,9 +7,7 @@
     <!-- FLAT DETAIL -->
     <string name="euro">%1$d €</string>
     <string name="metre_carre">%1$d m&#178;</string>
-    <string name="media">Media</string>
     <string name="location">Location</string>
-    <string name="tag">tag_to_set_programmatically</string>
     <string name="no_related_flat">No related flat</string>
     <string name="info">Information</string>
     <string name="description">Description *</string>
@@ -57,7 +55,6 @@
     <string name="addFlat">Add a flat</string>
     <string name="mandatory_information">*  =  mandatory field</string>
     <string name="btn_add_label">Add a flat</string>
-    <string name="btn_add_description">Add button</string>
     <string name="flat_saved">Flat has been saved in database.</string>
     <string name="invalid_form">WARNING :\nThe fields Summary, Description, Surface, \nPrice and City can\'t be empty.</string>
     <string name="editFlat">Edit a flat</string>
@@ -65,7 +62,7 @@
     <string name="title_edit_pics">Pictures</string>
     <string name="photo_caption">Caption</string>
     <string name="caption">Caption</string>
-    <string name="edit_caption">Caption…</string>
+    <string name="edit_caption">Caption&#8230;</string>
     <string name="new_photo">Add photo</string>
     <string name="invalid_caption">Please enter a caption first.</string>
     <string name="permissions_issue">You need permissions first.</string>
@@ -80,28 +77,28 @@
     <string name="warning_removal_not_saved">Don\'t forget to save the flat.</string>
     <string name="notification_title">New Flat recorded</string>
     <string name="notification_text">%1$s</string>
-    <string name="channel_name">notification_channel</string>
-    <string name="channel_description">Notification channel</string>
+    <string name="channel_name" translatable="false">notification_channel</string>
+    <string name="channel_description" translatable="false">Notification channel</string>
     <string name="pic_deleted">Pic deleted</string>
     <string name="map">Map</string>
     <string name="list">List</string>
     <string name="title_filter">Filters</string>
-    <string name="title_filter_poi">Searching a flat close to…</string>
-    <string name="min">Min…</string>
-    <string name="max">Max…</string>
-    <string name="filter_city">In this city…</string>
-    <string name="title_filter_sale">Searching for sale status…</string>
+    <string name="title_filter_poi">Searching a flat close to&#8230;</string>
+    <string name="min">Min&#8230;</string>
+    <string name="max">Max&#8230;</string>
+    <string name="filter_city">In this city&#8230;</string>
+    <string name="title_filter_sale">Searching for sale status&#8230;</string>
     <string name="on_sale_filter_title">\"On sale\" only</string>
     <string name="sold_filter_title">\"Sold\" only</string>
     <string name="available_date_filter">Available date *</string>
     <string name="sold_date_filter">Sold date *</string>
     <string name="date_filter">DD/MM/YYYY</string>
-    <string name="date_filter_max">Before…</string>
-    <string name="date_filter_min">After…</string>
+    <string name="date_filter_max">Before&#8230;</string>
+    <string name="date_filter_min">After&#8230;</string>
     <string name="warning_date">* Format for date is "DD/MM/YYYY"</string>
     <string name="city_filter">City</string>
     <string name="price_filter">Price</string>
-    <string name="warning_wrong_form">Some fields of the \"Searching for sale status…\" were inacurrately filled.\nPlease double-check.</string>
+    <string name="warning_wrong_form">Some fields of the \"Searching for sale status&#8230;\" were inacurrately filled.\nPlease double-check.</string>
     <string name="search_result">This is the result of your search.</string>
     <string name="previous_search_result">This is the result of your previous search.</string>
     <string name="back_to_full_listing">Back to the full list</string>
@@ -111,10 +108,10 @@
     <string name="contribution">Contribution (€)</string>
     <string name="loan_calculation">Loan calculation</string>
     <string name="rate">Rate (%)</string>
-    <string name="hint_contribution">Enter contribution...</string>
-    <string name="hint_rate">Enter rate...</string>
+    <string name="hint_contribution">Enter contribution&#8230;</string>
+    <string name="hint_rate">Enter rate&#8230;</string>
     <string name="duration">Duration (years)</string>
-    <string name="hint_duration">Enter duration...</string>
+    <string name="hint_duration">Enter duration&#8230;</string>
     <string name="cancel">Cancel</string>
     <string name="submit">Submit</string>
     <string name="loan_result">Your mensuality will be of\n <b>%1$d €</b>\n during <b>%2$d</b> years.</string>
@@ -125,11 +122,11 @@
     <string name="gallery">Choose from gallery</string>
 
     <string-array name="flat_type">
-        <item>Appartement</item>
+        <item>Flat</item>
         <item>Duplex</item>
-        <item>Maison</item>
+        <item>House</item>
         <item>Loft</item>
-        <item>Souplex</item>
+        <item>Basement duplex</item>
         <item>Triplex</item>
     </string-array>
 
