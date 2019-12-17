@@ -4,7 +4,6 @@
     android:id="@+id/item_flat_recycler_layout"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:tag="@string/tag"
     android:background="@color/white">
 
     <androidx.appcompat.widget.AppCompatImageView

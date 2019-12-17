@@ -120,6 +120,7 @@
     <string name="warning_wrong_information">Something is going wrong here !\nCheck your value &amp; try again !</string>
     <string name="take_picture">Take picture</string>
     <string name="gallery">Choose from gallery</string>
+    <string name="btn_add_description">Add button</string>
 
     <string-array name="flat_type">
         <item>Flat</item>

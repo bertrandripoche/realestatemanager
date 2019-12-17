@@ -118,6 +118,7 @@
     <string name="warning_wrong_information">Informations incohérentes !\nVërifiez vos informations !</string>
     <string name="take_picture">Prendre une photo</string>
     <string name="gallery">Choisir depuis la galerie</string>
+    <string name="btn_add_description">Bouton ajouter</string>
 
     <string-array name="flat_type">
         <item>Appartement</item>
