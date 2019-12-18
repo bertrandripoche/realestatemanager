@@ -344,26 +344,6 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         mBtnCancel= mPopupPhotoChoiceView.findViewById(R.id.btn_cancel);
     }
 
-//    private void selectImage2(String caption) {
-//        final CharSequence[] items = { "Take Photo", "Choose from Library", "Cancel" };
-//        AlertDialog.Builder builder = new AlertDialog.Builder(EditFlatActivity.this, R.style.AlertDialogTheme);
-//        builder.setTitle(getString(R.string.add_photo, caption));
-//
-//        builder.setItems(items, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int item) {
-//                if (items[item].equals("Take Photo")) {
-//                    cameraIntent();
-//                } else if (items[item].equals("Choose from Library")) {
-//                    galleryIntent();
-//                } else if (items[item].equals("Cancel")) {
-//                    dialog.dismiss();
-//                }
-//            }
-//        });
-//        builder.show();
-//    }
-
     private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -480,7 +460,9 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
     }
 
     private void configureSpinners() {
-        ArrayAdapter adapterSpinnerFlatType = ArrayAdapter.createFromResource(this, R.array.flat_type, R.layout.spinner_item);
+        String[] dataForSpinner = Utils.createDataForFlatTypeSpinners(this);
+        ArrayAdapter adapterSpinnerFlatType = new ArrayAdapter<String>
+                (this, R.layout.spinner_item, dataForSpinner);
         adapterSpinnerFlatType.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mFlatType.setAdapter(adapterSpinnerFlatType);
         ArrayAdapter adapterSpinnerFlatAgent = ArrayAdapter.createFromResource(this, R.array.flat_agent, R.layout.spinner_item);
@@ -520,7 +502,8 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
             mCity.setText(mFlat.getCityAddress());
             if (mFlat.getSurface() != null) mSurface.setText(String.valueOf(mFlat.getSurface()));
 
-            setSpinner(mFlatType, mFlat.getType());
+            String flatType = Utils.getStringFromFlatTypeSpinners(this, mFlat.getType());
+            setSpinner(mFlatType, flatType);
 
             if (mFlat.getNumberAddress() == null) mStreetNb.setText("");
             else mStreetNb.setText(String.valueOf(mFlat.getNumberAddress()));
@@ -577,7 +560,7 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
 
         mFlat.setSummary(Utils.capitalizeFirstLetterOfASingleWord(this.mSummary.getText().toString()));
         mFlat.setDescription(Utils.capitalizeFirstLetterOfASingleWord(this.mDescription.getText().toString()));
-        mFlat.setType(this.mFlatType.getSelectedItem().toString());
+        mFlat.setType(this.mFlatType.getSelectedItemPosition());
         mFlat.setPrice(price);
         mFlat.setSurface(surface);
         mFlat.setRoom(room);

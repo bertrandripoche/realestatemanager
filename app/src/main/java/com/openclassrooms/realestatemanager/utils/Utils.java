@@ -9,6 +9,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 
+import com.openclassrooms.realestatemanager.R;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -168,6 +170,23 @@ public class Utils {
             mensuality = numerator / denominator;
         }
         return (int)mensuality;
+    }
+
+    public static String[] createDataForFlatTypeSpinners(Context context) {
+        String[] origin = context.getResources().getStringArray(R.array.flat_type);
+        String[] finalData = new String[6];
+        for(int i = 0; i < origin.length; i++) {
+            int resId = context.getResources().getIdentifier(origin[i], "string", "com.openclassrooms.realestatemanager");
+            finalData[i] = context.getString(resId);
+        }
+        return finalData;
+    }
+
+    public static String getStringFromFlatTypeSpinners(Context context, int position) {
+        String[] origin = context.getResources().getStringArray(R.array.flat_type);
+        int resId = context.getResources().getIdentifier(origin[position], "string", "com.openclassrooms.realestatemanager");
+        String finalData = context.getString(resId);
+        return finalData;
     }
 
 }

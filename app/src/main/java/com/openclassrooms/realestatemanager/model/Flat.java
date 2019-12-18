@@ -20,7 +20,7 @@ public class Flat {
     private String picPath;
     private String summary;
     private String description;
-    private String type;
+    private Integer type;
     private Integer price;
     private Integer surface;
     private Integer room;
@@ -46,7 +46,7 @@ public class Flat {
     public Flat() {
     }
 
-    public Flat(String picPath, String summary, String description, String type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, Double latitude, Double longitude, boolean isSchool, boolean isPostOffice, boolean isRestaurant, boolean isTheater, boolean isShop, int agentId) {
+    public Flat(String picPath, String summary, String description, Integer type, Integer price, Integer surface, Integer room, Integer bedroom, Integer bathroom, Integer numberAddress, String streetAddress, Integer postalCodeAddress, String cityAddress, Double latitude, Double longitude, boolean isSchool, boolean isPostOffice, boolean isRestaurant, boolean isTheater, boolean isShop, int agentId) {
         this.picPath = picPath;
         this.summary = summary;
         this.description = description;
@@ -77,7 +77,7 @@ public class Flat {
     public String getPicPath() {return picPath;}
     public String getSummary() {return summary;}
     public String getDescription() {return description;}
-    public String getType() {return type;}
+    public Integer getType() {return type;}
     public Integer getPrice() {return price;}
     public Integer getSurface() {return surface;}
     public Integer getRoom() {return room;}
@@ -104,7 +104,7 @@ public class Flat {
     public void setPicPath(String picPath) {this.picPath = picPath;}
     public void setSummary(String summary) {this.summary = summary;}
     public void setDescription(String description) {this.description = description;}
-    public void setType(String type) {this.type = type;}
+    public void setType(Integer type) {this.type = type;}
     public void setPrice(Integer price) {this.price = price;}
     public void setSurface(Integer surface) {this.surface = surface;}
     public void setRoom(Integer room) {this.room = room;}
@@ -133,7 +133,7 @@ public class Flat {
         if (values.containsKey("picPath")) flat.setPicPath(values.getAsString("picPath"));
         if (values.containsKey("summary")) flat.setSummary(values.getAsString("summary"));
         if (values.containsKey("description")) flat.setDescription(values.getAsString("description"));
-        if (values.containsKey("type")) flat.setType(values.getAsString("type"));
+        if (values.containsKey("type")) flat.setType(values.getAsInteger("type"));
         if (values.containsKey("price")) flat.setPrice(values.getAsInteger("price"));
         if (values.containsKey("surface")) flat.setSurface(values.getAsInteger("surface"));
         if (values.containsKey("room")) flat.setRoom(values.getAsInteger("room"));

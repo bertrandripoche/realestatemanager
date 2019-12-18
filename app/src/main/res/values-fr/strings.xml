@@ -120,14 +120,12 @@
     <string name="gallery">Choisir depuis la galerie</string>
     <string name="btn_add_description">Bouton ajouter</string>
 
-    <string-array name="flat_type">
-        <item>Appartement</item>
-        <item>Duplex</item>
-        <item>Maison</item>
-        <item>Loft</item>
-        <item>Souplex</item>
-        <item>Triplex</item>
-    </string-array>
+    <string name="flattype1">Appartement</string>
+    <string name="flattype2">Duplex</string>
+    <string name="flattype3">Maison</string>
+    <string name="flattype4">Loft</string>
+    <string name="flattype5">Souplex</string>
+    <string name="flattype6">Triplex</string>
 
     <string-array name="flat_agent">
         <item>Marc Antoine</item>

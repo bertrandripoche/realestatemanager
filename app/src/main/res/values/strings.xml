@@ -122,13 +122,20 @@
     <string name="gallery">Choose from gallery</string>
     <string name="btn_add_description">Add button</string>
 
+    <string name="flattype1">Flat</string>
+    <string name="flattype2">Duplex</string>
+    <string name="flattype3">House</string>
+    <string name="flattype4">Loft</string>
+    <string name="flattype5">Basement duplex</string>
+    <string name="flattype6">Triplex</string>
+
     <string-array name="flat_type">
-        <item>Flat</item>
-        <item>Duplex</item>
-        <item>House</item>
-        <item>Loft</item>
-        <item>Basement duplex</item>
-        <item>Triplex</item>
+        <item>flattype1</item>
+        <item>flattype2</item>
+        <item>flattype3</item>
+        <item>flattype4</item>
+        <item>flattype5</item>
+        <item>flattype6</item>
     </string-array>
 
     <string-array name="flat_agent">

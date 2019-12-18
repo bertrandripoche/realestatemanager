@@ -115,7 +115,7 @@ public class FlatListFragment extends Fragment {
 
         mFlatList = new ArrayList<>();
 
-        mAdapter = new FlatAdapter(mFlatList, mIsTablet);
+        mAdapter = new FlatAdapter(mFlatList, mIsTablet, getContext());
         mAdapter.index = mainActivity.mSelectedFlat;
 
         mRecyclerView.setHasFixedSize(true);

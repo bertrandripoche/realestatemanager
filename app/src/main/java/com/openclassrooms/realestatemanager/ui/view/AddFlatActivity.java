@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager.ui.view;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
@@ -108,11 +107,8 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
 
     private int mSelectedFlat = -1;
     private static int AGENT_ID = 0;
-    private static final String TABLET = "tablet";
     final String FLATID = "flatId";
     final String SELECTEDFLAT = "selectedFlat";
-    private static final String CHANNEL_ID = "1";
-    private final String NOTIFICATION_TAG = "FIREBASE_NOTIF";
     private static final int REQUEST_CAMERA_TAKE_PICTURE = 0;
     private static final int REQUEST_SELECT_PIC_GALLERY = 1;
     private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -280,13 +276,32 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
     }
 
     private void configureSpinners() {
-        ArrayAdapter adapterSpinnerFlatType = ArrayAdapter.createFromResource(this, R.array.flat_type, R.layout.spinner_item);
+        String[] dataForSpinner = Utils.createDataForFlatTypeSpinners(this);
+        ArrayAdapter adapterSpinnerFlatType = new ArrayAdapter<String>
+                (this, R.layout.spinner_item, dataForSpinner);
         adapterSpinnerFlatType.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mFlatType.setAdapter(adapterSpinnerFlatType);
         ArrayAdapter adapterSpinnerFlatAgent = ArrayAdapter.createFromResource(this, R.array.flat_agent, R.layout.spinner_item);
         adapterSpinnerFlatAgent.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mFlatAgent.setAdapter(adapterSpinnerFlatAgent);
+
+//        ArrayAdapter adapterSpinnerFlatType = ArrayAdapter.createFromResource(this, R.array.flat_type, R.layout.spinner_item);
+//        adapterSpinnerFlatType.setDropDownViewResource(R.layout.spinner_dropdown_item);
+//        mFlatType.setAdapter(adapterSpinnerFlatType);
+//        ArrayAdapter adapterSpinnerFlatAgent = ArrayAdapter.createFromResource(this, R.array.flat_agent, R.layout.spinner_item);
+//        adapterSpinnerFlatAgent.setDropDownViewResource(R.layout.spinner_dropdown_item);
+//        mFlatAgent.setAdapter(adapterSpinnerFlatAgent);
     }
+
+//    private String[] createDataForFlatTypeSpinners() {
+//        String[] origin = getResources().getStringArray(R.array.flat_type);
+//        String[] finalData = new String[6];
+//        for(int i = 0; i < origin.length; i++) {
+//            int resId = getResources().getIdentifier(origin[i], "string", "com.openclassrooms.realestatemanager");
+//            finalData[i] = getString(resId);
+//        }
+//        return finalData;
+//    }
 
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
@@ -337,7 +352,8 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         else picPath = "";
         String summary = this.mSummary.getText().toString();
         String description = this.mDescription.getText().toString();
-        String flatType = this.mFlatType.getSelectedItem().toString();
+//        String flatType = this.mFlatType.getSelectedItem().toString();
+        Integer flatType = this.mFlatType.getSelectedItemPosition();
         Integer price = getNumber(this.mPrice.getText().toString());
         Integer surface = getNumber(this.mSurface.getText().toString());
         Integer room = getNumber(this.mRoomNb.getText().toString());
@@ -520,26 +536,6 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         mBtnTakePicture = mPopupPhotoChoiceView.findViewById(R.id.btn_take_picture);
         mBtnCancel= mPopupPhotoChoiceView.findViewById(R.id.btn_cancel);
     }
-
-//    private void selectImage2(String caption) {
-//        final CharSequence[] items = { "Take Photo", "Choose from Library", "Cancel" };
-//        AlertDialog.Builder builder = new AlertDialog.Builder(AddFlatActivity.this, R.style.AlertDialogTheme);
-//        builder.setTitle(getString(R.string.add_photo, caption));
-//
-//        builder.setItems(items, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int item) {
-//                if (items[item].equals("Take Photo")) {
-//                    cameraIntent();
-//                } else if (items[item].equals("Choose from Library")) {
-//                    galleryIntent();
-//                } else if (items[item].equals("Cancel")) {
-//                    dialog.dismiss();
-//                }
-//            }
-//        });
-//        builder.show();
-//    }
 
     private void galleryIntent() {
         Intent intent = new Intent();

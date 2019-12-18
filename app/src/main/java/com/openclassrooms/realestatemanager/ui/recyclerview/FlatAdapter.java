@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.recyclerview;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +18,13 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
 
     private List<Flat> mFlatList;
     private boolean mIsTablet;
+    private Context mContext;
     public int index;
 
-    public FlatAdapter(List<Flat> flatList, boolean isTablet) {
+    public FlatAdapter(List<Flat> flatList, boolean isTablet, Context context) {
         this.mFlatList = flatList;
         this.mIsTablet = isTablet;
+        this.mContext = context;
     }
 
     /**
@@ -45,8 +48,7 @@ public class FlatAdapter extends RecyclerView.Adapter<FlatViewHolder>{
      */
     @Override
     public void onBindViewHolder(@NonNull FlatViewHolder holder, int position) {
-        holder.updateWithFlat(this.mFlatList.get(position));
-System.out.println("***Position "+position + " / Index" + index);
+        holder.updateWithFlat(this.mFlatList.get(position), mContext);
         if (index != -1 && index==this.mFlatList.get(position).getId() && mIsTablet) setSelected(holder);
         else unsetSelected(holder);
     }

@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.recyclerview;
 
+import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.model.Flat;
+import com.openclassrooms.realestatemanager.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,14 +36,15 @@ class FlatViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void updateWithFlat(Flat flat) {
+    public void updateWithFlat(Flat flat, Context context) {
         if (flat != null) {
             if (flat.getPicPath() != null && !flat.getPicPath().equals(""))
                 this.mFlatPic.setImageBitmap(BitmapFactory.decodeFile(flat.getPicPath()));
             this.mFlatSummary.setText(flat.getSummary());
             this.mFlatCity.setText(flat.getCityAddress());
             this.mFlatPrice.setText(this.itemView.getResources().getString(R.string.euro, flat.getPrice()));
-            this.mFlatType.setText(flat.getType());
+            String flatType = Utils.getStringFromFlatTypeSpinners(context, flat.getType());
+            this.mFlatType.setText(flatType);
             this.mFlatConstraintLayout.setTag(flat.getId());
             if (flat.isSold()) mFlatSold.setVisibility(View.VISIBLE);
             else mFlatSold.setVisibility(View.GONE);

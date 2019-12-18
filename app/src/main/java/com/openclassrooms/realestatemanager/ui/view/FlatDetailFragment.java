@@ -73,7 +73,6 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
     @Nullable @BindView(R.id.btn_loan_submit) Button mBtnSubmitLoan;
     @Nullable @BindView(R.id.btn_loan_close) Button mBtnCloseLoan;
 
-    private List<Flat> mFlatList;
     private Flat mFlat;
     private Long mFlatId;
     private FlatDetailActivity mFlatDetailActivity;
@@ -264,7 +263,7 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
             mSummary.setText(mFlat.getSummary());
             mDescription.setText(getString(R.string.description_text, mFlat.getDescription()));
             mPrice.setText(getString(R.string.euro, mFlat.getPrice()));
-            mType.setText(mFlat.getType());
+            mType.setText(Utils.getStringFromFlatTypeSpinners(getContext(), mFlat.getType()));
             mCity.setText(mFlat.getCityAddress());
             mSurface.setText(getString(R.string.metre_carre, mFlat.getSurface()));
 
