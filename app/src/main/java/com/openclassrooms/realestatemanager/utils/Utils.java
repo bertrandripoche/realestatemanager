@@ -1,24 +1,16 @@
 package com.openclassrooms.realestatemanager.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 
 import com.openclassrooms.realestatemanager.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.zip.DataFormatException;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 
@@ -172,6 +164,11 @@ public class Utils {
         return (int)mensuality;
     }
 
+    /**
+     * Allows to get data to correctly populate the spinner whatever the language
+     * @param context provides a context to the method
+     * @return an array of String for flattype spinner which matches the smartphone language
+     */
     public static String[] createDataForFlatTypeSpinners(Context context) {
         String[] origin = context.getResources().getStringArray(R.array.flat_type);
         String[] finalData = new String[6];
@@ -182,6 +179,12 @@ public class Utils {
         return finalData;
     }
 
+    /**
+     * Method which allows to get the flattype string from the saved spinner position whatever the language
+     * @param context provides a context to the method
+     * @param position is the saved position (of the item in the spinner)
+     * @return the flattype String which matches the smartphone language
+     */
     public static String getStringFromFlatTypeSpinners(Context context, int position) {
         String[] origin = context.getResources().getStringArray(R.array.flat_type);
         int resId = context.getResources().getIdentifier(origin[position], "string", "com.openclassrooms.realestatemanager");
