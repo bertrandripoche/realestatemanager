@@ -311,16 +311,18 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         mBtnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                galleryIntent();
+                mIsDialogDisplayed = false;
                 mAlertDialog.cancel();
+                galleryIntent();
             }
         });
 
         mBtnTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cameraIntent();
+                mIsDialogDisplayed = false;
                 mAlertDialog.cancel();
+                cameraIntent();
             }
         });
 

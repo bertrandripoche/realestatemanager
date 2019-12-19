@@ -285,23 +285,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         adapterSpinnerFlatAgent.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mFlatAgent.setAdapter(adapterSpinnerFlatAgent);
 
-//        ArrayAdapter adapterSpinnerFlatType = ArrayAdapter.createFromResource(this, R.array.flat_type, R.layout.spinner_item);
-//        adapterSpinnerFlatType.setDropDownViewResource(R.layout.spinner_dropdown_item);
-//        mFlatType.setAdapter(adapterSpinnerFlatType);
-//        ArrayAdapter adapterSpinnerFlatAgent = ArrayAdapter.createFromResource(this, R.array.flat_agent, R.layout.spinner_item);
-//        adapterSpinnerFlatAgent.setDropDownViewResource(R.layout.spinner_dropdown_item);
-//        mFlatAgent.setAdapter(adapterSpinnerFlatAgent);
     }
-
-//    private String[] createDataForFlatTypeSpinners() {
-//        String[] origin = getResources().getStringArray(R.array.flat_type);
-//        String[] finalData = new String[6];
-//        for(int i = 0; i < origin.length; i++) {
-//            int resId = getResources().getIdentifier(origin[i], "string", "com.openclassrooms.realestatemanager");
-//            finalData[i] = getString(resId);
-//        }
-//        return finalData;
-//    }
 
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
@@ -352,7 +336,6 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         else picPath = "";
         String summary = this.mSummary.getText().toString();
         String description = this.mDescription.getText().toString();
-//        String flatType = this.mFlatType.getSelectedItem().toString();
         Integer flatType = this.mFlatType.getSelectedItemPosition();
         Integer price = getNumber(this.mPrice.getText().toString());
         Integer surface = getNumber(this.mSurface.getText().toString());
@@ -394,7 +377,6 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
                 AGENT_ID);
 
         this.mFlatViewModel.createFlat(this, flat, mFlatPicList, mIsTablet);
-//        mNotificationService.createNotification(this, summary, flatId, mIsTablet);
         cleanForm();
     }
 
@@ -504,16 +486,18 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         mBtnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                galleryIntent();
                 mAlertDialog.cancel();
+                mIsDialogDisplayed = false;
+                galleryIntent();
             }
         });
 
         mBtnTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cameraIntent();
                 mAlertDialog.cancel();
+                mIsDialogDisplayed = false;
+                cameraIntent();
             }
         });
 
@@ -547,6 +531,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
     }
 
     private void cameraIntent() {
+
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (intent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
