@@ -50,6 +50,7 @@ import com.openclassrooms.realestatemanager.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -221,8 +222,14 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
                 } else {
                     uriImageSelected = mPhotoURI;
                     mSelectedImagePath = mCurrentPhotoPath;
-                    int rotationValue = getOrientationEXIF(this, mSelectedImagePath);
-                    System.out.println("Orientation : "+rotationValue);
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uriImageSelected);
+                        bitmap = Utils.handleSamplingAndRotationBitmap(this, uriImageSelected);
+                        OutputStream os= this.getContentResolver().openOutputStream(uriImageSelected);
+                        bitmap.compress(Bitmap.CompressFormat.PNG,100,os);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 Pic pic = new Pic(uriImageSelected, mSelectedImagePath, mCaption.getText().toString(), 0);
@@ -561,79 +568,5 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
 
         return image;
     }
-
-//    private void rotateImage(String imagePath) {
-//        Matrix matrix = new Matrix();
-//        ExifInterface exifReader = null;
-//        try {
-//            exifReader = new ExifInterface(imagePath);
-//            int orientation = Integer.parseInt(exifReader.getAttribute(ExifInterface.TAG_ORIENTATION));
-//            String exifOrientation = exifReader.getAttribute(ExifInterface.TAG_ORIENTATION);
-//
-//            System.out.println("Exif : "+exifOrientation);
-//            if (orientation ==ExifInterface.ORIENTATION_NORMAL) {
-//System.out.println("Photo Normale");
-//            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
-//System.out.println("Photo 90");
-//                matrix.postRotate(90);
-//            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
-//System.out.println("Photo 180");
-//                matrix.postRotate(180);
-//            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
-//System.out.println("Photo 270");
-//                matrix.postRotate(270);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-    public static int getOrientationEXIF(Context context, String imagePath) {
-
-        int orientation = 0;
-
-        try {
-            ExifInterface exif = new ExifInterface(imagePath);
-
-            orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
-            switch (orientation) {
-
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    orientation = 90;
-                    return orientation;
-
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    orientation = 180;
-                    return orientation;
-
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    orientation = 270;
-                    return orientation;
-
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
-
-    public static Bitmap rotate(float rotationValue, String filePath) {
-        Bitmap original= BitmapFactory.decodeFile(filePath);
-
-        int width = original.getWidth();
-        int height = original.getHeight();
-
-        Matrix matrix = new Matrix();
-
-        matrix.postRotate(rotationValue);
-
-        Bitmap rotated = Bitmap.createBitmap(original, 0, 0, width, height, matrix, true);
-
-        return rotated;
-    }
-
 
 }

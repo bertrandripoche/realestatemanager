@@ -21,6 +21,9 @@ android {
     }
     testOptions {
         unitTests.includeAndroidResources = true
+        unitTests {
+            includeAndroidResources = true
+        }
     }
     dataBinding {
         enabled = true
@@ -49,18 +52,12 @@ dependencies {
     implementation 'com.github.Jay-Goo:RangeSeekBar:v1.2.2'
     implementation 'com.crystal:crystalrangeseekbar:1.1.3'
 
-
     //BUTTERKNIFE
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
 
     // TEXT JUSTIFY
     implementation 'me.biubiubiu.justifytext:library:1.1'
-
-    // POWERMOCK
-    testImplementation 'org.powermock:powermock-core:1.7.0RC2'
-    testImplementation 'org.powermock:powermock-module-junit4:1.7.0RC2'
-    testImplementation 'org.powermock:powermock-api-mockito2:1.7.0RC2'
 
     //ROOM
     implementation 'android.arch.persistence.room:runtime:1.1.1'
@@ -98,6 +95,14 @@ dependencies {
     // NESPRESSO
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+
+    // POWERMOCK
+    testImplementation 'org.powermock:powermock-core:1.7.0RC2'
+    testImplementation 'org.powermock:powermock-module-junit4:1.7.0RC2'
+    testImplementation 'org.powermock:powermock-api-mockito2:1.7.0RC2'
+
+    // ROBOELECTRIC
+    testImplementation 'org.robolectric:robolectric:4.3'
 
 }
 

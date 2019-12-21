@@ -32,6 +32,7 @@ public class BaseActivity extends AppCompatActivity {
     protected int mSelectedFlat = -1;
     final String FLATID = "flatId";
     final String SELECTEDFLAT = "selectedFlat";
+    private FlatListFragment mFlatListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,6 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.secondary_menu_search:
                 if (mIsTablet) {
                     loadFragment(new SearchFragment(), R.id.container_fragment_flat_detail);
-//                    configureFragment(new SearchFragment(), R.id.container_fragment_flat_detail, SEARCH);
                     hideEditBtn();
                 }
                 else launchActivity("SearchActivity");
@@ -124,16 +124,6 @@ public class BaseActivity extends AppCompatActivity {
         this.startActivity(myIntent);
     }
 
-    private void launchFragment(String searchFragment) {
-        mSelectedFlat = -1;
-
-        mSearchFragment = new SearchFragment();
-        this.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_fragment_flat_detail, mSearchFragment, "Search")
-                .commit();
-        hideEditBtn();
-    }
-
     protected void loadFragment(Fragment fragment, int container) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(container, fragment);
@@ -178,10 +168,6 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void configureToolbar(){
-        setSupportActionBar(mToolbar);
-    }
-
     protected void configureAndShowFlatDetailFragment(){
         mFlatDetailFragment = (FlatDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
         if (mFlatDetailFragment == null && findViewById(R.id.container_fragment_flat_detail) != null) {
@@ -200,6 +186,10 @@ public class BaseActivity extends AppCompatActivity {
                     .add(R.id.container_fragment_search, mSearchFragment)
                     .commit();
         }
+    }
+
+    protected void configureToolbar(){
+        setSupportActionBar(mToolbar);
     }
 
     protected void hideListBtn() {if (mListBtn != null) mListBtn.setVisible(false);}

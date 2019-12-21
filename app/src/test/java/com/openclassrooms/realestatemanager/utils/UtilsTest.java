@@ -1,22 +1,24 @@
 package com.openclassrooms.realestatemanager.utils;
 
-import com.openclassrooms.realestatemanager.utils.Utils;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
+
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
+
+import static org.mockito.Mockito.*;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-@RunWith(MockitoJUnitRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Utils.class)
 public class UtilsTest {
 
     @Test
@@ -59,15 +61,20 @@ public class UtilsTest {
 
     @Test
     public void testGetTodayDateTest() {
-        Calendar calendar = new GregorianCalendar(2018, 0, 13);
-        long today = calendar.getTimeInMillis();
+//        Calendar calendar = new GregorianCalendar(2018, 0, 13);
+//        long fakeToday = calendar.getTimeInMillis();
+//
+//        Calendar c = mock(Calendar.class);
+//        when(c.getTimeInMillis()).thenReturn(fakeToday);
 
-        Calendar c = mock(Calendar.class);
-        when(c.getTimeInMillis()).thenReturn(today);
+        Calendar fakeToday = Calendar.getInstance();
+        fakeToday.set(2018, Calendar.MARCH, 13);
+        PowerMockito.mockStatic(Calendar.class);
+        Mockito.when(Calendar.getInstance()).thenReturn(fakeToday);
 
-        Utils myTestedUtilsClass = new Utils();
-        String result = myTestedUtilsClass.getTodayDate();
-        assertThat(result).isEqualTo("03/03/2018");
+//        Utils myTestedUtilsClass = new Utils();
+        String result = Utils.getTodayDate();
+        assertThat(result).isEqualTo("13/03/2018");
     }
 
     @Test
@@ -75,4 +82,5 @@ public class UtilsTest {
         String result = String.valueOf(Utils.calculateMensuality(200000,4.5,20));
         assertThat(result).isEqualTo("1265");
     }
+
 }
