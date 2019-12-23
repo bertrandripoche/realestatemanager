@@ -4,20 +4,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import static org.mockito.Mockito.*;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
-//@RunWith(MockitoJUnitRunner.class)
 @RunWith(PowerMockRunner.class)
 @PrepareForTest( Utils.class)
 public class UtilsTest {
