@@ -79,7 +79,7 @@ public class AddFlatTest {
                                         withId(R.id.form_flat_presentation),
                                         3),
                                 1)));
-        appCompatEditText2.perform(scrollTo(), replaceText("d"), closeSoftKeyboard());
+        appCompatEditText2.perform(scrollTo(), replaceText("s"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText3 = onView(
                 allOf(withId(R.id.edit_surface),
@@ -88,7 +88,7 @@ public class AddFlatTest {
                                         withId(R.id.form_flat_presentation),
                                         4),
                                 1)));
-        appCompatEditText3.perform(scrollTo(), replaceText("1"), closeSoftKeyboard());
+        appCompatEditText3.perform(scrollTo(), replaceText("4"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText4 = onView(
                 allOf(withId(R.id.edit_price),
@@ -97,7 +97,7 @@ public class AddFlatTest {
                                         withId(R.id.form_flat_presentation),
                                         8),
                                 1)));
-        appCompatEditText4.perform(scrollTo(), replaceText("1"), closeSoftKeyboard());
+        appCompatEditText4.perform(scrollTo(), replaceText("4"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText5 = onView(
                 allOf(withId(R.id.edit_city),
@@ -106,7 +106,7 @@ public class AddFlatTest {
                                         withId(R.id.form_flat_address),
                                         4),
                                 1)));
-        appCompatEditText5.perform(scrollTo(), replaceText("c"), closeSoftKeyboard());
+        appCompatEditText5.perform(scrollTo(), replaceText("p"), closeSoftKeyboard());
 
         ViewInteraction imageButton = onView(
                 allOf(withId(R.id.btn_add_flat), withContentDescription("Add button"),
@@ -115,6 +115,7 @@ public class AddFlatTest {
         int pink = Color.parseColor("#C20044");
         imageButton.check(matches(buttonShouldHaveBackgroundColor(pink)));
     }
+
 
     @Test
     public void checkAddButtonIsOff() {

@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager.ui.view;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
@@ -149,34 +148,6 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         startActivity(intent);
     }
 
-    @OnClick(R.id.btn_save_flat)
-    public void onClickAddButton() {
-        this.updateFlat();
-        Toast.makeText(getApplicationContext(), R.string.flat_updated, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-    @OnClick(R.id.btn_add_photo)
-    @AfterPermissionGranted(RC_IMAGE_PERMS)
-    public void onClickPhotoButton() {
-        if (!mCaption.getText().toString().equals("")) {
-            String caption = mCaption.getText().toString();
-            if (!EasyPermissions.hasPermissions(this, PERMS)) {
-                EasyPermissions.requestPermissions(this, getString(R.string.permissions_issue), RC_IMAGE_PERMS, PERMS);
-                return;
-            }
-            selectImage(caption);
-        }
-        else {
-            Toast.makeText(getApplicationContext(), R.string.invalid_caption, Toast.LENGTH_LONG).show();
-        }
-    }
-
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("flatPicList", mFlatPicList);
@@ -237,22 +208,16 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         isRotated = true;
     }
 
-    private void checkRecyclerView() {
-        if (mFlatPicList == null || mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
-        else {
-            mFlatPhotosRecyclerView.setVisibility(View.VISIBLE);
-            if (mAdapter == null) this.configureRecyclerView();
-            else mAdapter.notifyDataSetChanged();
-        }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
-    private void configureRecyclerView() {
-        mAdapter = new FlatPicAdapter(mFlatPicList, this, true);
-
-        mFlatPhotosRecyclerView.setHasFixedSize(true);
-        mFlatPhotosRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-        mFlatPhotosRecyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        this.handleResponse(requestCode, resultCode, data);
     }
 
     @Override
@@ -265,10 +230,26 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         if (mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        this.handleResponse(requestCode, resultCode, data);
+    @OnClick(R.id.btn_save_flat)
+    public void onClickAddButton() {
+        this.updateFlat();
+        Toast.makeText(getApplicationContext(), R.string.flat_updated, Toast.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.btn_add_photo)
+    @AfterPermissionGranted(RC_IMAGE_PERMS)
+    public void onClickPhotoButton() {
+        if (!mCaption.getText().toString().equals("")) {
+            String caption = mCaption.getText().toString();
+            if (!EasyPermissions.hasPermissions(this, PERMS)) {
+                EasyPermissions.requestPermissions(this, getString(R.string.permissions_issue), RC_IMAGE_PERMS, PERMS);
+                return;
+            }
+            selectImage(caption);
+        }
+        else {
+            Toast.makeText(getApplicationContext(), R.string.invalid_caption, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void handleResponse(int requestCode, int resultCode, Intent data){
@@ -295,6 +276,90 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
             }
         }
     }
+
+    public String getRealPathFromURI (Uri contentUri) {
+        String path = null;
+        String[] proj = { MediaStore.MediaColumns.DATA };
+        Cursor cursor = this.getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+            path = cursor.getString(column_index);
+        }
+        cursor.close();
+        return path;
+    }
+
+    private void checkRecyclerView() {
+        if (mFlatPicList == null || mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
+        else {
+            mFlatPhotosRecyclerView.setVisibility(View.VISIBLE);
+            if (mAdapter == null) this.configureRecyclerView();
+            else mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void configureRecyclerView() {
+        mAdapter = new FlatPicAdapter(mFlatPicList, this, true);
+
+        mFlatPhotosRecyclerView.setHasFixedSize(true);
+        mFlatPhotosRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        mFlatPhotosRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void configureSpinners() {
+        String[] dataForSpinner = Utils.createDataForFlatTypeSpinners(this);
+        ArrayAdapter adapterSpinnerFlatType = new ArrayAdapter<String>
+                (this, R.layout.spinner_item, dataForSpinner);
+        adapterSpinnerFlatType.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        mFlatType.setAdapter(adapterSpinnerFlatType);
+        ArrayAdapter adapterSpinnerFlatAgent = ArrayAdapter.createFromResource(this, R.array.flat_agent, R.layout.spinner_item);
+        adapterSpinnerFlatAgent.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        mFlatAgent.setAdapter(adapterSpinnerFlatAgent);
+    }
+
+    private void configureToolbar(){
+        setSupportActionBar(mToolbar);
+        ActionBar ab = getSupportActionBar();
+        Objects.requireNonNull(ab).setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(ab).setTitle(R.string.editFlat);
+    }
+
+    private void configureViewModel(){
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
+        this.mFlatViewModel = ViewModelProviders.of(this, mViewModelFactory).get(FlatViewModel.class);
+        this.mFlatViewModel.init(AGENT_ID);
+    }
+
+    private void configureTextWatchers() {
+        mCaption.addTextChangedListener(textWatcher);
+        mSummary.addTextChangedListener(textWatcher);
+        mDescription.addTextChangedListener(textWatcher);
+        mSurface.addTextChangedListener(textWatcher);
+        mPrice.addTextChangedListener(textWatcher);
+        mCity.addTextChangedListener(textWatcher);
+    }
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            // Enable-disable Floating Action Button
+            if (isFormValid()) enableAddFlatButton();
+            else disableAddFlatButton();
+
+            // Enable-disable Photo Button
+            if (mCaption.getText().toString().equals("")) disablePhotoButton();
+            else enablePhotoButton();
+        }
+    };
 
     private void selectImage(String caption) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -386,48 +451,6 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         return image;
     }
 
-    public String getRealPathFromURI (Uri contentUri) {
-        String path = null;
-        String[] proj = { MediaStore.MediaColumns.DATA };
-        Cursor cursor = this.getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-            path = cursor.getString(column_index);
-        }
-        cursor.close();
-        return path;
-    }
-
-    private void configureTextWatchers() {
-        mCaption.addTextChangedListener(textWatcher);
-        mSummary.addTextChangedListener(textWatcher);
-        mDescription.addTextChangedListener(textWatcher);
-        mSurface.addTextChangedListener(textWatcher);
-        mPrice.addTextChangedListener(textWatcher);
-        mCity.addTextChangedListener(textWatcher);
-    }
-
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            // Enable-disable Floating Action Button
-            if (isFormValid()) enableAddFlatButton();
-            else disableAddFlatButton();
-
-            // Enable-disable Photo Button
-            if (mCaption.getText().toString().equals("")) disablePhotoButton();
-            else enablePhotoButton();
-        }
-    };
-
     private void enableAddFlatButton() {
         mBtnEditFlat.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.pink)));
     }
@@ -448,28 +471,27 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         return !mSummary.getText().toString().equals("") && !mDescription.getText().toString().equals("")  && !mSurface.getText().toString().equals("")  && !mPrice.getText().toString().equals("")  && !mCity.getText().toString().equals("");
     }
 
-    private void configureToolbar(){
-        setSupportActionBar(mToolbar);
-        ActionBar ab = getSupportActionBar();
-        Objects.requireNonNull(ab).setDisplayHomeAsUpEnabled(true);
-        Objects.requireNonNull(ab).setTitle(R.string.editFlat);
+    private Integer getNumber(String str) {
+        Integer number;
+        try
+        {number = Integer.parseInt(str);}
+        catch (NumberFormatException e)
+        {number = null;}
+        return number;
     }
 
-    private void configureViewModel(){
-        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
-        this.mFlatViewModel = ViewModelProviders.of(this, mViewModelFactory).get(FlatViewModel.class);
-        this.mFlatViewModel.init(AGENT_ID);
-    }
+    private Address getAddressFromSearchString(String address) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addressList = geocoder.getFromLocationName(address, 1);
 
-    private void configureSpinners() {
-        String[] dataForSpinner = Utils.createDataForFlatTypeSpinners(this);
-        ArrayAdapter adapterSpinnerFlatType = new ArrayAdapter<String>
-                (this, R.layout.spinner_item, dataForSpinner);
-        adapterSpinnerFlatType.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        mFlatType.setAdapter(adapterSpinnerFlatType);
-        ArrayAdapter adapterSpinnerFlatAgent = ArrayAdapter.createFromResource(this, R.array.flat_agent, R.layout.spinner_item);
-        adapterSpinnerFlatAgent.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        mFlatAgent.setAdapter(adapterSpinnerFlatAgent);
+            if (addressList.size() > 0) {
+                return addressList.get(0);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     protected Long getFlatId() {
@@ -586,27 +608,4 @@ public class EditFlatActivity extends AppCompatActivity implements FlatPicAdapte
         mIsModified = false;
     }
 
-    private Integer getNumber(String str) {
-        Integer number;
-        try
-        {number = Integer.parseInt(str);}
-        catch (NumberFormatException e)
-        {number = null;}
-        return number;
-    }
-
-    private Address getAddressFromSearchString(String address) {
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        try {
-            List<Address> addressList = geocoder.getFromLocationName(address, 1);
-
-            if (addressList.size() > 0) {
-                System.out.println("Depuis méthode "+addressList.get(0).getLatitude() + " - " + addressList.get(0).getLongitude());
-                return addressList.get(0);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }

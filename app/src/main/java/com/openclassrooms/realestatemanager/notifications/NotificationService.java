@@ -22,18 +22,15 @@ public class NotificationService {
     public void createNotification(Context context, String summary, long flatId, boolean isTablet) {
         Intent intent;
 
+        Bundle args = new Bundle();
+        args.putLong(FLATID, flatId);
         if (isTablet) {
-            Bundle args = new Bundle();
-            args.putLong(FLATID, flatId);
             args.putInt(SELECTEDFLAT, (int) flatId);
             intent = new Intent(context, MainActivity.class);
-            intent.putExtras(args);
         } else {
-            Bundle args = new Bundle();
-            args.putLong(FLATID, flatId);
             intent = new Intent(context, FlatDetailActivity.class);
-            intent.putExtras(args);
         }
+        intent.putExtras(args);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,  PendingIntent.FLAG_UPDATE_CURRENT);
 

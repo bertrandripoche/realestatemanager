@@ -1,13 +1,10 @@
 package com.openclassrooms.realestatemanager.ui.view;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -31,7 +28,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
-import androidx.exifinterface.media.ExifInterface;
 import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -155,10 +151,46 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         startActivity(intent);
     }
 
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("flatPicList", mFlatPicList);
+        outState.putString("photoTaken", mCurrentPhotoPath);
+        if (mIsDialogDisplayed) {
+            mAlertDialog.cancel();
+            outState.putBoolean("dialogDisplayed", true);
+            outState.putString("caption", mCaption.getText().toString());
+        }
+    }
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mFlatPicList = savedInstanceState.getParcelableArrayList("flatPicList");
+        if (mFlatPicList.size() != 0) checkRecyclerView();
+        mCurrentPhotoPath = savedInstanceState.getString("photoTaken");
+        if (savedInstanceState.getBoolean("dialogDisplayed")) {
+            selectImage(savedInstanceState.getString("caption"));
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        this.handleResponse(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onClickDeleteButton(int position) {
+        Pic pic = mAdapter.getFlatPic(position);
+        Toast.makeText(this, R.string.pic_deleted, Toast.LENGTH_SHORT).show();
+        mFlatPicList.remove(pic);
+        mAdapter.notifyDataSetChanged();
+        if (mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.btn_add_flat)
@@ -185,33 +217,6 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         }
     }
 
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("flatPicList", mFlatPicList);
-        outState.putString("photoTaken", mCurrentPhotoPath);
-        if (mIsDialogDisplayed) {
-            mAlertDialog.cancel();
-            outState.putBoolean("dialogDisplayed", true);
-            outState.putString("caption", mCaption.getText().toString());
-        }
-    }
-
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mFlatPicList = savedInstanceState.getParcelableArrayList("flatPicList");
-        if (mFlatPicList.size() != 0) checkRecyclerView();
-        mCurrentPhotoPath = savedInstanceState.getString("photoTaken");
-        if (savedInstanceState.getBoolean("dialogDisplayed")) {
-            selectImage(savedInstanceState.getString("caption"));
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        this.handleResponse(requestCode, resultCode, data);
-    }
-
     private void handleResponse(int requestCode, int resultCode, Intent data){
         if (requestCode == REQUEST_SELECT_PIC_GALLERY || requestCode == REQUEST_CAMERA_TAKE_PICTURE) {
             if (resultCode == RESULT_OK) {
@@ -222,7 +227,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
                 } else {
                     uriImageSelected = mPhotoURI;
                     mSelectedImagePath = mCurrentPhotoPath;
-                    try {
+                    if (uriImageSelected != null) try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uriImageSelected);
                         bitmap = Utils.handleSamplingAndRotationBitmap(this, uriImageSelected);
                         OutputStream os= this.getContentResolver().openOutputStream(uriImageSelected);
@@ -273,15 +278,6 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         mAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onClickDeleteButton(int position) {
-        Pic pic = mAdapter.getFlatPic(position);
-        Toast.makeText(this, R.string.pic_deleted, Toast.LENGTH_SHORT).show();
-        mFlatPicList.remove(pic);
-        mAdapter.notifyDataSetChanged();
-        if (mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
-    }
-
     private void configureSpinners() {
         String[] dataForSpinner = Utils.createDataForFlatTypeSpinners(this);
         ArrayAdapter adapterSpinnerFlatType = new ArrayAdapter<String>
@@ -292,6 +288,28 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         adapterSpinnerFlatAgent.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mFlatAgent.setAdapter(adapterSpinnerFlatAgent);
 
+    }
+
+    private void configureToolbar(){
+        setSupportActionBar(mToolbar);
+        ActionBar ab = getSupportActionBar();
+        Objects.requireNonNull(ab).setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(ab).setTitle(R.string.addFlat);
+    }
+
+    private void configureViewModel(){
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
+        this.mFlatViewModel = ViewModelProviders.of(this, mViewModelFactory).get(FlatViewModel.class);
+        this.mFlatViewModel.init(AGENT_ID);
+    }
+
+    private void configureTextWatchers() {
+        mCaption.addTextChangedListener(textWatcher);
+        mSummary.addTextChangedListener(textWatcher);
+        mDescription.addTextChangedListener(textWatcher);
+        mSurface.addTextChangedListener(textWatcher);
+        mPrice.addTextChangedListener(textWatcher);
+        mCity.addTextChangedListener(textWatcher);
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
@@ -314,169 +332,6 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
             else enablePhotoButton();
         }
     };
-
-    private void configureToolbar(){
-        setSupportActionBar(mToolbar);
-        ActionBar ab = getSupportActionBar();
-        Objects.requireNonNull(ab).setDisplayHomeAsUpEnabled(true);
-        Objects.requireNonNull(ab).setTitle(R.string.addFlat);
-    }
-
-    private void configureTextWatchers() {
-        mCaption.addTextChangedListener(textWatcher);
-        mSummary.addTextChangedListener(textWatcher);
-        mDescription.addTextChangedListener(textWatcher);
-        mSurface.addTextChangedListener(textWatcher);
-        mPrice.addTextChangedListener(textWatcher);
-        mCity.addTextChangedListener(textWatcher);
-    }
-
-    private void configureViewModel(){
-        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
-        this.mFlatViewModel = ViewModelProviders.of(this, mViewModelFactory).get(FlatViewModel.class);
-        this.mFlatViewModel.init(AGENT_ID);
-    }
-
-    private void createFlat(){
-        String picPath;
-        if (mFlatPicList.size() != 0) picPath = mFlatPicList.get(0).getPicPath();
-        else picPath = "";
-        String summary = this.mSummary.getText().toString();
-        String description = this.mDescription.getText().toString();
-        Integer flatType = this.mFlatType.getSelectedItemPosition();
-        Integer price = getNumber(this.mPrice.getText().toString());
-        Integer surface = getNumber(this.mSurface.getText().toString());
-        Integer room = getNumber(this.mRoomNb.getText().toString());
-        Integer bedroom = getNumber(this.mBedroomNb.getText().toString());
-        Integer bathroom = getNumber(this.mBathroomNb.getText().toString());
-        String street = this.mStreet.getText().toString();
-        String city = Utils.capitalizeFirstLetterOfASingleWord(this.mCity.getText().toString());
-        Integer streetNb = getNumber(this.mStreetNb.getText().toString());
-        Integer postalCode = getNumber(this.mPostalCode.getText().toString());
-
-        String address = Utils.buildAddress(streetNb, this.mStreet.getText().toString(), postalCode, this.mCity.getText().toString());
-        Address flatAddress = getAddressFromSearchString(address);
-
-        Double latitude = (flatAddress == null) ? null : flatAddress.getLatitude();
-        Double longitude = (flatAddress == null) ? null : flatAddress.getLongitude();
-
-        Flat flat = new Flat(
-                picPath,
-                summary,
-                description,
-                flatType,
-                price,
-                surface,
-                room,
-                bedroom,
-                bathroom,
-                streetNb,
-                street,
-                postalCode,
-                city,
-                latitude,
-                longitude,
-                mSchool.isChecked(),
-                mPostOffice.isChecked(),
-                mRestaurant.isChecked(),
-                mTheater.isChecked(),
-                mShop.isChecked(),
-                AGENT_ID);
-
-        this.mFlatViewModel.createFlat(this, flat, mFlatPicList, mIsTablet);
-        cleanForm();
-    }
-
-    private void cleanForm() {
-        Toast.makeText(getApplicationContext(), R.string.flat_saved, Toast.LENGTH_LONG).show();
-        emptyFields();
-        disableAddFlatButton();
-        mFlatPicList = new ArrayList();
-        checkRecyclerView();
-    }
-
-    private void emptyFields() {
-        mFlatType.setSelection(0,true);
-        mCaption.setText("");
-        mSummary.setText("");
-        mDescription.setText("");
-        mSurface.setText("");
-        mRoomNb.setText("");
-        mBedroomNb.setText("");
-        mBathroomNb.setText("");
-        mPrice.setText("");
-        mStreetNb.setText("");
-        mStreet.setText("");
-        mPostalCode.setText("");
-        mCity.setText("");
-        mSchool.setChecked(false);
-        mPostOffice.setChecked(false);
-        mRestaurant.setChecked(false);
-        mTheater.setChecked(false);
-        mShop.setChecked(false);
-        mFlatAgent.setSelection(0,true);
-    }
-
-    private void enableAddFlatButton() {
-        mBtnAddFlat.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.pink)));
-    }
-
-    private void disableAddFlatButton() {
-        mBtnAddFlat.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_grey)));
-    }
-
-    private void enablePhotoButton() {
-        mBtnCaption.setImageResource(R.drawable.ic_add_photo);
-    }
-
-    private void disablePhotoButton() {
-        mBtnCaption.setImageResource(R.drawable.ic_add_photo_off);
-    }
-
-    private boolean isFormValid() {
-        return !mSummary.getText().toString().equals("") && !mDescription.getText().toString().equals("")  && !mSurface.getText().toString().equals("")  && !mPrice.getText().toString().equals("")  && !mCity.getText().toString().equals("");
-    }
-
-    private Integer getNumber(String str) {
-        Integer number;
-        try
-            {number = Integer.parseInt(str);}
-        catch (NumberFormatException e)
-            {number = null;}
-        return number;
-    }
-
-    private Address getAddressFromSearchString(String address) {
-        Geocoder geocoder = new Geocoder(this, Locale.FRANCE);
-        try {
-            List<Address> addressList = geocoder.getFromLocationName(address, 1);
-
-            if (addressList.size() > 0) {
-                return addressList.get(0);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    protected Long getFlatId() {
-        Long flatId = -1L;
-        Intent i = getIntent();
-        if (i != null && i.getExtras() != null) {
-            flatId = i.getExtras().getLong(FLATID);
-        }
-        return flatId;
-    }
-
-    protected int getSelectedFlat() {
-        int selectedFlat = -1;
-        Intent i = getIntent();
-        if (i != null && i.getExtras() != null) {
-            selectedFlat = i.getExtras().getInt(SELECTEDFLAT);
-        }
-        return selectedFlat;
-    }
 
     private void selectImage(String caption) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -567,6 +422,147 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         mCurrentPhotoPath = image.getAbsolutePath();
 
         return image;
+    }
+
+    private void enableAddFlatButton() {
+        mBtnAddFlat.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.pink)));
+    }
+
+    private void disableAddFlatButton() {
+        mBtnAddFlat.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_grey)));
+    }
+
+    private void enablePhotoButton() {
+        mBtnCaption.setImageResource(R.drawable.ic_add_photo);
+    }
+
+    private void disablePhotoButton() {
+        mBtnCaption.setImageResource(R.drawable.ic_add_photo_off);
+    }
+
+    private boolean isFormValid() {
+        return !mSummary.getText().toString().equals("") && !mDescription.getText().toString().equals("")  && !mSurface.getText().toString().equals("")  && !mPrice.getText().toString().equals("")  && !mCity.getText().toString().equals("");
+    }
+
+    private Integer getNumber(String str) {
+        Integer number;
+        try
+        {number = Integer.parseInt(str);}
+        catch (NumberFormatException e)
+        {number = null;}
+        return number;
+    }
+
+    private Address getAddressFromSearchString(String address) {
+        Geocoder geocoder = new Geocoder(this, Locale.FRANCE);
+        try {
+            List<Address> addressList = geocoder.getFromLocationName(address, 1);
+
+            if (addressList.size() > 0) {
+                return addressList.get(0);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    protected Long getFlatId() {
+        Long flatId = -1L;
+        Intent i = getIntent();
+        if (i != null && i.getExtras() != null) {
+            flatId = i.getExtras().getLong(FLATID);
+        }
+        return flatId;
+    }
+
+    protected int getSelectedFlat() {
+        int selectedFlat = -1;
+        Intent i = getIntent();
+        if (i != null && i.getExtras() != null) {
+            selectedFlat = i.getExtras().getInt(SELECTEDFLAT);
+        }
+        return selectedFlat;
+    }
+
+    private void cleanForm() {
+        Toast.makeText(getApplicationContext(), R.string.flat_saved, Toast.LENGTH_LONG).show();
+        emptyFields();
+        disableAddFlatButton();
+        mFlatPicList = new ArrayList();
+        checkRecyclerView();
+    }
+
+    private void emptyFields() {
+        mFlatType.setSelection(0,true);
+        mCaption.setText("");
+        mSummary.setText("");
+        mDescription.setText("");
+        mSurface.setText("");
+        mRoomNb.setText("");
+        mBedroomNb.setText("");
+        mBathroomNb.setText("");
+        mPrice.setText("");
+        mStreetNb.setText("");
+        mStreet.setText("");
+        mPostalCode.setText("");
+        mCity.setText("");
+        mSchool.setChecked(false);
+        mPostOffice.setChecked(false);
+        mRestaurant.setChecked(false);
+        mTheater.setChecked(false);
+        mShop.setChecked(false);
+        mFlatAgent.setSelection(0,true);
+    }
+
+    private void createFlat(){
+        String picPath;
+        if (mFlatPicList.size() != 0) picPath = mFlatPicList.get(0).getPicPath();
+        else picPath = "";
+        String summary = this.mSummary.getText().toString();
+        String description = this.mDescription.getText().toString();
+        Integer flatType = this.mFlatType.getSelectedItemPosition();
+        Integer price = getNumber(this.mPrice.getText().toString());
+        Integer surface = getNumber(this.mSurface.getText().toString());
+        Integer room = getNumber(this.mRoomNb.getText().toString());
+        Integer bedroom = getNumber(this.mBedroomNb.getText().toString());
+        Integer bathroom = getNumber(this.mBathroomNb.getText().toString());
+        String street = this.mStreet.getText().toString();
+        String city = Utils.capitalizeFirstLetterOfASingleWord(this.mCity.getText().toString());
+        Integer streetNb = getNumber(this.mStreetNb.getText().toString());
+        Integer postalCode = getNumber(this.mPostalCode.getText().toString());
+
+        String address = Utils.buildAddress(streetNb, this.mStreet.getText().toString(), postalCode, this.mCity.getText().toString());
+        Address flatAddress = getAddressFromSearchString(address);
+
+        Double latitude = (flatAddress == null) ? null : flatAddress.getLatitude();
+        Double longitude = (flatAddress == null) ? null : flatAddress.getLongitude();
+
+        Flat flat = new Flat(
+                picPath,
+                summary,
+                description,
+                flatType,
+                price,
+                surface,
+                room,
+                bedroom,
+                bathroom,
+                streetNb,
+                street,
+                postalCode,
+                city,
+                latitude,
+                longitude,
+                mSchool.isChecked(),
+                mPostOffice.isChecked(),
+                mRestaurant.isChecked(),
+                mTheater.isChecked(),
+                mShop.isChecked(),
+                AGENT_ID);
+
+        this.mFlatViewModel.createFlat(this, flat, mFlatPicList, mIsTablet);
+        cleanForm();
     }
 
 }
