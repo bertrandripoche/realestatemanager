@@ -1,39 +1,23 @@
 package com.openclassrooms.realestatemanager.ui.view;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.openclassrooms.realestatemanager.utils.UriTypeConverter;
 import com.openclassrooms.realestatemanager.viewmodel.FlatViewModel;
 import com.openclassrooms.realestatemanager.ui.recyclerview.FlatPicAdapter;
 import com.openclassrooms.realestatemanager.R;
@@ -44,15 +28,11 @@ import com.openclassrooms.realestatemanager.model.Pic;
 import com.openclassrooms.realestatemanager.notifications.NotificationService;
 import com.openclassrooms.realestatemanager.utils.Utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,57 +40,10 @@ import butterknife.OnClick;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter.Listener {
-    @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.flat_photos_list_recycler_view) RecyclerView mFlatPhotosRecyclerView;
+public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapter.Listener, FloatButtonActions {
     @BindView(R.id.btn_add_flat) FloatingActionButton mBtnAddFlat;
-    @BindView(R.id.edit_photo_caption) EditText mCaption;
-    @BindView(R.id.btn_add_photo) ImageButton mBtnCaption;
-    @BindView(R.id.edit_flat_type) Spinner mFlatType;
-    @BindView(R.id.edit_summary) EditText mSummary;
-    @BindView(R.id.edit_description) EditText mDescription;
-    @BindView(R.id.edit_surface) EditText mSurface;
-    @BindView(R.id.edit_room) EditText mRoomNb;
-    @BindView(R.id.edit_bedroom) EditText mBedroomNb;
-    @BindView(R.id.edit_bathroom) EditText mBathroomNb;
-    @BindView(R.id.edit_price) EditText mPrice;
-    @BindView(R.id.edit_street_nb) EditText mStreetNb;
-    @BindView(R.id.edit_street) EditText mStreet;
-    @BindView(R.id.edit_postal_code) EditText mPostalCode;
-    @BindView(R.id.edit_city) EditText mCity;
-    @BindView(R.id.edit_school_switch) SwitchCompat mSchool;
-    @BindView(R.id.edit_post_office_switch) SwitchCompat mPostOffice;
-    @BindView(R.id.edit_restaurant_switch) SwitchCompat mRestaurant;
-    @BindView(R.id.edit_theater_switch) SwitchCompat mTheater;
-    @BindView(R.id.edit_shop_switch) SwitchCompat mShop;
-    @BindView(R.id.edit_flat_agent) Spinner mFlatAgent;
 
-    private FlatViewModel mFlatViewModel;
-    private Long mFlatId;
-    private Uri uriImageSelected;
-    private Uri mPhotoURI;
-    private String mCurrentPhotoPath;
-    private String mSelectedImagePath;
-    private ArrayList<Pic> mFlatPicList = new ArrayList();
-    private FlatPicAdapter mAdapter;
-    private View mPopupPhotoChoiceView = null;
-    private TextView mPopupPhotoChoiceTitle;
-    private Button mBtnGallery;
-    private Button mBtnTakePicture;
-    private Button mBtnCancel;
-    private AlertDialog mAlertDialog;
-    private boolean mIsDialogDisplayed = false;
     private boolean mIsTablet;
-
-    private int mSelectedFlat = -1;
-    private static int AGENT_ID = 0;
-    final String FLATID = "flatId";
-    final String SELECTEDFLAT = "selectedFlat";
-    private static final int REQUEST_CAMERA_TAKE_PICTURE = 0;
-    private static final int REQUEST_SELECT_PIC_GALLERY = 1;
-    private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
-    private static final int RC_IMAGE_PERMS = 100;
-
     private NotificationService mNotificationService = new NotificationService();
 
     public AddFlatActivity() {
@@ -123,11 +56,11 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         ButterKnife.bind(this);
         mIsTablet = getResources().getBoolean(R.bool.isTablet);
 
-        this.configureToolbar();
-        this.configureViewModel();
-        this.configureSpinners();
-        this.configureTextWatchers();
-        this.checkRecyclerView();
+        configureToolbar();
+        configureViewModel();
+        configureSpinners();
+        configureTextWatchers();
+        checkRecyclerView();
 
         mFlatId = getFlatId();
         mSelectedFlat = getSelectedFlat();
@@ -160,6 +93,10 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
             outState.putBoolean("dialogDisplayed", true);
             outState.putString("caption", mCaption.getText().toString());
         }
+        if (mPhotoURI != null) {
+            String uriInStringFormat = UriTypeConverter.toString(mPhotoURI);
+            outState.putString("uri", uriInStringFormat);
+        }
     }
 
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -170,6 +107,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         if (savedInstanceState.getBoolean("dialogDisplayed")) {
             selectImage(savedInstanceState.getString("caption"));
         }
+        mPhotoURI = savedInstanceState.getString("uri") == null ? null : UriTypeConverter.toUri(savedInstanceState.getString("uri"));
     }
 
     @Override
@@ -222,22 +160,22 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
             if (resultCode == RESULT_OK) {
                 mSelectedImagePath = "";
                 if (requestCode == REQUEST_SELECT_PIC_GALLERY) {
-                    uriImageSelected = data.getData();
-                    mSelectedImagePath = getRealPathFromURI(uriImageSelected);
+                    mUriImageSelected = data.getData();
+                    mSelectedImagePath = getRealPathFromURI(mUriImageSelected);
                 } else {
-                    uriImageSelected = mPhotoURI;
+                    mUriImageSelected = mPhotoURI;
                     mSelectedImagePath = mCurrentPhotoPath;
-                    if (uriImageSelected != null) try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uriImageSelected);
-                        bitmap = Utils.handleSamplingAndRotationBitmap(this, uriImageSelected);
-                        OutputStream os= this.getContentResolver().openOutputStream(uriImageSelected);
+                    if (mUriImageSelected != null) try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mUriImageSelected);
+                        bitmap = Utils.handleSamplingAndRotationBitmap(this, mUriImageSelected);
+                        OutputStream os= this.getContentResolver().openOutputStream(mUriImageSelected);
                         bitmap.compress(Bitmap.CompressFormat.PNG,100,os);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
 
-                Pic pic = new Pic(uriImageSelected, mSelectedImagePath, mCaption.getText().toString(), 0);
+                Pic pic = new Pic(mUriImageSelected, mSelectedImagePath, mCaption.getText().toString(), 0);
                 mFlatPicList.add(pic);
 
                 Toast.makeText(this, R.string.picture_saved, Toast.LENGTH_SHORT).show();
@@ -249,23 +187,12 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         }
     }
 
-    public String getRealPathFromURI (Uri contentUri) {
-        String path = null;
-        String[] proj = { MediaStore.MediaColumns.DATA };
-        Cursor cursor = this.getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-            path = cursor.getString(column_index);
-        }
-        cursor.close();
-        return path;
-    }
-
     private void checkRecyclerView() {
         if (mFlatPicList == null || mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
         else {
             mFlatPhotosRecyclerView.setVisibility(View.VISIBLE);
-            this.configureRecyclerView();
+            if (mAdapter == null) this.configureRecyclerView();
+            else mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -276,25 +203,6 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         mFlatPhotosRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mFlatPhotosRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-    }
-
-    private void configureSpinners() {
-        String[] dataForSpinner = Utils.createDataForFlatTypeSpinners(this);
-        ArrayAdapter adapterSpinnerFlatType = new ArrayAdapter<String>
-                (this, R.layout.spinner_item, dataForSpinner);
-        adapterSpinnerFlatType.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        mFlatType.setAdapter(adapterSpinnerFlatType);
-        ArrayAdapter adapterSpinnerFlatAgent = ArrayAdapter.createFromResource(this, R.array.flat_agent, R.layout.spinner_item);
-        adapterSpinnerFlatAgent.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        mFlatAgent.setAdapter(adapterSpinnerFlatAgent);
-
-    }
-
-    private void configureToolbar(){
-        setSupportActionBar(mToolbar);
-        ActionBar ab = getSupportActionBar();
-        Objects.requireNonNull(ab).setDisplayHomeAsUpEnabled(true);
-        Objects.requireNonNull(ab).setTitle(R.string.addFlat);
     }
 
     private void configureViewModel(){
@@ -324,8 +232,8 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         @Override
         public void afterTextChanged(Editable s) {
             // Enable-disable Floating Action Button
-            if (isFormValid()) enableAddFlatButton();
-            else disableAddFlatButton();
+            if (isFormValid()) enableFloatButton();
+            else disableFloatButton();
 
             // Enable-disable Photo Button
             if (mCaption.getText().toString().equals("")) disablePhotoButton();
@@ -333,115 +241,12 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         }
     };
 
-    private void selectImage(String caption) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setCancelable(false);
-
-        initPopupViewControls();
-        alertDialogBuilder.setView(mPopupPhotoChoiceView);
-        mPopupPhotoChoiceTitle.setText(getString(R.string.add_photo, caption));
-
-        mAlertDialog = alertDialogBuilder.create();
-        mAlertDialog.show();
-        mIsDialogDisplayed = true;
-
-        mBtnGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAlertDialog.cancel();
-                mIsDialogDisplayed = false;
-                galleryIntent();
-            }
-        });
-
-        mBtnTakePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAlertDialog.cancel();
-                mIsDialogDisplayed = false;
-                cameraIntent();
-            }
-        });
-
-        mBtnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mIsDialogDisplayed = false;
-                mAlertDialog.cancel();
-            }
-        });
-    }
-
-    private void initPopupViewControls() {
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
-
-        mPopupPhotoChoiceView = layoutInflater.inflate(R.layout.popup_photo_choice, null);
-
-        mPopupPhotoChoiceTitle = mPopupPhotoChoiceView.findViewById(R.id.popup_photo_choice_title);
-        mBtnGallery  = mPopupPhotoChoiceView.findViewById(R.id.btn_gallery);
-        mBtnTakePicture = mPopupPhotoChoiceView.findViewById(R.id.btn_take_picture);
-        mBtnCancel= mPopupPhotoChoiceView.findViewById(R.id.btn_cancel);
-    }
-
-    private void galleryIntent() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        String[] mimeTypes = {"image/jpeg", "image/png"};
-        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
-        intent.setAction(Intent.ACTION_GET_CONTENT);//
-        startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_SELECT_PIC_GALLERY);
-    }
-
-    private void cameraIntent() {
-
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                System.out.println("Error in cameraIntent");
-            }
-
-            if (photoFile != null) {
-                mPhotoURI = FileProvider.getUriForFile(this,
-                        "com.openclassrooms.realestatemanager.fileprovider",
-                        photoFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoURI);
-                startActivityForResult(intent, REQUEST_CAMERA_TAKE_PICTURE);
-            }
-        }
-    }
-
-    private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-
-        mCurrentPhotoPath = image.getAbsolutePath();
-
-        return image;
-    }
-
-    private void enableAddFlatButton() {
+    public void enableFloatButton() {
         mBtnAddFlat.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.pink)));
     }
 
-    private void disableAddFlatButton() {
+    public void disableFloatButton() {
         mBtnAddFlat.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_grey)));
-    }
-
-    private void enablePhotoButton() {
-        mBtnCaption.setImageResource(R.drawable.ic_add_photo);
-    }
-
-    private void disablePhotoButton() {
-        mBtnCaption.setImageResource(R.drawable.ic_add_photo_off);
-    }
-
-    private boolean isFormValid() {
-        return !mSummary.getText().toString().equals("") && !mDescription.getText().toString().equals("")  && !mSurface.getText().toString().equals("")  && !mPrice.getText().toString().equals("")  && !mCity.getText().toString().equals("");
     }
 
     private Integer getNumber(String str) {
@@ -488,7 +293,7 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
     private void cleanForm() {
         Toast.makeText(getApplicationContext(), R.string.flat_saved, Toast.LENGTH_LONG).show();
         emptyFields();
-        disableAddFlatButton();
+        disableFloatButton();
         mFlatPicList = new ArrayList();
         checkRecyclerView();
     }
@@ -535,8 +340,8 @@ public class AddFlatActivity extends AppCompatActivity implements FlatPicAdapter
         String address = Utils.buildAddress(streetNb, this.mStreet.getText().toString(), postalCode, this.mCity.getText().toString());
         Address flatAddress = getAddressFromSearchString(address);
 
-        Double latitude = (flatAddress == null) ? null : flatAddress.getLatitude();
-        Double longitude = (flatAddress == null) ? null : flatAddress.getLongitude();
+        Double latitude = (flatAddress == null) ? 0 : flatAddress.getLatitude();
+        Double longitude = (flatAddress == null) ? 0 : flatAddress.getLongitude();
 
         Flat flat = new Flat(
                 picPath,

@@ -17,22 +17,25 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BaseActivity extends AppCompatActivity {
+    @BindView(R.id.toolbar) Toolbar mToolbar;
+
     private static final String LIST = "List";
     private static final String DETAIL = "Detail";
     private static final String SEARCH = "Search";
-    @BindView(R.id.toolbar) Toolbar mToolbar;
+    final String FLATID = "flatId";
+    final String SELECTEDFLAT = "selectedFlat";
+
     MenuItem mEditBtn;
     MenuItem mListBtn;
     MenuItem mMapBtn;
     MenuItem mSearchBtn;
+    FlatListFragment mFlatListFragment;
     FlatDetailFragment mFlatDetailFragment;
     SearchFragment mSearchFragment;
+
     boolean mIsTablet;
     protected Long mFlatId = -1L;
     protected int mSelectedFlat = -1;
-    final String FLATID = "flatId";
-    final String SELECTEDFLAT = "selectedFlat";
-    private FlatListFragment mFlatListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
