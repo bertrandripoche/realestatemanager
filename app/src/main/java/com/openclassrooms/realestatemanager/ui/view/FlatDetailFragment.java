@@ -142,11 +142,20 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
         else flatSold();
     }
 
+    /**
+     * Action when clicking on Loan button
+     */
     @OnClick(R.id.btn_loan)
     public void onClickLoanButton() {
         createLoanAlertDialog(0,0,0);
     }
 
+    /**
+     * Create the loan alertDialog popup
+     * @param contribution is the
+     * @param rate
+     * @param duration
+     */
     private void createLoanAlertDialog(int contribution, double rate, int duration) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setCancelable(false);
@@ -196,6 +205,9 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
         });
     }
 
+    /**
+     * Allows to display the popup to choose the picture action
+     */
     private void initPopupViewControls() {
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
 
@@ -210,36 +222,53 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
         mBtnCloseLoan = mPopupInputDialogView.findViewById(R.id.btn_loan_close);
     }
 
-
+    /**
+     * Make the flat sold in database and on screen
+     */
     private void flatSold() {
         String soldDate = Utils.getTodayDate();
         mFlatViewModel.updateSoldFlat(mFlat.getId(), soldDate);
         disableSoldBtn();
     }
 
+    /**
+     * Make the flat not sold in database and on screen
+     */
     private void flatNotSold() {
         mFlatViewModel.updateNotSoldFlat(mFlat.getId());
         enableSoldBtn();
     }
 
+    /**
+     * Make the sold button active
+     */
     private void enableSoldBtn() {
         mBtnIsSold.setBackground(getResources().getDrawable(R.drawable.rounded_button));
         mBtnIsSold.setText(R.string.is_it_sold);
         mAvailable_from.setText(getString(R.string.available_date, mFlat.getAvailableDate()));
     }
 
+    /**
+     * Make the sold button disabled
+     */
     private void disableSoldBtn() {
         mBtnIsSold.setBackground(getResources().getDrawable(R.drawable.rounded_button_off));
         mBtnIsSold.setText(R.string.sold);
         mAvailable_from.setText(getString(R.string.sold_date, mFlat.getSoldDate()));
     }
 
+    /**
+     * Configure the viewModel
+     */
     private void configureViewModel() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getContext());
         this.mFlatViewModel = ViewModelProviders.of(this, mViewModelFactory).get(FlatViewModel.class);
         this.mFlatViewModel.init(AGENT_ID);
     }
 
+    /**
+     * Get the flatId from bundle
+     */
     protected Long getFlatId() {
         Long flatId;
         final String FLATID = "flatId";
@@ -252,10 +281,16 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
         }return flatId;
     }
 
+    /**
+     * Get flat information from flatId
+     */
     private void getFlat(long flatId) {
         this.mFlatViewModel.getFlatFromId(flatId).observe(this, this::populateData);
     }
 
+    /**
+     * Populate the page with flat information
+     */
     private void populateData(Flat flat) {
         mFlat = flat;
         if (mFlat != null) {
@@ -310,10 +345,18 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
         }
     }
 
+    /**
+     * Get flat pics from database and display them
+     * @param flatId is the id of the flat from which we get the pics
+     */
     private void getPics(int flatId) {
         this.mFlatViewModel.getPicsFromFlat(flatId).observe(this, this::displayPics);
     }
 
+    /**
+     * Display the flat pics in a recyclerView
+     * @param pics is the list of pics to display
+     */
     private void displayPics(List<Pic> pics) {
         if (pics.size() != 0) {
             mFlatPicList = pics;
@@ -322,6 +365,9 @@ public class FlatDetailFragment extends Fragment  implements OnMapReadyCallback 
         }
     }
 
+    /**
+     * Configure the recyclerView
+     */
     private void configureRecyclerView() {
         final int orientation = getResources().getInteger(R.integer.gallery_pic_orientation);
 

@@ -4,14 +4,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.Button;
 
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.viewmodel.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
 import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FlatDetailActivity extends BaseActivity {
@@ -34,10 +32,8 @@ public class FlatDetailActivity extends BaseActivity {
         configureViewModel();
 
         mExtras = getBundle();
-        mFlatId = getTagIdFromBundle();
+        mFlatId = getFlatIdFromBundle();
 
-//        loadFragment(new FlatDetailFragment(), R.id.container_fragment_flat_detail);
-//        configureFragment(new FlatDetailFragment(), R.id.container_fragment_flat_detail, DETAIL);
         configureAndShowFlatDetailFragment();
     }
 
@@ -53,15 +49,26 @@ public class FlatDetailActivity extends BaseActivity {
         return true;
     }
 
+    /**
+     * Get the bundle
+     * @return Bundle
+     */
     private Bundle getBundle() {
         return this.getIntent().getExtras();
     }
 
-    private Long getTagIdFromBundle() {
+    /**
+     * Get flatId from bundle
+     * @return a Long which is the flatId
+     */
+    private Long getFlatIdFromBundle() {
         if (mExtras.get(FLATID) != null) return (Long) mExtras.get(FLATID);
         else return null;
     }
 
+    /**
+     * Configure the viewModel
+     */
     private void configureViewModel() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         this.mFlatViewModel = ViewModelProviders.of(this, mViewModelFactory).get(FlatViewModel.class);

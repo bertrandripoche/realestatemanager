@@ -153,6 +153,19 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    /**
+     * Method to configure the textWatchers on the fields which requires it
+     */
+    private void configureTextWatchers() {
+        mAvailableDateMin.addTextChangedListener(textWatcher);
+        mAvailableDateMax.addTextChangedListener(textWatcher);
+        mSoldDateMin.addTextChangedListener(textWatcher);
+        mSoldDateMax.addTextChangedListener(textWatcher);
+    }
+
+    /**
+     * Method to describe the actions to do on text writing
+     */
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -170,13 +183,9 @@ public class SearchFragment extends Fragment {
         }
     };
 
-    private void configureTextWatchers() {
-        mAvailableDateMin.addTextChangedListener(textWatcher);
-        mAvailableDateMax.addTextChangedListener(textWatcher);
-        mSoldDateMin.addTextChangedListener(textWatcher);
-        mSoldDateMax.addTextChangedListener(textWatcher);
-    }
-
+    /**
+     * Modify the form if needed when click on OnSale switch
+     */
     @OnClick(R.id.filter_on_sale_switch)
     public void onClickOnSaleOnlyButton() {
         if (mSoldOnly.isChecked()) {
@@ -186,16 +195,21 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    /**
+     * Modify the form if needed when click on Sold switch
+     */
     @OnClick(R.id.filter_sold_switch)
     public void onClickSoldOnlyButton() {
         if (mOnSaleOnly.isChecked()) mOnSaleOnly.setChecked(false);
     }
 
+    /**
+     * Modify the form if needed when click on OnSale switch
+     */
     @OnClick(R.id.btn_search)
     public void onClickSearchButton() {
         if (checkFormValidity()) {
             String mySQLQuery = createSQLQuery();
-System.out.println("Ma query : "+mySQLQuery);
 
             if (!mySQLQuery.equals(ORIGINAL_SQL_QUERY)) startSearchDisplayOnMainActivity(mySQLQuery);
             else Toast.makeText(getContext(), R.string.warning_no_filter_filled,Toast.LENGTH_SHORT).show();
@@ -203,6 +217,10 @@ System.out.println("Ma query : "+mySQLQuery);
         else Toast.makeText(getContext(), R.string.warning_wrong_form,Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Start activity to get the result of the query
+     * @param query is the SQL query get from the form
+     */
     private void startSearchDisplayOnMainActivity(String query) {
         final String QUERY = "Query";
         Bundle args = new Bundle();
@@ -212,6 +230,10 @@ System.out.println("Ma query : "+mySQLQuery);
         startActivity(intent);
     }
 
+    /**
+     * Create the SQL query from the form
+     * @return the query as a String
+     */
     private String createSQLQuery() {
         boolean isFirstFilter = true;
         String mySQLQuery = ORIGINAL_SQL_QUERY;
@@ -291,6 +313,10 @@ System.out.println("Ma query : "+mySQLQuery);
         return mySQLQuery;
     }
 
+    /**
+     * Validate form validity
+     * @return true if the form is valid
+     */
     private boolean checkFormValidity() {
         boolean isValid = true;
 
@@ -318,6 +344,9 @@ System.out.println("Ma query : "+mySQLQuery);
         return isValid;
     }
 
+    /**
+     * Configure the seekbars
+     */
     private void configureSeekBar() {
         mPriceRangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
             @Override

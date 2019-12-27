@@ -34,7 +34,7 @@ public class BaseActivity extends AppCompatActivity {
     SearchFragment mSearchFragment;
 
     boolean mIsTablet;
-    protected Long mFlatId = -1L;
+    protected Long mFlatId = null;
     protected int mSelectedFlat = -1;
 
     @Override
@@ -87,6 +87,10 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Start activities from button
+     * @param activity is a string representing the activity
+     */
     protected void launchActivity(String activity) {
         Class myClass;
 
@@ -95,23 +99,23 @@ public class BaseActivity extends AppCompatActivity {
                 myClass = FlatDetailActivity.class;
                 break;
             case "AddFlatActivity":
-                mFlatId = createBundleWithFlatId(mFlatId, FLATID);
+                mFlatId = createBundleWithFlatId(mFlatId);
                 myClass = AddFlatActivity.class;
                 break;
             case "EditFlatActivity":
-                mFlatId = createBundleWithFlatId(mFlatId, FLATID);
+                mFlatId = createBundleWithFlatId(mFlatId);
                 myClass = EditFlatActivity.class;
                 break;
             case "MapActivity":
-                mFlatId = createBundleWithFlatId(mFlatId, FLATID);
+                mFlatId = createBundleWithFlatId(mFlatId);
                 myClass = MapActivity.class;
                 break;
             case "MainActivity":
-                mFlatId = createBundleWithFlatId(mFlatId, FLATID);
+                mFlatId = createBundleWithFlatId(mFlatId);
                 myClass = MainActivity.class;
                 break;
             case "SearchActivity":
-                mFlatId = createBundleWithFlatId(mFlatId, FLATID);
+                mFlatId = createBundleWithFlatId(mFlatId);
                 myClass = SearchActivity.class;
                 break;
             default:
@@ -127,6 +131,11 @@ public class BaseActivity extends AppCompatActivity {
         this.startActivity(myIntent);
     }
 
+    /**
+     * Load fragment
+     * @param fragment the fragment to load
+     * @param container the container where to load the fragment
+     */
     protected void loadFragment(Fragment fragment, int container) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(container, fragment);
@@ -134,6 +143,12 @@ public class BaseActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    /**
+     * Configure fragment
+     * @param fragment the fragment to configure
+     * @param container the container where to load the fragment
+     * @param type is the type of fragment to configure
+     */
     protected void configureFragment(Fragment fragment, int container, String type) {
         fragment =  getSupportFragmentManager().findFragmentById(container);
 
@@ -171,6 +186,9 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Configure the flatDetail fragment
+     */
     protected void configureAndShowFlatDetailFragment(){
         mFlatDetailFragment = (FlatDetailFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_detail);
         if (mFlatDetailFragment == null && findViewById(R.id.container_fragment_flat_detail) != null) {
@@ -181,6 +199,9 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Configure the searchDetail fragment
+     */
     protected void configureAndShowSearchFragment(){
         mSearchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_search);
         if (mSearchFragment == null && findViewById(R.id.container_fragment_search) != null) {
@@ -191,23 +212,52 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Configure the toolbar
+     */
     protected void configureToolbar(){
         setSupportActionBar(mToolbar);
     }
 
+    /**
+     * Hide the list button
+     */
     protected void hideListBtn() {if (mListBtn != null) mListBtn.setVisible(false);}
+    /**
+     * Display the list button
+     */
     protected void displayListBtn() {if (mListBtn != null) mListBtn.setVisible(true);}
-
+    /**
+     * Hide the map button
+     */
     protected void hideMapBtn() {if (mMapBtn != null) mMapBtn.setVisible(false);}
+    /**
+     * Display the map button
+     */
     protected void displayMapBtn() {if (mMapBtn != null) mMapBtn.setVisible(true);}
-
+    /**
+     * Hide the edit button
+     */
     protected void hideEditBtn() {if (mEditBtn != null) mEditBtn.setVisible(false);}
+    /**
+     * Display the edit button
+     */
     protected void displayEditBtn() {if (mEditBtn != null) mEditBtn.setVisible(true);}
-
+    /**
+     * Hide the search button
+     */
     protected void hideSearchBtn() {if (mSearchBtn != null) mSearchBtn.setVisible(false);}
+    /**
+     * Display the search button
+     */
     protected void displaySearchBtn() {if (mSearchBtn != null) mSearchBtn.setVisible(true);}
 
-    protected Long createBundleWithFlatId(Long flatId, String FLATID) {
+    /**
+     * Create a bundle with the flatId
+     * @param flatId is the flatId
+     * @return
+     */
+    protected Long createBundleWithFlatId(Long flatId) {
         if (mFlatDetailFragment != null) flatId = mFlatDetailFragment.getFlatId();
         else {
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -220,5 +270,4 @@ public class BaseActivity extends AppCompatActivity {
         }
         return flatId;
     }
-
 }

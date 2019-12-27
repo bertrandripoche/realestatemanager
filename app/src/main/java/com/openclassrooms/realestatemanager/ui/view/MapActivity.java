@@ -101,7 +101,6 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMyLocationC
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.setOnMyLocationButtonClickListener(this);
 
-//        updateLocationUI();
         setMyLocationEnabled();
         getDeviceLocation();
         mMap.setOnMyLocationClickListener(this);
@@ -153,16 +152,26 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMyLocationC
         }
     }
 
+    /**
+     * Configure the viewModel
+     */
     private void configureViewModel() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         this.mFlatViewModel = ViewModelProviders.of(this, mViewModelFactory).get(FlatViewModel.class);
         this.mFlatViewModel.init(AGENT_ID);
     }
 
+    /**
+     * Get the flats from the database
+     */
     private void getFlats() {
         this.mFlatViewModel.getFlats().observe(this, this::updateFlatsList);
     }
 
+    /**
+     * Update flat list
+     * @param flats the new list of flats
+     */
     private void updateFlatsList(List<Flat> flats){
         mFlatList = flats;
 
@@ -206,6 +215,10 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMyLocationC
         });
     }
 
+    /**
+     * Move the Compass button
+     * @param mapView is the view on which the button needs to be moved
+     */
     private void moveCompassButton(View mapView) {
         try {
             assert mapView != null; // skip this if the mapView has not been set yet
@@ -232,6 +245,5 @@ public class MapActivity extends BaseActivity implements GoogleMap.OnMyLocationC
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
-
     }
 }

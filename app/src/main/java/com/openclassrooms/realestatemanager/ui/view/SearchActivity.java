@@ -14,17 +14,9 @@ import com.openclassrooms.realestatemanager.injections.ViewModelFactory;
 
 import java.util.Objects;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SearchActivity extends BaseActivity {
-    private static final String SEARCH = "Search";
-    final String FLATID = "flatId";
-    public Long mFlatId;
-    private Bundle mExtras;
-    private FlatViewModel mFlatViewModel;
-    private static int AGENT_ID = 0;
-    private SearchFragment mSearchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +25,6 @@ public class SearchActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         configureToolbar();
-//        loadFragment(new SearchFragment(), R.id.container_fragment_search);
-        //configureFragment(new SearchFragment(), R.id.container_fragment_search, SEARCH);
         configureAndShowSearchFragment();
     }
 
@@ -51,28 +41,4 @@ public class SearchActivity extends BaseActivity {
         Objects.requireNonNull(ab).setTitle(R.string.search_title);
     }
 
-    protected void configureAndShowSearchFragment(){
-        mSearchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_search);
-        if (mSearchFragment == null && findViewById(R.id.container_fragment_search) != null) {
-            mSearchFragment = new SearchFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_fragment_search, mSearchFragment)
-                    .commit();
-        }
-    }
-
-    private Bundle getBundle() {
-        return this.getIntent().getExtras();
-    }
-
-    private Long getTagIdFromBundle() {
-        if (mExtras.get(FLATID) != null) return (Long) mExtras.get(FLATID);
-        else return null;
-    }
-
-    private void configureViewModel() {
-        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
-        this.mFlatViewModel = ViewModelProviders.of(this, mViewModelFactory).get(FlatViewModel.class);
-        this.mFlatViewModel.init(AGENT_ID);
-    }
 }

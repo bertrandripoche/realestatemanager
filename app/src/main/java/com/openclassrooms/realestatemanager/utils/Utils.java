@@ -1,7 +1,6 @@
 package com.openclassrooms.realestatemanager.utils;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -272,15 +271,7 @@ public class Utils  {
             final int heightRatio = Math.round((float) height / (float) reqHeight);
             final int widthRatio = Math.round((float) width / (float) reqWidth);
 
-            // Choose the smallest ratio as inSampleSize value, this will guarantee a final image
-            // with both dimensions larger than or equal to the requested height and width.
             inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
-
-            // This offers some additional logic in case the image has a strange
-            // aspect ratio. For example, a panorama may have a much larger
-            // width than height. In these cases the total pixels might still
-            // end up being too large to fit comfortably in memory, so we should
-            // be more aggressive with sample down the image (=larger inSampleSize).
 
             final float totalPixels = width * height;
 
@@ -297,7 +288,7 @@ public class Utils  {
     /**
      * Rotate an image if required.
      *
-     * @param img           The image bitmap
+     * @param img The image bitmap
      * @param selectedImage Image URI
      * @return The resulted Bitmap after manipulation
      */
@@ -324,6 +315,12 @@ public class Utils  {
         }
     }
 
+    /**
+     * Rotate a bitmap image
+     * @param img is the bitmap image to rotate
+     * @param degree is the angle used to rotate the image
+     * @return a rotated bitmap image
+     */
     private static Bitmap rotateImage(Bitmap img, int degree) {
         Matrix matrix = new Matrix();
         matrix.postRotate(degree);

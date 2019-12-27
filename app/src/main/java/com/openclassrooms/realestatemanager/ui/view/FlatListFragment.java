@@ -90,25 +90,42 @@ public class FlatListFragment extends Fragment {
         }
     }
 
+    /**
+     * Get a list of flats from a query
+     * @param queryString the required query
+     */
     private void getFlatsFromQuery(String queryString) {
         SimpleSQLiteQuery query = new SimpleSQLiteQuery(queryString);
         this.mFlatViewModel.getFlatsFromQuery(query).observe(this, this::updateFlatsList);
     }
 
+    /**
+     * Get the flats from the database
+     */
     public void getFlats() {
         this.mFlatViewModel.getFlats().observe(this, this::updateFlatsList);
     }
 
+    /**
+     * Update the recyclerView of the list of flats
+     * @param flats is the new list of flats
+     */
     private void updateFlatsList(List<Flat> flats){
         this.mAdapter.updateData(flats);
     }
 
+    /**
+     * Configure the viewModel
+     */
     private void configureViewModel() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getContext());
         this.mFlatViewModel = ViewModelProviders.of(this, mViewModelFactory).get(FlatViewModel.class);
         this.mFlatViewModel.init(AGENT_ID);
     }
 
+    /**
+     * Configure the recyclerView for the list of flats
+     */
     private void configureRecyclerView() {
         final int orientation = getResources().getInteger(R.integer.gallery_orientation);
         MainActivity mainActivity = (MainActivity) getActivity();
@@ -124,6 +141,9 @@ public class FlatListFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Configure the click on the item of the recyclerView
+     */
     void configureOnClickRecyclerView(){
         ItemClickSupport.addTo(mRecyclerView, R.layout.recycler_view_flat_item)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {

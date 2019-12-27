@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -31,8 +30,6 @@ import com.openclassrooms.realestatemanager.utils.Utils;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -122,6 +119,10 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
         this.handleResponse(requestCode, resultCode, data);
     }
 
+    /**
+     * Delete a flat pic
+     * @param position is the position of the item in the recyclerView
+     */
     @Override
     public void onClickDeleteButton(int position) {
         Pic pic = mAdapter.getFlatPic(position);
@@ -131,6 +132,9 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
         if (mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
     }
 
+    /**
+     * Determine action when add button clicked
+     */
     @OnClick(R.id.btn_add_flat)
     public void onClickAddButton() {
         if (isFormValid()) this.createFlat();
@@ -139,6 +143,9 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
         }
     }
 
+    /**
+     * Trigger the selection image action
+     */
     @OnClick(R.id.btn_add_photo)
     @AfterPermissionGranted(RC_IMAGE_PERMS)
     public void onClickPhotoButton() {
@@ -155,6 +162,12 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
         }
     }
 
+    /**
+     * To handle result of picture/galery selection
+     * @param requestCode is the code of the request to be handled
+     * @param resultCode is the result code from the action
+     * @param data is the data obtained by the action
+     */
     private void handleResponse(int requestCode, int resultCode, Intent data){
         if (requestCode == REQUEST_SELECT_PIC_GALLERY || requestCode == REQUEST_CAMERA_TAKE_PICTURE) {
             if (resultCode == RESULT_OK) {
@@ -187,6 +200,9 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
         }
     }
 
+    /**
+     * Method to check if there are some flat pics and display them if any
+     */
     private void checkRecyclerView() {
         if (mFlatPicList == null || mFlatPicList.size() == 0) mFlatPhotosRecyclerView.setVisibility(View.GONE);
         else {
@@ -196,6 +212,9 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
         }
     }
 
+    /**
+     * Method to first configure the recyclerView
+     */
     private void configureRecyclerView() {
         mAdapter = new FlatPicAdapter(mFlatPicList, this, true);
 
@@ -205,12 +224,18 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
         mAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Method to configure the viewModel
+     */
     private void configureViewModel(){
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         this.mFlatViewModel = ViewModelProviders.of(this, mViewModelFactory).get(FlatViewModel.class);
         this.mFlatViewModel.init(AGENT_ID);
     }
 
+    /**
+     * Method to configure the textWatchers on the fields which requires it
+     */
     private void configureTextWatchers() {
         mCaption.addTextChangedListener(textWatcher);
         mSummary.addTextChangedListener(textWatcher);
@@ -220,6 +245,9 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
         mCity.addTextChangedListener(textWatcher);
     }
 
+    /**
+     * Method to describe the actions to do on text writing
+     */
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -241,37 +269,24 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
         }
     };
 
+    /**
+     * Make the float button enabled
+     */
     public void enableFloatButton() {
         mBtnAddFlat.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.pink)));
     }
 
+    /**
+     * Make the float button disabled
+     */
     public void disableFloatButton() {
         mBtnAddFlat.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_grey)));
     }
 
-    private Integer getNumber(String str) {
-        Integer number;
-        try
-        {number = Integer.parseInt(str);}
-        catch (NumberFormatException e)
-        {number = null;}
-        return number;
-    }
-
-    private Address getAddressFromSearchString(String address) {
-        Geocoder geocoder = new Geocoder(this, Locale.FRANCE);
-        try {
-            List<Address> addressList = geocoder.getFromLocationName(address, 1);
-
-            if (addressList.size() > 0) {
-                return addressList.get(0);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
+    /**
+     * Get flatid from bundle
+     * @return a Long which is the flatId
+     */
     protected Long getFlatId() {
         Long flatId = -1L;
         Intent i = getIntent();
@@ -281,6 +296,10 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
         return flatId;
     }
 
+    /**
+     * Get the selected flat from bundle
+     * @return an int representing the flat selected
+     */
     protected int getSelectedFlat() {
         int selectedFlat = -1;
         Intent i = getIntent();
@@ -290,6 +309,9 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
         return selectedFlat;
     }
 
+    /**
+     * Clean the form to put it back like new
+     */
     private void cleanForm() {
         Toast.makeText(getApplicationContext(), R.string.flat_saved, Toast.LENGTH_LONG).show();
         emptyFields();
@@ -298,6 +320,9 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
         checkRecyclerView();
     }
 
+    /**
+     * Empty the fields of the form
+     */
     private void emptyFields() {
         mFlatType.setSelection(0,true);
         mCaption.setText("");
@@ -320,6 +345,9 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
         mFlatAgent.setSelection(0,true);
     }
 
+    /**
+     * Create flat in database
+     */
     private void createFlat(){
         String picPath;
         if (mFlatPicList.size() != 0) picPath = mFlatPicList.get(0).getPicPath();
@@ -338,7 +366,7 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
         Integer postalCode = getNumber(this.mPostalCode.getText().toString());
 
         String address = Utils.buildAddress(streetNb, this.mStreet.getText().toString(), postalCode, this.mCity.getText().toString());
-        Address flatAddress = getAddressFromSearchString(address);
+        Address flatAddress = getAddressFromAddressString(address);
 
         Double latitude = (flatAddress == null) ? 0 : flatAddress.getLatitude();
         Double longitude = (flatAddress == null) ? 0 : flatAddress.getLongitude();

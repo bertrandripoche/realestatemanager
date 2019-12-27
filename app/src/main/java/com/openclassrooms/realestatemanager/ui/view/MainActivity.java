@@ -41,10 +41,32 @@ public class MainActivity extends BaseActivity {
 
         checkPreviousFlatSelection();
         configureFragment(new FlatListFragment(), R.id.container_fragment_flat_list, LIST);
-//        loadFragment(new FlatListFragment(), R.id.container_fragment_flat_list);
-        //configureAndShowFlatListFragment();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+       super.onCreateOptionsMenu(menu);
+       if(mFlatId != null && mFlatId > 0 &&findViewById(R.id.container_fragment_flat_detail) != null) displayEditBtn();
+       else hideEditBtn();
+       return true;
+    }
+
+    /**
+     * Detail action when "Back to List" button clicked
+     */
+    @OnClick(R.id.btn_back_to_list)
+    public void onClickBackToListButton() {
+        mIsFullListRequestedAfterSearchCleaning = true;
+        mQuery = "";
+        hideBackToListBtn();
+
+        Intent myIntent = new Intent(this, MainActivity.class);
+        startActivity(myIntent);
+    }
+
+    /**
+     * Check if there is a previous flat selected
+     */
     private void checkPreviousFlatSelection() {
         if(mFlatId != null && mFlatId >= 0 && findViewById(R.id.container_fragment_flat_detail) != null)
         {
@@ -68,35 +90,10 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void configureAndShowFlatListFragment() {
-        mFlatListFragment = (FlatListFragment) getSupportFragmentManager().findFragmentById(R.id.container_fragment_flat_list);
-
-        if (mFlatListFragment == null) {
-            mFlatListFragment = new FlatListFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_fragment_flat_list, mFlatListFragment)
-                    .commit();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-       super.onCreateOptionsMenu(menu);
-       if(mFlatId != null && mFlatId > 0 &&findViewById(R.id.container_fragment_flat_detail) != null) displayEditBtn();
-       else hideEditBtn();
-       return true;
-    }
-
-    @OnClick(R.id.btn_back_to_list)
-    public void onClickBackToListButton() {
-        mIsFullListRequestedAfterSearchCleaning = true;
-        mQuery = "";
-        hideBackToListBtn();
-
-        Intent myIntent = new Intent(this, MainActivity.class);
-        startActivity(myIntent);
-    }
-
+    /**
+     * Get the flatid from bundle
+     * @return a Long representing the flatId
+     */
     protected Long getFlatId() {
         Long mFlatId = -1L;
         final String FLATID = "flatId";
@@ -107,15 +104,23 @@ public class MainActivity extends BaseActivity {
         return mFlatId;
     }
 
+    /**
+     * Get query from bundle
+     * @return a string
+     */
     protected String getQuery() {
         String query = "";
         Intent i = getIntent();
         if (i != null && i.getExtras() != null) {
-            query = i.getExtras().getString("Query");
+            query = i.getExtras().getString(QUERY);
         }
         return query;
     }
 
+    /**
+     * Get the selected flat from bundle
+     * @return an int
+     */
     protected int getSelectedFlat() {
         int selectedFlat = -1;
         Intent i = getIntent();
@@ -125,6 +130,9 @@ public class MainActivity extends BaseActivity {
         return selectedFlat;
     }
 
+    /**
+     * Creating the notification channel is required to send notifications
+     */
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.channel_name);
@@ -138,6 +146,12 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Hide the list button active
+     */
     protected void hideBackToListBtn() {if (mBackToListBtn != null) mBackToListBtn.setVisibility(View.GONE);}
+    /**
+     * Display the list button active
+     */
     protected void displayBackToListBtn() {if (mBackToListBtn != null) mBackToListBtn.setVisibility(View.VISIBLE);}
 }

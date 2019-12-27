@@ -3,12 +3,11 @@ package com.openclassrooms.realestatemanager.ui.view;
 import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -25,10 +24,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.realestatemanager.R;
 import com.openclassrooms.realestatemanager.model.Pic;
 import com.openclassrooms.realestatemanager.ui.recyclerview.FlatPicAdapter;
@@ -40,10 +37,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -139,6 +137,42 @@ public class BaseEditionActivity extends AppCompatActivity {
         return path;
     }
 
+    /**
+     * Get a number from a string
+     * @param str is a String representing a number
+     * @return an Integer
+     */
+    protected Integer getNumber(String str) {
+        Integer number;
+        try
+        {number = Integer.parseInt(str);}
+        catch (NumberFormatException e)
+        {number = null;}
+        return number;
+    }
+
+    /**
+     * Find an address from an address string
+     * @param address is the address to look for
+     * @return an address
+     */
+    protected Address getAddressFromAddressString(String address) {
+        Geocoder geocoder = new Geocoder(this, Locale.FRANCE);
+        try {
+            List<Address> addressList = geocoder.getFromLocationName(address, 1);
+
+            if (addressList.size() > 0) {
+                return addressList.get(0);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Configure the spinner of the forms
+     */
     protected void configureSpinners() {
         String[] dataForSpinner = Utils.createDataForFlatTypeSpinners(this);
         ArrayAdapter adapterSpinnerFlatType = new ArrayAdapter<String>
@@ -150,24 +184,41 @@ public class BaseEditionActivity extends AppCompatActivity {
         mFlatAgent.setAdapter(adapterSpinnerFlatAgent);
     }
 
+    /**
+     * Configure the toolbar
+     */
     protected void configureToolbar(){
         setSupportActionBar(mToolbar);
         ActionBar ab = getSupportActionBar();
         Objects.requireNonNull(ab).setDisplayHomeAsUpEnabled(true);
     }
 
+    /**
+     * Make the photo button active
+     */
     protected void enablePhotoButton() {
         mBtnCaption.setImageResource(R.drawable.ic_add_photo);
     }
 
+    /**
+     * Make the photo button disabled
+     */
     protected void disablePhotoButton() {
         mBtnCaption.setImageResource(R.drawable.ic_add_photo_off);
     }
 
+    /**
+     * Check if the form is valid
+     * @return true if the form is valid
+     */
     protected boolean isFormValid() {
         return !mSummary.getText().toString().equals("") && !mDescription.getText().toString().equals("")  && !mSurface.getText().toString().equals("")  && !mPrice.getText().toString().equals("")  && !mCity.getText().toString().equals("");
     }
 
+    /**
+     *
+     * @param caption is the caption that user wants to attach to picture
+     */
     protected void selectImage(String caption) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setCancelable(false);
@@ -209,6 +260,9 @@ public class BaseEditionActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Allows to display the popup to choose the picture action
+     */
     protected void initPopupViewControls() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
 
@@ -220,6 +274,9 @@ public class BaseEditionActivity extends AppCompatActivity {
         mBtnCancel= mPopupPhotoChoiceView.findViewById(R.id.btn_cancel);
     }
 
+    /**
+     * Allows to choose a picture from gallery
+     */
     protected void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -229,8 +286,10 @@ public class BaseEditionActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_SELECT_PIC_GALLERY);
     }
 
+    /**
+     * Allows to take a picture from camera
+     */
     protected void cameraIntent() {
-
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (intent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
@@ -250,6 +309,11 @@ public class BaseEditionActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Create a file to manage the picture
+     * @return a File
+     * @throws IOException
+     */
     protected File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
