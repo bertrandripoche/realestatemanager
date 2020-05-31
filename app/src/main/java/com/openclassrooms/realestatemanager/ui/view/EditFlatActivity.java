@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.realestatemanager.R;
+import com.openclassrooms.realestatemanager.utils.Image;
 import com.openclassrooms.realestatemanager.utils.UriTypeConverter;
 import com.openclassrooms.realestatemanager.viewmodel.FlatViewModel;
 import com.openclassrooms.realestatemanager.injections.Injection;
@@ -45,9 +46,6 @@ public class EditFlatActivity extends BaseEditionActivity implements FlatPicAdap
     private Flat mFlat;
     private boolean mIsModified = false;
     private boolean isRotated = false;
-
-    public EditFlatActivity() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,7 +224,7 @@ public class EditFlatActivity extends BaseEditionActivity implements FlatPicAdap
                     mSelectedImagePath = mCurrentPhotoPath;
                     if (mUriImageSelected != null) try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mUriImageSelected);
-                        bitmap = Utils.handleSamplingAndRotationBitmap(this, mUriImageSelected);
+                        bitmap = Image.handleSamplingAndRotationBitmap(this, mUriImageSelected);
                         OutputStream os= this.getContentResolver().openOutputStream(mUriImageSelected);
                         bitmap.compress(Bitmap.CompressFormat.PNG,100,os);
                     } catch (IOException e) {

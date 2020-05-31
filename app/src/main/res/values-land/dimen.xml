@@ -26,7 +26,7 @@
     <dimen name="map_height">150dp</dimen>
 
     <integer name="gallery_orientation">0</integer>
-    <integer name="gallery_pic_orientation">1</integer>
+    <integer name="gallery_pic_orientation">0</integer>
 
     <integer name="price_max_filter">2000000</integer>
     <integer name="surface_max_filter">500</integer>

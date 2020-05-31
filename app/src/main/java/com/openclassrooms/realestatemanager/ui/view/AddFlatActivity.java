@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.openclassrooms.realestatemanager.utils.Image;
 import com.openclassrooms.realestatemanager.utils.UriTypeConverter;
 import com.openclassrooms.realestatemanager.viewmodel.FlatViewModel;
 import com.openclassrooms.realestatemanager.ui.recyclerview.FlatPicAdapter;
@@ -42,9 +43,6 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
 
     private boolean mIsTablet;
     private NotificationService mNotificationService = new NotificationService();
-
-    public AddFlatActivity() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,7 +178,7 @@ public class AddFlatActivity extends BaseEditionActivity implements FlatPicAdapt
                     mSelectedImagePath = mCurrentPhotoPath;
                     if (mUriImageSelected != null) try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mUriImageSelected);
-                        bitmap = Utils.handleSamplingAndRotationBitmap(this, mUriImageSelected);
+                        bitmap = Image.handleSamplingAndRotationBitmap(this, mUriImageSelected);
                         OutputStream os= this.getContentResolver().openOutputStream(mUriImageSelected);
                         bitmap.compress(Bitmap.CompressFormat.PNG,100,os);
                     } catch (IOException e) {

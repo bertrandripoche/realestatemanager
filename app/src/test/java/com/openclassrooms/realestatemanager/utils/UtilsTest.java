@@ -13,7 +13,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest( Utils.class)
+@PrepareForTest(Utils.class)
 public class UtilsTest {
 
     @Test

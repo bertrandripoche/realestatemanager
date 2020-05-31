@@ -43,15 +43,11 @@ class FlatViewHolder extends RecyclerView.ViewHolder {
             this.mFlatSummary.setText(flat.getSummary());
             this.mFlatCity.setText(flat.getCityAddress());
             this.mFlatPrice.setText(this.itemView.getResources().getString(R.string.euro, flat.getPrice()));
-            String flatType = Utils.getStringFromFlatTypeSpinners(context, flat.getType());
+            String flatType = (flat.getType() == null) ? String.valueOf(R.string.flattype1) : Utils.getStringFromFlatTypeSpinners(context, flat.getType());
             this.mFlatType.setText(flatType);
             this.mFlatConstraintLayout.setTag(flat.getId());
             if (flat.isSold()) mFlatSold.setVisibility(View.VISIBLE);
             else mFlatSold.setVisibility(View.GONE);
-System.out.println("********************************");
-System.out.println("***PicPath : "+ flat.getPicPath());
-System.out.println("***FlatId : "+ flat.getId());
-System.out.println("***Summary : "+ flat.getSummary());
         }
     }
 
