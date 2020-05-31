@@ -14,12 +14,12 @@ This app was part of the mandatory app to realize to achieve the training.<br/>
 
 <h1>Features</h1>
 This app allows you to :
-- see the current list of flat available and previously sold
-- see them on a map
-- filtering the list following different criterias
-- add a new item
-- edit an item
-- set an item as sold
+- see the current list of flat available and previously sold<br/>
+- see them on a map<br/>
+- filtering the list following different criterias<br/>
+- add a new item<br/>
+- edit an item<br/>
+- set an item as sold<br/>
 - calculate a loan for a specific item
 
 2 langages available : english/french
